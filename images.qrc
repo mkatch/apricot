@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/images">
-        <file alias="isocastle.png">resources/isocastle.png</file>
-    </qresource>
-</RCC>

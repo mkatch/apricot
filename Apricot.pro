@@ -9,11 +9,11 @@ include(src/qtquick2applicationviewer/qtquick2applicationviewer.pri)
 qtcAddDeployment()
 
 RESOURCES += \
-    images.qrc \
-    qml.qrc
+    resources.qrc \
+    src.qrc
 
 OTHER_FILES += \
-    resources/isocastle.png
+    resources/images/isocastle.png
 
 HEADERS += \
     ApricotCore.hpp
