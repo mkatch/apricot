@@ -1,13 +1,24 @@
-#include <QtGui/QGuiApplication>
+#include <QQmlEngine>
+#include <QQmlContext>
+#include <QDebug>
+
 #include "qtquick2applicationviewer.h"
+#include "application.hpp"
+#include "project.hpp"
+#include "core/core.hpp"
+#include "tools/tools.hpp"
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+    Application application(argc, argv);
+
+    registerCoreTypes();
+    registerTools();
 
     QtQuick2ApplicationViewer viewer;
-    viewer.setMainQmlFile(QStringLiteral("qml/Apricot/main.qml"));
-    viewer.showExpanded();
+    viewer.rootContext()->setContextProperty("project", &application.project());
+    viewer.setSource(QUrl("qrc:/main/main.qml"));
+    viewer.show();
 
-    return app.exec();
+    return application.exec();
 }
