@@ -7,9 +7,11 @@
 #include "ToolActionArea.hpp"
 #include "Tool.hpp"
 
+
 #define REGISTER_CORE_TYPE(Type) qmlRegisterType<Type>("ApricotCore", 1, 0, #Type)
 #define REGISTER_UNCREATABLE_CORE_TYPE(Type) \
     qmlRegisterUncreatableType<Type>("ApricotCore", 1, 0, #Type, #Type + QString(" is uncreatable"))
+
 
 void registerCoreTypes()
 {

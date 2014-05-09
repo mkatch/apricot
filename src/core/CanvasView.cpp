@@ -1,17 +1,19 @@
 #include "CanvasView.hpp"
 
-#include <algorithm>
 #include <QtCore>
 #include <QtQml>
 #include <QDebug>
 
+#include <algorithm>
 using std::max;
+
 
 CanvasFrame::CanvasFrame(CanvasView *view) :
     QObject(view)
 {
     // Do nothing
 }
+
 
 CanvasView::CanvasView(QQuickItem *parent) :
     QQuickItem(parent),
@@ -21,10 +23,12 @@ CanvasView::CanvasView(QQuickItem *parent) :
     // Do nothing
 }
 
+
 CanvasView::~CanvasView()
 {
     // Do nothing
 }
+
 
 void CanvasView::setCanvas(Canvas *canvas)
 {
@@ -39,6 +43,7 @@ void CanvasView::setCanvas(Canvas *canvas)
         emit canvasChanged();
     }
 }
+
 
 void CanvasView::setZoom(qreal zoom)
 {
@@ -56,6 +61,7 @@ void CanvasView::setZoom(qreal zoom)
     }
 }
 
+
 void CanvasView::dragTo(const QPointF &pos)
 {
     bool differentX = (imageItem->x() != pos.x());
@@ -71,12 +77,14 @@ void CanvasView::dragTo(const QPointF &pos)
     }
 }
 
+
 void CanvasView::refreshCanvas()
 {
     QVariant oldSource = imageItem->property("source");
     imageItem->setProperty("source", "");
     imageItem->setProperty("source", oldSource);
 }
+
 
 void CanvasView::componentComplete()
 {

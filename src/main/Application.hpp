@@ -1,7 +1,9 @@
-#ifndef APPLICATION_HPP
-#define APPLICATION_HPP
+#ifndef MAIN_APPLICATION_HPP
+#define MAIN_APPLICATION_HPP
+
 
 #include <QGuiApplication>
+
 
 class Project;
 
@@ -12,20 +14,16 @@ class Application : public QGuiApplication
 public:
     Application(int argc, char **argv);
 
-    Project& project();
+    Project &project() { return *m_project; }
 
 signals:
 
 public slots:
 
 private:
-    Project* m_project;
+    Project *m_project;
 
 };
 
-inline Project& Application::project()
-{
-    return *m_project;
-}
 
-#endif // APPLICATION_HPP
+#endif // MAIN_APPLICATION_HPP

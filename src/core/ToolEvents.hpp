@@ -1,9 +1,11 @@
-#ifndef TOOLEVENTS_HPP
-#define TOOLEVENTS_HPP
+#ifndef CORE_TOOL_EVENTS_HPP
+#define CORE_TOOL_EVENTS_HPP
+
 
 #include <QEvent>
 #include <QInputEvent>
 #include <QMouseEvent>
+
 
 class ToolEvent
 {
@@ -148,4 +150,5 @@ private:
     QPoint m_angleDelta;
 };
 
-#endif // TOOLEVENTS_HPP
+
+#endif // CORE_TOOL_EVENTS_HPP

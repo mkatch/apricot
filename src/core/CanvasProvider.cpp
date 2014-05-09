@@ -1,9 +1,9 @@
 #include "CanvasProvider.hpp"
+#include "Canvas.hpp"
 
 #include <QDebug>
 #include <QBitmap>
 
-#include "Canvas.hpp"
 
 CanvasProvider::CanvasProvider(const Canvas *canvas) :
     QQuickImageProvider(Pixmap),
@@ -12,10 +12,12 @@ CanvasProvider::CanvasProvider(const Canvas *canvas) :
     // Do nothing
 }
 
+
 void CanvasProvider::setCanvas(const Canvas *canvas)
 {
     m_canvas = canvas;
 }
+
 
 QPixmap CanvasProvider::requestPixmap(const QString &id, QSize *size, const QSize &requestedSize)
 {

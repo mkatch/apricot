@@ -1,8 +1,10 @@
-#ifndef CANVAS_HPP
-#define CANVAS_HPP
+#ifndef CORE_CANVAS_HPP
+#define CORE_CANVAS_HPP
+
 
 #include <QObject>
 #include <QPixmap>
+
 
 class Canvas : public QObject
 {
@@ -24,4 +26,5 @@ private:
     QPixmap pixmap;
 };
 
-#endif // CANVAS_HPP
+
+#endif // CORE_CANVAS_HPP

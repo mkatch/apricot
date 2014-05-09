@@ -1,9 +1,9 @@
 #include "ToolActionArea.hpp"
+#include "Tool.hpp"
+#include "ToolEvents.hpp"
 
 #include <QDebug>
 
-#include "Tool.hpp"
-#include "ToolEvents.hpp"
 
 ToolActionArea::ToolActionArea(QQuickItem *parent) :
     CanvasView(parent),
@@ -15,6 +15,7 @@ ToolActionArea::ToolActionArea(QQuickItem *parent) :
     setFlag(QQuickItem::ItemHasContents, true);
     setFlag(QQuickItem::ItemIsFocusScope, true);
 }
+
 
 void ToolActionArea::setTool(Tool *tool)
 {
@@ -33,15 +34,18 @@ void ToolActionArea::setTool(Tool *tool)
         emit activeChanged();
 }
 
+
 QPointF ToolActionArea::canvasToArea(const QPoint &canvasPos) const
 {
     return canvasPos;
 }
 
+
 QPoint ToolActionArea::areaToCanvas(const QPointF &areaPos) const
 {
     return areaPos.toPoint();
 }
+
 
 void ToolActionArea::mousePressEvent(QMouseEvent *event)
 {
@@ -64,6 +68,7 @@ void ToolActionArea::mousePressEvent(QMouseEvent *event)
         lastMousePos = event->localPos();
 }
 
+
 void ToolActionArea::mouseReleaseEvent(QMouseEvent *event)
 {
     if (!active())
@@ -83,6 +88,7 @@ void ToolActionArea::mouseReleaseEvent(QMouseEvent *event)
     tool()->mouseReleaseEvent(&toolEvent);
 }
 
+
 void ToolActionArea::mouseDoubleClickEvent(QMouseEvent *event)
 {
     if (!active())
@@ -101,6 +107,7 @@ void ToolActionArea::mouseDoubleClickEvent(QMouseEvent *event)
     );
     tool()->mouseDoubleClickEvent(&toolEvent);
 }
+
 
 void ToolActionArea::mouseMoveEvent(QMouseEvent *event)
 {
@@ -124,6 +131,7 @@ void ToolActionArea::mouseMoveEvent(QMouseEvent *event)
     lastMousePos = event->localPos();
 }
 
+
 void ToolActionArea::hoverMoveEvent(QHoverEvent *event)
 {
     if (!active())
@@ -145,6 +153,7 @@ void ToolActionArea::hoverMoveEvent(QHoverEvent *event)
     tool()->mouseHoverEvent(&toolEvent);
 }
 
+
 void ToolActionArea::wheelEvent(QWheelEvent *event)
 {
     if (!active())
@@ -164,6 +173,7 @@ void ToolActionArea::wheelEvent(QWheelEvent *event)
     );
     tool()->mouseWheelEvent(&toolEvent);
 }
+
 
 QSGNode *ToolActionArea::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *data)
 {

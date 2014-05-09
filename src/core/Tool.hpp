@@ -1,8 +1,10 @@
-#ifndef TOOL_HPP
-#define TOOL_HPP
+#ifndef CORE_TOOL_HPP
+#define CORE_TOOL_HPP
+
 
 #include <QObject>
 #include <QtQuick>
+
 
 class ToolActionArea;
 class ToolMouseEvent;
@@ -33,29 +35,24 @@ public slots:
 
 protected:
     virtual void onActivated();
-
     virtual void onDeactivating();
 
     virtual void mousePressEvent(ToolMouseEvent *event);
-
     virtual void mouseReleaseEvent(ToolMouseEvent *event);
-
     virtual void mouseDoubleClickEvent(ToolMouseEvent *event);
-
     virtual void mouseHoverEvent(ToolMouseMoveEvent *event);
-
     virtual void mouseDragEvent(ToolMouseMoveEvent *event);
-
     virtual void mouseWheelEvent(ToolMouseWheelEvent *event);
 
     virtual QSGNode *updateActionAreaPaintNode(QSGNode *oldNode);
 
 private:
-    ToolActionArea* m_actionArea;
+    ToolActionArea *m_actionArea;
 
     void setActionArea(ToolActionArea *actionArea);
 
     friend class ToolActionArea;
 };
 
-#endif // TOOL_HPP
+
+#endif // CORE_TOOL_HPP

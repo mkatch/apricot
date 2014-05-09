@@ -8,6 +8,7 @@
 #include "core/core.hpp"
 #include "tools/tools.hpp"
 
+
 int main(int argc, char *argv[])
 {
     Application application(argc, argv);

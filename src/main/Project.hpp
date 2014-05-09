@@ -1,9 +1,11 @@
-#ifndef PROJECT_HPP
-#define PROJECT_HPP
+#ifndef MAIN_PROJECT_HPP
+#define MAIN_PROJECT_HPP
+
 
 #include <QObject>
 
 #include "core/Canvas.hpp"
+
 
 class Project : public QObject
 {
@@ -22,4 +24,5 @@ private:
     Canvas m_canvas;
 };
 
-#endif // PROJECT_HPP
+
+#endif // MAIN_PROJECT_HPP

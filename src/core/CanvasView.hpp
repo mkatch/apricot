@@ -1,9 +1,11 @@
-#ifndef CANVASVIEW_HPP
-#define CANVASVIEW_HPP
+#ifndef CORE_CANVAS_VIEW_HPP
+#define CORE_CANVAS_VIEW_HPP
+
 
 #include <QQuickItem>
 
 #include "CanvasProvider.hpp"
+
 
 class CanvasView;
 class Canvas;
@@ -38,7 +40,7 @@ signals:
 private:
     const QQuickItem *imageItem;
 
-    CanvasFrame(CanvasView* view);
+    CanvasFrame(CanvasView *view);
 
     friend class CanvasView;
 };
@@ -88,4 +90,5 @@ private:
     friend class CanvasFrame;
 };
 
-#endif // CANVASVIEW_HPP
+
+#endif // CORE_CANVAS_VIEW_HPP

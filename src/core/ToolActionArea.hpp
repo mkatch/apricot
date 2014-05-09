@@ -1,9 +1,11 @@
-#ifndef TOOLACTIONAREA_HPP
-#define TOOLACTIONAREA_HPP
+#ifndef CORE_TOOL_ACTION_AREA_HPP
+#define CORE_TOOL_ACTION_AREA_HPP
+
 
 #include <QQuickItem>
 
 #include "CanvasView.hpp"
+
 
 class Tool;
 
@@ -55,4 +57,5 @@ private:
     void applyToolToCanvas(bool preview);
 };
 
-#endif // TOOLACTIONAREA_HPP
+
+#endif // CORE_TOOL_ACTION_AREA_HPP
