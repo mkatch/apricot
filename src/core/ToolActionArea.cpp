@@ -7,7 +7,7 @@
 
 ToolActionArea::ToolActionArea(QQuickItem *parent) :
     CanvasView(parent),
-    m_tool(0),
+    m_tool(nullptr),
     toolChangedSinceLastUpdatePaintNode(false)
 {
     setAcceptHoverEvents(true);
@@ -21,9 +21,9 @@ void ToolActionArea::setTool(Tool *tool)
     if (m_tool == tool)
         return;
 
-    bool emitActiveChanged = (tool == 0) || (m_tool == 0);
-    if (m_tool != 0)
-        m_tool->setActionArea(0);
+    bool emitActiveChanged = (tool == nullptr) || (m_tool == nullptr);
+    if (m_tool != nullptr)
+        m_tool->setActionArea(nullptr);
     m_tool = tool;
     m_tool->setActionArea(this);
     toolChangedSinceLastUpdatePaintNode = true;
@@ -169,12 +169,12 @@ QSGNode *ToolActionArea::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *
 {
     Q_UNUSED(data)
     if (!active())
-        return 0;
+        return nullptr;
 
     if (toolChangedSinceLastUpdatePaintNode)
     {
         delete oldNode;
-        oldNode = 0;
+        oldNode = nullptr;
         toolChangedSinceLastUpdatePaintNode = false;
     }
     return tool()->updateActionAreaPaintNode(oldNode);

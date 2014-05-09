@@ -11,7 +11,7 @@ class Project : public QObject
     Q_PROPERTY(Canvas *canvas READ canvas NOTIFY canvasChanged)
 
 public:
-    explicit Project(QObject *parent = 0);
+    explicit Project(QObject *parent = nullptr);
 
     Canvas *canvas() { return &m_canvas; }
 

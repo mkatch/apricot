@@ -14,12 +14,12 @@ class ToolActionArea : public CanvasView
     Q_PROPERTY(bool active READ active NOTIFY activeChanged)
 
 public:
-    explicit ToolActionArea(QQuickItem *parent = 0);
+    explicit ToolActionArea(QQuickItem *parent = nullptr);
 
     Tool *tool() const { return m_tool; }
     void setTool(Tool *tool);
 
-    bool active() const { return tool() != 0; }
+    bool active() const { return tool() != nullptr; }
 
     QPointF canvasToArea(const QPoint& canvasPos) const;
 

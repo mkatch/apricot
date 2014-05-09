@@ -12,7 +12,7 @@ class Canvas : public QObject
     Q_PROPERTY(QSize size READ size)
 
 public:
-    Canvas(const QString& fileName, QObject *parent = 0);
+    Canvas(const QString& fileName, QObject *parent = nullptr);
 
     int width() const { return pixmap.width(); }
     int height() const { return pixmap.height(); }

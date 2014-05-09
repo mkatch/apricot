@@ -22,8 +22,8 @@ QPixmap CanvasProvider::requestPixmap(const QString &id, QSize *size, const QSiz
     if (id != "canvas")
         return QPixmap();
 
-    QPixmap pixmap = (m_canvas != 0) ? m_canvas->toPixmap() : QBitmap(1, 1);
-    if (size != 0)
+    QPixmap pixmap = (m_canvas != nullptr) ? m_canvas->toPixmap() : QBitmap(1, 1);
+    if (size != nullptr)
         *size = pixmap.size();
     return requestedSize.isValid() ? pixmap.scaled(requestedSize) : pixmap;
 }

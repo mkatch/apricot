@@ -51,7 +51,7 @@ class CanvasView : public QQuickItem
     Q_PROPERTY(qreal zoom READ zoom WRITE setZoom NOTIFY zoomChanged)
 
 public:
-    explicit CanvasView(QQuickItem *parent = 0);
+    explicit CanvasView(QQuickItem *parent = nullptr);
     virtual ~CanvasView();
 
     Canvas *canvas() const { return m_canvas; }

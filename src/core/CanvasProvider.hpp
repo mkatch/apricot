@@ -9,7 +9,7 @@ class Canvas;
 class CanvasProvider : public QQuickImageProvider
 {
 public:
-    CanvasProvider(const Canvas *canvas = 0);
+    CanvasProvider(const Canvas *canvas = nullptr);
 
     const Canvas *canvas() const { return m_canvas; }
     void setCanvas(const Canvas* canvas);

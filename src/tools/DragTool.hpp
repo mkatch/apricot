@@ -8,7 +8,7 @@ class DragTool : public Tool
     Q_OBJECT
 
 public:
-    explicit DragTool(QObject *parent = 0);
+    explicit DragTool(QObject *parent = nullptr);
 
 protected:
     virtual void mousePressEvent(ToolMouseEvent* event);

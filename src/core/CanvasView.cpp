@@ -16,7 +16,7 @@ CanvasFrame::CanvasFrame(CanvasView *view) :
 CanvasView::CanvasView(QQuickItem *parent) :
     QQuickItem(parent),
     m_canvasFrame(new CanvasFrame(this)),
-    imageItem(0)
+    imageItem(nullptr)
 {
     // Do nothing
 }
@@ -31,7 +31,7 @@ void CanvasView::setCanvas(Canvas *canvas)
     if (m_canvas != canvas)
     {
         m_canvas = canvas;
-        if (canvasProvider != 0)
+        if (canvasProvider != nullptr)
         {
             canvasProvider->setCanvas(canvas);
             refreshCanvas();

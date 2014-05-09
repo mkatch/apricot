@@ -16,11 +16,11 @@ class Tool : public QObject
     Q_PROPERTY(bool active READ active NOTIFY activeChanged)
 
 public:
-    explicit Tool(QObject *parent = 0);
+    explicit Tool(QObject *parent = nullptr);
 
     ToolActionArea *actionArea() const { return m_actionArea; }
 
-    bool active() const { return m_actionArea != 0; }
+    bool active() const { return m_actionArea != nullptr; }
 
 signals:
     void actionAreaChanged();
