@@ -1,6 +1,6 @@
 import QtQuick 2.0
-import ApricotCore 1.0
-import ApricotTools 1.0
+import Apricot 1.0
+import Apricot.Tools 1.0
 
 Rectangle {
     width: 800

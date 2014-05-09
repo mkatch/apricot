@@ -8,6 +8,6 @@ SOURCES += \
     src/main/Project.cpp
 
 OTHER_FILES += \
-    src/main/main.qml
+    src/main/Main.qml
 
 RESOURCES +=

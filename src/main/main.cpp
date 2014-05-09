@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
     QtQuick2ApplicationViewer viewer;
     viewer.rootContext()->setContextProperty("project", &application.project());
-    viewer.setSource(QUrl("qrc:/main/main.qml"));
+    viewer.setSource(QUrl("qrc:/main/Main.qml"));
     viewer.show();
 
     return application.exec();

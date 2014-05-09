@@ -32,24 +32,23 @@ CanvasView::~CanvasView()
 
 void CanvasView::setCanvas(Canvas *canvas)
 {
-    if (m_canvas != canvas)
-    {
-        m_canvas = canvas;
-        if (canvasProvider != nullptr)
-        {
-            canvasProvider->setCanvas(canvas);
-            refreshCanvas();
-        }
-        emit canvasChanged();
+    if (m_canvas == canvas) {
+        return;
     }
+
+    m_canvas = canvas;
+    if (canvasProvider != nullptr) {
+        canvasProvider->setCanvas(canvas);
+        refreshCanvas();
+    }
+    emit canvasChanged();
 }
 
 
 void CanvasView::setZoom(qreal zoom)
 {
     zoom = max(zoom, 0.01); // Otherwise we would divide by 0 in the next call
-    if (this->zoom() != zoom)
-    {
+    if (this->zoom() != zoom) {
         qreal f = zoom / this->zoom() - 1.0;
         imageItem->setScale(zoom);
         emit zoomChanged();
@@ -66,8 +65,7 @@ void CanvasView::dragTo(const QPointF &pos)
 {
     bool differentX = (imageItem->x() != pos.x());
     bool differentY = (imageItem->y() != pos.y());
-    if (differentX || differentY)
-    {
+    if (differentX || differentY) {
         imageItem->setPosition(pos);
         if (differentX)
             emit canvasFrame()->xChanged();
@@ -97,7 +95,7 @@ void CanvasView::componentComplete()
     canvasProvider = new CanvasProvider(m_canvas); // TODO Possible leak
     engine->addImageProvider(canvasProviderId, canvasProvider);
 
-    QQmlComponent imageComponent(engine, QUrl("qrc:/core/canvasview.qml"));
+    QQmlComponent imageComponent(engine, QUrl("qrc:/core/CanvasView.qml"));
     imageItem = qobject_cast<QQuickItem *>(imageComponent.create(context));
     imageItem->setProperty("source", "image://" + canvasProviderId + "/canvas");
     imageItem->setParent(this);

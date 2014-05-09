@@ -69,16 +69,14 @@ void Tool::setActionArea(ToolActionArea *actionArea)
     if (m_actionArea == actionArea)
         return;
 
-    if (m_actionArea == nullptr)
-    {
+    if (m_actionArea == nullptr) {
         m_actionArea = actionArea;
         emit actionAreaChanged();
         onActivated();
         emit activeChanged();
     }
 
-    if (actionArea == nullptr)
-    {
+    if (actionArea == nullptr) {
         emit deactivating();
         onDeactivating();
         m_actionArea = actionArea;

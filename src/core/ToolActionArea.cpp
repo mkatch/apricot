@@ -49,8 +49,7 @@ QPoint ToolActionArea::areaToCanvas(const QPointF &areaPos) const
 
 void ToolActionArea::mousePressEvent(QMouseEvent *event)
 {
-    if (!active())
-    {
+    if (!active()) {
         event->ignore();
         return;
     }
@@ -71,8 +70,7 @@ void ToolActionArea::mousePressEvent(QMouseEvent *event)
 
 void ToolActionArea::mouseReleaseEvent(QMouseEvent *event)
 {
-    if (!active())
-    {
+    if (!active()) {
         event->ignore();
         return;
     }
@@ -91,8 +89,7 @@ void ToolActionArea::mouseReleaseEvent(QMouseEvent *event)
 
 void ToolActionArea::mouseDoubleClickEvent(QMouseEvent *event)
 {
-    if (!active())
-    {
+    if (!active()) {
         event->ignore();
         return;
     }
@@ -111,8 +108,7 @@ void ToolActionArea::mouseDoubleClickEvent(QMouseEvent *event)
 
 void ToolActionArea::mouseMoveEvent(QMouseEvent *event)
 {
-    if (!active())
-    {
+    if (!active()) {
         event->ignore();
         return;
     }
@@ -134,8 +130,7 @@ void ToolActionArea::mouseMoveEvent(QMouseEvent *event)
 
 void ToolActionArea::hoverMoveEvent(QHoverEvent *event)
 {
-    if (!active())
-    {
+    if (!active()) {
         event->ignore();
         return;
     }
@@ -156,8 +151,7 @@ void ToolActionArea::hoverMoveEvent(QHoverEvent *event)
 
 void ToolActionArea::wheelEvent(QWheelEvent *event)
 {
-    if (!active())
-    {
+    if (!active()) {
         event->ignore();
         return;
     }
@@ -178,11 +172,11 @@ void ToolActionArea::wheelEvent(QWheelEvent *event)
 QSGNode *ToolActionArea::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *data)
 {
     Q_UNUSED(data)
+
     if (!active())
         return nullptr;
 
-    if (toolChangedSinceLastUpdatePaintNode)
-    {
+    if (toolChangedSinceLastUpdatePaintNode) {
         delete oldNode;
         oldNode = nullptr;
         toolChangedSinceLastUpdatePaintNode = false;
