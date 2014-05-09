@@ -1,9 +1,9 @@
-#include "canvasprovider.hpp"
+#include "CanvasProvider.hpp"
 
 #include <QDebug>
 #include <QBitmap>
 
-#include "canvas.hpp"
+#include "Canvas.hpp"
 
 CanvasProvider::CanvasProvider(const Canvas *canvas) :
     QQuickImageProvider(Pixmap),

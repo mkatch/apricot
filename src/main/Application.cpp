@@ -1,6 +1,6 @@
-#include "application.hpp"
+#include "Application.hpp"
 
-#include "project.hpp"
+#include "Project.hpp"
 
 Application::Application(int argc, char** argv) :
     QGuiApplication(argc, argv),

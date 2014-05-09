@@ -3,7 +3,7 @@
 
 #include <QQuickItem>
 
-#include "canvasview.hpp"
+#include "CanvasView.hpp"
 
 class Tool;
 

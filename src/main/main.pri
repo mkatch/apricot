@@ -1,11 +1,11 @@
 HEADERS += \
-    src/main/application.hpp \
-    src/main/project.hpp
+    src/main/Application.hpp \
+    src/main/Project.hpp
 
 SOURCES += \
     src/main/main.cpp \
-    src/main/application.cpp \
-    src/main/project.cpp
+    src/main/Application.cpp \
+    src/main/Project.cpp
 
 OTHER_FILES += \
     src/main/main.qml

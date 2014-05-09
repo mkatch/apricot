@@ -2,10 +2,10 @@
 
 #include <QtQml>
 
-#include "canvas.hpp"
-#include "canvasview.hpp"
-#include "toolactionarea.hpp"
-#include "tool.hpp"
+#include "Canvas.hpp"
+#include "CanvasView.hpp"
+#include "ToolActionArea.hpp"
+#include "Tool.hpp"
 
 #define REGISTER_CORE_TYPE(Type) qmlRegisterType<Type>("ApricotCore", 1, 0, #Type)
 #define REGISTER_UNCREATABLE_CORE_TYPE(Type) \

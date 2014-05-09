@@ -1,7 +1,7 @@
-#include "tool.hpp"
+#include "Tool.hpp"
 
-#include "toolactionarea.hpp"
-#include "toolevents.hpp"
+#include "ToolActionArea.hpp"
+#include "ToolEvents.hpp"
 
 Tool::Tool(QObject *parent) :
     QObject(parent)

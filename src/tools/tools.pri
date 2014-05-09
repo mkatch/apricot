@@ -1,9 +1,7 @@
 SOURCES += \
-    src/tools/testtool.cpp \
     src/tools/tools.cpp \
-    src/tools/dragtool.cpp
+    src/tools/DragTool.cpp
 
 HEADERS += \
-    src/tools/testtool.hpp \
     src/tools/tools.hpp \
-    src/tools/dragtool.hpp
+    src/tools/DragTool.hpp

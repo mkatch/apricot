@@ -3,8 +3,8 @@
 #include <QDebug>
 
 #include "qtquick2applicationviewer.h"
-#include "application.hpp"
-#include "project.hpp"
+#include "Application.hpp"
+#include "Project.hpp"
 #include "core/core.hpp"
 #include "tools/tools.hpp"
 

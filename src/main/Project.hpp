@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "core/canvas.hpp"
+#include "core/Canvas.hpp"
 
 class Project : public QObject
 {

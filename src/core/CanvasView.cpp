@@ -1,4 +1,4 @@
-#include "canvasview.hpp"
+#include "CanvasView.hpp"
 
 #include <algorithm>
 #include <QtCore>

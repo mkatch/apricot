@@ -1,21 +1,21 @@
 SOURCES += \
-    src/core/canvas.cpp \
-    src/core/tool.cpp \
-    src/core/toolactionarea.cpp \
     src/core/core.cpp \
-    src/core/canvasview.cpp \
-    src/core/canvasprovider.cpp
+    src/core/Canvas.cpp \
+    src/core/CanvasProvider.cpp \
+    src/core/CanvasView.cpp \
+    src/core/Tool.cpp \
+    src/core/ToolActionArea.cpp
 
 HEADERS += \
-    src/core/canvas.hpp \
-    src/core/tool.hpp \
-    src/core/toolactionarea.hpp \
-    src/core/toolevents.hpp \
     src/core/core.hpp \
-    src/core/canvasview.hpp \
-    src/core/canvasprovider.hpp
+    src/core/Canvas.hpp \
+    src/core/CanvasProvider.hpp \
+    src/core/CanvasView.hpp \
+    src/core/Tool.hpp \
+    src/core/ToolActionArea.hpp \
+    src/core/ToolEvents.hpp
 
 OTHER_FILES += \
-    src/core/canvasview.qml
+    src/core/CanvasView.qml
 
 RESOURCES +=

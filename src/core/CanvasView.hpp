@@ -3,7 +3,7 @@
 
 #include <QQuickItem>
 
-#include "canvasprovider.hpp"
+#include "CanvasProvider.hpp"
 
 class CanvasView;
 class Canvas;

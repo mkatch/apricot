@@ -1,4 +1,4 @@
-#include "project.hpp"
+#include "Project.hpp"
 
 #include <QDebug>
 #include <QPainter>

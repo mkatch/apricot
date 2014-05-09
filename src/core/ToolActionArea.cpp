@@ -1,9 +1,9 @@
-#include "toolactionarea.hpp"
+#include "ToolActionArea.hpp"
 
 #include <QDebug>
 
-#include "tool.hpp"
-#include "toolevents.hpp"
+#include "Tool.hpp"
+#include "ToolEvents.hpp"
 
 ToolActionArea::ToolActionArea(QQuickItem *parent) :
     CanvasView(parent),
