@@ -3,7 +3,7 @@
 
 
 Application::Application(int argc, char** argv) :
-    QGuiApplication(argc, argv),
+    QApplication(argc, argv),
     m_project(new Project(this))
 {
     // Do nothing

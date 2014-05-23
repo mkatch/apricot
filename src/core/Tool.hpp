@@ -3,7 +3,6 @@
 
 
 #include <QObject>
-#include <QtQuick>
 
 
 class ToolActionArea;
@@ -43,8 +42,6 @@ protected:
     virtual void mouseHoverEvent(ToolMouseMoveEvent *event);
     virtual void mouseDragEvent(ToolMouseMoveEvent *event);
     virtual void mouseWheelEvent(ToolMouseWheelEvent *event);
-
-    virtual QSGNode *updateActionAreaPaintNode(QSGNode *oldNode);
 
 private:
     ToolActionArea *m_actionArea;

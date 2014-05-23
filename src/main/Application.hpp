@@ -2,12 +2,12 @@
 #define MAIN_APPLICATION_HPP
 
 
-#include <QGuiApplication>
+#include <QApplication>
 
 
 class Project;
 
-class Application : public QGuiApplication
+class Application : public QApplication
 {
     Q_OBJECT
 

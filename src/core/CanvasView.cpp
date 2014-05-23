@@ -1,34 +1,37 @@
 #include "CanvasView.hpp"
+#include "ui_CanvasView.h"
 
-#include <QtCore>
-#include <QtQml>
-#include <QDebug>
+#include <QtWidgets>
 
 #include <algorithm>
 using std::max;
 
+#include "Canvas.hpp"
 
-CanvasFrame::CanvasFrame(CanvasView *view) :
-    QObject(view)
+CanvasFrame::CanvasFrame(QGraphicsPixmapItem *pixmapItem) :
+    pixmapItem(pixmapItem)
 {
     // Do nothing
 }
 
-
-CanvasView::CanvasView(QQuickItem *parent) :
-    QQuickItem(parent),
-    m_canvasFrame(new CanvasFrame(this)),
-    imageItem(nullptr)
+CanvasView::CanvasView(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::CanvasView),
+    placeholderPixmap(1200, 23),
+    pixmapItem(scene.addPixmap(placeholderPixmap)),
+    m_canvas(nullptr),
+    m_canvasFrame(pixmapItem)
 {
-    // Do nothing
-}
+    ui->setupUi(this);
+    ui->graphicsView->setScene(&scene);
 
+    scene.addRect(10, 10, 20, 30);
+}
 
 CanvasView::~CanvasView()
 {
-    // Do nothing
+    delete ui;
 }
-
 
 void CanvasView::setCanvas(Canvas *canvas)
 {
@@ -36,12 +39,45 @@ void CanvasView::setCanvas(Canvas *canvas)
         return;
     }
 
-    m_canvas = canvas;
-    if (canvasProvider != nullptr) {
-        canvasProvider->setCanvas(canvas);
-        refreshCanvas();
+    qreal oldX = canvasFrame()->x();
+    qreal oldY = canvasFrame()->y();
+    qreal oldWidth = canvasFrame()->width();
+    qreal oldHeight = canvasFrame()->height();
+
+    if (m_canvas == nullptr) {
+        pixmapItem->setPixmap(placeholderPixmap);
     }
+    else {
+        pixmapItem->setPixmap(m_canvas->toPixmap());
+    }
+
     emit canvasChanged();
+
+    bool differentX = (canvasFrame()->x() != oldX);
+    bool differentY = (canvasFrame()->y() != oldY);
+    bool differentWidth = (canvasFrame()->width() != oldWidth);
+    bool differentHeight = (canvasFrame()->height() != oldHeight);
+
+    if (differentX) {
+        emit canvasFrame()->xChanged();
+    }
+    if (differentY) {
+        emit canvasFrame()->yChanged();
+    }
+    if (differentX || differentY) {
+        emit canvasFrame()->positionChanged();
+    }
+    if (differentWidth) {
+        emit canvasFrame()->widthChanged();
+    }
+    if (differentHeight) {
+        emit canvasFrame()->heightChanged();
+    }
+    if (differentWidth || differentHeight) {
+        emit canvasFrame()->sizeChanged();
+    }
+
+    ui->graphicsView->invalidateScene();
 }
 
 
@@ -50,7 +86,7 @@ void CanvasView::setZoom(qreal zoom)
     zoom = max(zoom, 0.01); // Otherwise we would divide by 0 in the next call
     if (this->zoom() != zoom) {
         qreal f = zoom / this->zoom() - 1.0;
-        imageItem->setScale(zoom);
+        pixmapItem->setScale(zoom);
         emit zoomChanged();
         emit canvasFrame()->widthChanged();
         emit canvasFrame()->heightChanged();
@@ -63,42 +99,14 @@ void CanvasView::setZoom(qreal zoom)
 
 void CanvasView::dragTo(const QPointF &pos)
 {
-    bool differentX = (imageItem->x() != pos.x());
-    bool differentY = (imageItem->y() != pos.y());
+    bool differentX = (pixmapItem->x() != pos.x());
+    bool differentY = (pixmapItem->y() != pos.y());
     if (differentX || differentY) {
-        imageItem->setPosition(pos);
+        pixmapItem->setPos(pos);
         if (differentX)
             emit canvasFrame()->xChanged();
         if (differentY)
             emit canvasFrame()->yChanged();
         emit canvasFrame()->positionChanged();
     }
-}
-
-
-void CanvasView::refreshCanvas()
-{
-    QVariant oldSource = imageItem->property("source");
-    imageItem->setProperty("source", "");
-    imageItem->setProperty("source", oldSource);
-}
-
-
-void CanvasView::componentComplete()
-{
-    QQuickItem::componentComplete();
-
-    QQmlContext *context = QQmlEngine::contextForObject(this);
-    QQmlEngine *engine = context->engine();
-
-    QString canvasProviderId = QString().sprintf("canvasview%p", this);
-    canvasProvider = new CanvasProvider(m_canvas); // TODO Possible leak
-    engine->addImageProvider(canvasProviderId, canvasProvider);
-
-    QQmlComponent imageComponent(engine, QUrl("qrc:/core/CanvasView.qml"));
-    imageItem = qobject_cast<QQuickItem *>(imageComponent.create(context));
-    imageItem->setProperty("source", "image://" + canvasProviderId + "/canvas");
-    imageItem->setParent(this);
-    imageItem->setParentItem(this);
-    m_canvasFrame->imageItem = imageItem;
 }

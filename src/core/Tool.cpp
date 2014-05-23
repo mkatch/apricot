@@ -58,12 +58,6 @@ void Tool::mouseWheelEvent(ToolMouseWheelEvent *event)
 }
 
 
-QSGNode *Tool::updateActionAreaPaintNode(QSGNode *oldNode)
-{
-    return oldNode;
-}
-
-
 void Tool::setActionArea(ToolActionArea *actionArea)
 {
     if (m_actionArea == actionArea)

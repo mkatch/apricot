@@ -5,15 +5,11 @@
 #include <QDebug>
 
 
-ToolActionArea::ToolActionArea(QQuickItem *parent) :
+ToolActionArea::ToolActionArea(QWidget *parent) :
     CanvasView(parent),
-    m_tool(nullptr),
-    toolChangedSinceLastUpdatePaintNode(false)
+    m_tool(nullptr)
 {
-    setAcceptHoverEvents(true);
-    setAcceptedMouseButtons(Qt::AllButtons);
-    setFlag(QQuickItem::ItemHasContents, true);
-    setFlag(QQuickItem::ItemIsFocusScope, true);
+    this->setMouseTracking(true);
 }
 
 
@@ -27,7 +23,6 @@ void ToolActionArea::setTool(Tool *tool)
         m_tool->setActionArea(nullptr);
     m_tool = tool;
     m_tool->setActionArea(this);
-    toolChangedSinceLastUpdatePaintNode = true;
     emit toolChanged();
     update();
     if (emitActiveChanged)
@@ -47,13 +42,49 @@ QPoint ToolActionArea::areaToCanvas(const QPointF &areaPos) const
 }
 
 
-void ToolActionArea::mousePressEvent(QMouseEvent *event)
+bool ToolActionArea::event(QEvent *event)
 {
     if (!active()) {
         event->ignore();
-        return;
+        return false;
     }
 
+    switch (event->type()) {
+    case QEvent::MouseButtonPress:
+        dispatchMousePressEvent(static_cast<QMouseEvent *>(event));
+        break;
+
+    case QEvent::MouseButtonRelease:
+        dispatchMouseReleaseEvent(static_cast<QMouseEvent *>(event));
+        break;
+
+    case QEvent::MouseButtonDblClick:
+        dispatchMouseDoubleClickEvent(static_cast<QMouseEvent *>(event));
+        break;
+
+    case QEvent::MouseMove:
+        dispatchMouseMoveEvent(static_cast<QMouseEvent *>(event));
+        break;
+
+    case QEvent::HoverEnter:
+    case QEvent::HoverLeave:
+    case QEvent::HoverMove:
+        dispatchHoverMoveEvent(static_cast<QHoverEvent *>(event));
+        break;
+
+    case QEvent::Wheel:
+        dispatchWheelEvent(static_cast<QWheelEvent *>(event));
+        break;
+
+    default:
+        return CanvasView::event(event);
+    }
+
+    return true;
+}
+
+void ToolActionArea::dispatchMousePressEvent(QMouseEvent *event)
+{
     ToolMouseEvent toolEvent(
         event,
         areaToCanvas(event->localPos()),
@@ -68,13 +99,8 @@ void ToolActionArea::mousePressEvent(QMouseEvent *event)
 }
 
 
-void ToolActionArea::mouseReleaseEvent(QMouseEvent *event)
+void ToolActionArea::dispatchMouseReleaseEvent(QMouseEvent *event)
 {
-    if (!active()) {
-        event->ignore();
-        return;
-    }
-
     ToolMouseEvent toolEvent(
         event,
         areaToCanvas(event->localPos()),
@@ -87,13 +113,8 @@ void ToolActionArea::mouseReleaseEvent(QMouseEvent *event)
 }
 
 
-void ToolActionArea::mouseDoubleClickEvent(QMouseEvent *event)
+void ToolActionArea::dispatchMouseDoubleClickEvent(QMouseEvent *event)
 {
-    if (!active()) {
-        event->ignore();
-        return;
-    }
-
     ToolMouseEvent toolEvent(
         event,
         areaToCanvas(event->localPos()),
@@ -106,13 +127,8 @@ void ToolActionArea::mouseDoubleClickEvent(QMouseEvent *event)
 }
 
 
-void ToolActionArea::mouseMoveEvent(QMouseEvent *event)
+void ToolActionArea::dispatchMouseMoveEvent(QMouseEvent *event)
 {
-    if (!active()) {
-        event->ignore();
-        return;
-    }
-
     ToolMouseMoveEvent toolEvent(
         event,
         areaToCanvas(event->localPos()),
@@ -128,13 +144,8 @@ void ToolActionArea::mouseMoveEvent(QMouseEvent *event)
 }
 
 
-void ToolActionArea::hoverMoveEvent(QHoverEvent *event)
+void ToolActionArea::dispatchHoverMoveEvent(QHoverEvent *event)
 {
-    if (!active()) {
-        event->ignore();
-        return;
-    }
-
     ToolMouseMoveEvent toolEvent(
         event,
         areaToCanvas(event->posF()),
@@ -149,13 +160,8 @@ void ToolActionArea::hoverMoveEvent(QHoverEvent *event)
 }
 
 
-void ToolActionArea::wheelEvent(QWheelEvent *event)
+void ToolActionArea::dispatchWheelEvent(QWheelEvent *event)
 {
-    if (!active()) {
-        event->ignore();
-        return;
-    }
-
     ToolMouseWheelEvent toolEvent(
         event,
         areaToCanvas(event->posF()),
@@ -166,20 +172,4 @@ void ToolActionArea::wheelEvent(QWheelEvent *event)
         event->modifiers()
     );
     tool()->mouseWheelEvent(&toolEvent);
-}
-
-
-QSGNode *ToolActionArea::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *data)
-{
-    Q_UNUSED(data)
-
-    if (!active())
-        return nullptr;
-
-    if (toolChangedSinceLastUpdatePaintNode) {
-        delete oldNode;
-        oldNode = nullptr;
-        toolChangedSinceLastUpdatePaintNode = false;
-    }
-    return tool()->updateActionAreaPaintNode(oldNode);
 }

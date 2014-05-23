@@ -1,13 +1,15 @@
 HEADERS += \
     src/main/Application.hpp \
-    src/main/Project.hpp
+    src/main/Project.hpp \
+    src/main/MainWindow.hpp
 
 SOURCES += \
     src/main/main.cpp \
     src/main/Application.cpp \
-    src/main/Project.cpp
+    src/main/Project.cpp \
+    src/main/MainWindow.cpp
 
-OTHER_FILES += \
-    src/main/Main.qml
+FORMS += \
+    src/main/MainWIndow.ui
 
 RESOURCES +=

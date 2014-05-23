@@ -13,9 +13,9 @@ public:
     explicit DragTool(QObject *parent = nullptr);
 
 protected:
-    virtual void mousePressEvent(ToolMouseEvent *event);
-    virtual void mouseDragEvent(ToolMouseMoveEvent *event);
-    virtual void mouseWheelEvent(ToolMouseWheelEvent *event);
+    virtual void mousePressEvent(ToolMouseEvent *event) override;
+    virtual void mouseDragEvent(ToolMouseMoveEvent *event) override;
+    virtual void mouseWheelEvent(ToolMouseWheelEvent *event) override;
 };
 
 

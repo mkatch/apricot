@@ -1,13 +1,14 @@
-#ifndef CORE_CANVAS_VIEW_HPP
-#define CORE_CANVAS_VIEW_HPP
+#ifndef WIDGETS_CANVASVIEW_HPP
+#define WIDGETS_CANVASVIEW_HPP
 
+#include <QWidget>
+#include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
 
-#include <QQuickItem>
-
-#include "CanvasProvider.hpp"
-
-
+namespace Ui {
 class CanvasView;
+}
+
 class Canvas;
 
 class CanvasFrame : public QObject
@@ -21,13 +22,13 @@ class CanvasFrame : public QObject
     Q_PROPERTY(qreal height READ height NOTIFY heightChanged)
 
 public:
-    QPointF position() const { return imageItem->position(); }
-    qreal x() const { return imageItem->x(); }
-    qreal y() const { return imageItem->y(); }
+    QPointF position() const { return pixmapItem->pos(); }
+    qreal x() const { return pixmapItem->x(); }
+    qreal y() const { return pixmapItem->y(); }
 
     QSizeF size() const { return QSizeF(width(), height()); }
-    qreal width() const { return imageItem->width() * imageItem->scale(); }
-    qreal height() const { return imageItem->height() * imageItem->scale(); }
+    qreal width() const { return pixmapItem->pixmap().width() * pixmapItem->scale(); }
+    qreal height() const {return pixmapItem->pixmap().height() * pixmapItem->scale(); }
 
 signals:
     void positionChanged();
@@ -38,14 +39,14 @@ signals:
     void heightChanged();
 
 private:
-    const QQuickItem *imageItem;
+    QGraphicsPixmapItem *pixmapItem;
 
-    CanvasFrame(CanvasView *view);
+    CanvasFrame(QGraphicsPixmapItem *pixmapItem);
 
     friend class CanvasView;
 };
 
-class CanvasView : public QQuickItem
+class CanvasView : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY(Canvas *canvas READ canvas WRITE setCanvas NOTIFY canvasChanged)
@@ -53,15 +54,16 @@ class CanvasView : public QQuickItem
     Q_PROPERTY(qreal zoom READ zoom WRITE setZoom NOTIFY zoomChanged)
 
 public:
-    explicit CanvasView(QQuickItem *parent = nullptr);
-    virtual ~CanvasView();
+    explicit CanvasView(QWidget *parent = 0);
+    ~CanvasView();
 
     Canvas *canvas() const { return m_canvas; }
     void setCanvas(Canvas *canvas);
 
-    CanvasFrame *canvasFrame() const { return m_canvasFrame; }
+    const CanvasFrame *canvasFrame() const { return &m_canvasFrame; }
+    CanvasFrame *canvasFrame() { return &m_canvasFrame; }
 
-    qreal zoom() const { return imageItem->scale(); }
+    qreal zoom() const { return pixmapItem->scale(); }
     void setZoom(qreal zoom);
 
     void dragTo(const QPointF &pos);
@@ -74,21 +76,16 @@ signals:
     void canvasChanged();
     void zoomChanged();
 
-public slots:
-    void refreshCanvas();
-
-protected:
-    virtual void componentComplete();
-
 private:
-    Canvas *m_canvas;
-    CanvasFrame *const m_canvasFrame;
+    Ui::CanvasView *ui;
+    QPixmap placeholderPixmap;
+    QGraphicsScene scene;
+    QGraphicsPixmapItem *pixmapItem;
 
-    CanvasProvider *canvasProvider;
-    QQuickItem *imageItem;
+    Canvas *m_canvas;
+    CanvasFrame m_canvasFrame;
 
     friend class CanvasFrame;
 };
 
-
-#endif // CORE_CANVAS_VIEW_HPP
+#endif // WIDGETS_CANVASVIEW_HPP

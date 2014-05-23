@@ -1,25 +1,24 @@
-#include <QQmlEngine>
-#include <QQmlContext>
 #include <QDebug>
 
-#include "qtquick2applicationviewer.h"
 #include "Application.hpp"
 #include "Project.hpp"
-#include "core/core.hpp"
-#include "tools/tools.hpp"
+#include "MainWIndow.hpp"
+#include "ApricotCore.hpp"
+#include "ApricotTools.hpp"
 
 
 int main(int argc, char *argv[])
 {
     Application application(argc, argv);
 
-    registerCoreTypes();
-    registerTools();
+    MainWindow mainWindow;
+    ToolActionArea actionArea;
+    DragTool dragTool;
+    mainWindow.setCentralWidget(&actionArea);
+    //actionArea.setCanvas(application.project().canvas());
+    actionArea.setTool(&dragTool);
 
-    QtQuick2ApplicationViewer viewer;
-    viewer.rootContext()->setContextProperty("project", &application.project());
-    viewer.setSource(QUrl("qrc:/main/Main.qml"));
-    viewer.show();
+    mainWindow.show();
 
     return application.exec();
 }

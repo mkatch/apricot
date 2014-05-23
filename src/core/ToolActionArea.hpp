@@ -2,8 +2,6 @@
 #define CORE_TOOL_ACTION_AREA_HPP
 
 
-#include <QQuickItem>
-
 #include "CanvasView.hpp"
 
 
@@ -16,7 +14,7 @@ class ToolActionArea : public CanvasView
     Q_PROPERTY(bool active READ active NOTIFY activeChanged)
 
 public:
-    explicit ToolActionArea(QQuickItem *parent = nullptr);
+    explicit ToolActionArea(QWidget *parent = nullptr);
 
     Tool *tool() const { return m_tool; }
     void setTool(Tool *tool);
@@ -34,24 +32,23 @@ signals:
 public slots:
 
 protected:
-    virtual void mousePressEvent(QMouseEvent *event);
+    virtual bool event(QEvent* event) override;
 
-    virtual void mouseReleaseEvent(QMouseEvent *event);
+    void dispatchMousePressEvent(QMouseEvent *event);
 
-    virtual void mouseDoubleClickEvent(QMouseEvent *event);
+    void dispatchMouseReleaseEvent(QMouseEvent *event);
 
-    virtual void mouseMoveEvent(QMouseEvent *event);
+    void dispatchMouseDoubleClickEvent(QMouseEvent *event);
 
-    virtual void hoverMoveEvent(QHoverEvent *event);
+    void dispatchMouseMoveEvent(QMouseEvent *event);
 
-    virtual void wheelEvent(QWheelEvent *event);
+    void dispatchHoverMoveEvent(QHoverEvent *event);
 
-    virtual QSGNode *updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *data);
+    void dispatchWheelEvent(QWheelEvent *event);
 
 private:
     Tool *m_tool;
 
-    bool toolChangedSinceLastUpdatePaintNode;
     QPointF lastMousePos;
 
     void applyToolToCanvas(bool preview);

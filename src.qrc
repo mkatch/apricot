@@ -1,8 +1,4 @@
 <RCC>
-    <qresource prefix="/core">
-        <file alias="CanvasView.qml">src/core/CanvasView.qml</file>
-    </qresource>
-    <qresource prefix="/main">
-        <file alias="Main.qml">src/main/Main.qml</file>
-    </qresource>
+    <qresource prefix="/core"/>
+    <qresource prefix="/main"/>
 </RCC>
