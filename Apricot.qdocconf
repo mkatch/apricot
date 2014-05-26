@@ -1,0 +1,35 @@
+#Include this file to inherit configuration related to Qt Project based modules.
+
+#C:\Qt\Tools\QtCreator\bin\mkacz91-apricot>C:\Qt\5.2.1\mingw48_32\bin\qdoc.exe .\Apricot.qdocconf
+
+dita.metadata.default.author      = Marcin Kaczmarek, Łukasz Hanuszczak, Adam Laskowski
+dita.metadata.default.permissions = all
+dita.metadata.default.publisher   = Uniwersytet Wrocławski
+dita.metadata.default.copyryear = 2014
+dita.metadata.default.copyrholder = Uniwersytet Wrocławski
+dita.metadata.default.audience = programmer
+
+#Set the main Qt index.html
+navigation.homepage = qdoc-index
+buildversion = "Qt 5.3 Reference Documentation"
+
+headerdirs = ./
+sourcedirs = ./
+imagedirs = ./doc/images
+outputdir = ./doc
+sources.fileextensions  = "*.cpp *.qdoc"
+headers.fileextensions  = "*.hpp"
+
+outputformats = HTML
+version = 0.1
+syntaxhighlighting = true
+sourceencoding = UTF-8
+outputencoding = UTF-8
+
+HTML.templatedir = .
+HTML.nobreadcrumbs = "true"
+HTML.stylesheets = theme.css
+HTML.headerstyles = "  <link rel=\"stylesheet\" type=\"text/css\" href=\"style/theme.css\" />\n"
+HTML.endheader = "</head>\n"
+HTML.footer = "<div class=\"footer\">Copyright (C) 2014 Uniwersytet Wrocławski</div>\n"
+

@@ -14,7 +14,7 @@ class Application : public QApplication
 public:
     Application(int argc, char **argv);
 
-    Project &project() { return *m_project; }
+    Project &project();
 
 signals:
 
