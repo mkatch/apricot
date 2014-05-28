@@ -21,11 +21,7 @@ OTHER_FILES += \
 
 HEADERS += \
     ApricotCore.hpp \
-<<<<<<< HEAD
     ApricotTools.hpp \
     ApricotUtils.hpp
-=======
-    ApricotTools.hpp
 
 SOURCES +=
->>>>>>> FETCH_HEAD
