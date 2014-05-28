@@ -21,10 +21,6 @@ public:
 
     bool active() const { return tool() != nullptr; }
 
-    QPointF canvasToArea(const QPoint& canvasPos) const;
-
-    QPoint areaToCanvas(const QPointF& areaPos) const;
-
 signals:
     void toolChanged();
     void activeChanged();

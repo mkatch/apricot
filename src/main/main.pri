@@ -10,6 +10,6 @@ SOURCES += \
     src/main/MainWindow.cpp
 
 FORMS += \
-    src/main/MainWIndow.ui
+    src/main/MainWindow.ui
 
 RESOURCES +=

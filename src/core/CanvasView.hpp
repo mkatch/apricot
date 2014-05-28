@@ -2,90 +2,61 @@
 #define WIDGETS_CANVASVIEW_HPP
 
 #include <QWidget>
+#include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
-
-namespace Ui {
-class CanvasView;
-}
+#include <QPixmap>
 
 class Canvas;
-
-class CanvasFrame : public QObject
-{
-    Q_OBJECT
-    Q_PROPERTY(QPointF position READ position NOTIFY positionChanged)
-    Q_PROPERTY(qreal x READ x NOTIFY xChanged)
-    Q_PROPERTY(qreal y READ y NOTIFY yChanged)
-    Q_PROPERTY(QSizeF size READ size NOTIFY sizeChanged)
-    Q_PROPERTY(qreal width READ width NOTIFY widthChanged)
-    Q_PROPERTY(qreal height READ height NOTIFY heightChanged)
-
-public:
-    QPointF position() const { return pixmapItem->pos(); }
-    qreal x() const { return pixmapItem->x(); }
-    qreal y() const { return pixmapItem->y(); }
-
-    QSizeF size() const { return QSizeF(width(), height()); }
-    qreal width() const { return pixmapItem->pixmap().width() * pixmapItem->scale(); }
-    qreal height() const {return pixmapItem->pixmap().height() * pixmapItem->scale(); }
-
-signals:
-    void positionChanged();
-    void xChanged();
-    void yChanged();
-    void sizeChanged();
-    void widthChanged();
-    void heightChanged();
-
-private:
-    QGraphicsPixmapItem *pixmapItem;
-
-    CanvasFrame(QGraphicsPixmapItem *pixmapItem);
-
-    friend class CanvasView;
-};
 
 class CanvasView : public QWidget
 {
     Q_OBJECT
-    Q_PROPERTY(Canvas *canvas READ canvas WRITE setCanvas NOTIFY canvasChanged)
-    Q_PROPERTY(CanvasFrame *canvasFrame READ canvasFrame)
-    Q_PROPERTY(qreal zoom READ zoom WRITE setZoom NOTIFY zoomChanged)
+    Q_PROPERTY(const Canvas *canvas READ canvas WRITE setCanvas NOTIFY canvasChanged)
+    Q_PROPERTY(qreal scale READ scale WRITE setScale NOTIFY scaleChanged)
+    Q_PROPERTY(QPointF translation READ translation WRITE setTranslation NOTIFY translationChanged)
+    Q_PROPERTY(QTransform transform READ transform NOTIFY transformChanged)
 
 public:
     explicit CanvasView(QWidget *parent = 0);
-    ~CanvasView();
+    virtual ~CanvasView();
 
-    Canvas *canvas() const { return m_canvas; }
-    void setCanvas(Canvas *canvas);
+    const Canvas *canvas() const { return m_canvas; }
+    void setCanvas(const Canvas *canvas);
 
-    const CanvasFrame *canvasFrame() const { return &m_canvasFrame; }
-    CanvasFrame *canvasFrame() { return &m_canvasFrame; }
+    qreal scale() const { return canvasItem->scale(); }
+    void setScale(qreal scale);
+    void scale(qreal scale) { setScale(this->scale() * scale); }
 
-    qreal zoom() const { return pixmapItem->scale(); }
-    void setZoom(qreal zoom);
+    QPointF translation() const { return canvasItem->pos(); }
+    void setTranslation(const QPointF &translation);
+    void setTranslation(qreal x, qreal y) { setTranslation(QPointF(x, y)); }
+    void translate(const QPointF &translation) { setTranslation(this->translation() + translation);}
+    void translate(qreal x, qreal y) { translate(QPointF(x, y)); }
 
-    void dragTo(const QPointF &pos);
-    void dragTo(qreal x, qreal y) { dragTo(QPointF(x, y)); }
+    QTransform transform() const;
 
-    void dragBy(const QPointF &dpos) { dragTo(canvasFrame()->position() + dpos); }
-    void dragBy(qreal dx, qreal dy) { dragBy(QPointF(dx, dy)); }
+    QPointF mapToCanvas(const QPointF &point) const;
+    QPointF mapFromCanvas(const QPointF &point) const;
 
 signals:
     void canvasChanged();
-    void zoomChanged();
+    void scaleChanged();
+    void translationChanged();
+    void transformChanged();
+
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 
 private:
-    Ui::CanvasView *ui;
+    QGraphicsView *graphicsView;
+    QGraphicsScene *graphicsScene;
+    QGraphicsPixmapItem *canvasItem;
     QPixmap placeholderPixmap;
-    QGraphicsScene scene;
-    QGraphicsPixmapItem *pixmapItem;
 
-    Canvas *m_canvas;
-    CanvasFrame m_canvasFrame;
+    const Canvas *m_canvas;
 
-    friend class CanvasFrame;
+    void layOut();
 };
 
 #endif // WIDGETS_CANVASVIEW_HPP

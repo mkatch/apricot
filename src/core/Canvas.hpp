@@ -20,7 +20,7 @@ public:
     int height() const { return pixmap.height(); }
     QSize size() const { return pixmap.size(); }
 
-    QPixmap toPixmap() const { return pixmap; }
+    const QPixmap &toPixmap() const { return pixmap; }
 
 private:
     QPixmap pixmap;

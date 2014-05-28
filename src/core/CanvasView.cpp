@@ -1,112 +1,87 @@
 #include "CanvasView.hpp"
-#include "ui_CanvasView.h"
-
-#include <QtWidgets>
 
 #include <algorithm>
 using std::max;
 
+#include "ApricotUtils.hpp"
 #include "Canvas.hpp"
-
-CanvasFrame::CanvasFrame(QGraphicsPixmapItem *pixmapItem) :
-    pixmapItem(pixmapItem)
-{
-    // Do nothing
-}
 
 CanvasView::CanvasView(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::CanvasView),
-    placeholderPixmap(1200, 23),
-    pixmapItem(scene.addPixmap(placeholderPixmap)),
-    m_canvas(nullptr),
-    m_canvasFrame(pixmapItem)
+    graphicsView(new QGraphicsView(this)),
+    graphicsScene(new QGraphicsScene(this)),
+    placeholderPixmap(256, 256),
+    m_canvas(nullptr)
 {
-    ui->setupUi(this);
-    ui->graphicsView->setScene(&scene);
-
-    scene.addRect(10, 10, 20, 30);
+    canvasItem = graphicsScene->addPixmap(placeholderPixmap);
+    graphicsView->setScene(graphicsScene);
+    graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    layOut();
 }
 
 CanvasView::~CanvasView()
 {
-    delete ui;
+    // Do nothing
 }
 
-void CanvasView::setCanvas(Canvas *canvas)
+void CanvasView::setCanvas(const Canvas *canvas)
 {
     if (m_canvas == canvas) {
         return;
     }
 
-    qreal oldX = canvasFrame()->x();
-    qreal oldY = canvasFrame()->y();
-    qreal oldWidth = canvasFrame()->width();
-    qreal oldHeight = canvasFrame()->height();
-
-    if (m_canvas == nullptr) {
-        pixmapItem->setPixmap(placeholderPixmap);
-    }
-    else {
-        pixmapItem->setPixmap(m_canvas->toPixmap());
-    }
+    m_canvas = canvas;
+    canvasItem->setPixmap(m_canvas != nullptr ? m_canvas->toPixmap() : placeholderPixmap);
 
     emit canvasChanged();
-
-    bool differentX = (canvasFrame()->x() != oldX);
-    bool differentY = (canvasFrame()->y() != oldY);
-    bool differentWidth = (canvasFrame()->width() != oldWidth);
-    bool differentHeight = (canvasFrame()->height() != oldHeight);
-
-    if (differentX) {
-        emit canvasFrame()->xChanged();
-    }
-    if (differentY) {
-        emit canvasFrame()->yChanged();
-    }
-    if (differentX || differentY) {
-        emit canvasFrame()->positionChanged();
-    }
-    if (differentWidth) {
-        emit canvasFrame()->widthChanged();
-    }
-    if (differentHeight) {
-        emit canvasFrame()->heightChanged();
-    }
-    if (differentWidth || differentHeight) {
-        emit canvasFrame()->sizeChanged();
-    }
-
-    ui->graphicsView->invalidateScene();
 }
 
-
-void CanvasView::setZoom(qreal zoom)
+void CanvasView::setScale(qreal scale)
 {
-    zoom = max(zoom, 0.01); // Otherwise we would divide by 0 in the next call
-    if (this->zoom() != zoom) {
-        qreal f = zoom / this->zoom() - 1.0;
-        pixmapItem->setScale(zoom);
-        emit zoomChanged();
-        emit canvasFrame()->widthChanged();
-        emit canvasFrame()->heightChanged();
-        emit canvasFrame()->sizeChanged();
-        QPointF center(width() / 2.0, height() / 2.0);
-        dragBy(f * (canvasFrame()->position() - center));
+    if (canvasItem->scale() == scale) {
+        return;
     }
+
+    canvasItem->setScale(scale);
+    emit scaleChanged();
+    emit transformChanged();
 }
 
-
-void CanvasView::dragTo(const QPointF &pos)
+void CanvasView::setTranslation(const QPointF &translation)
 {
-    bool differentX = (pixmapItem->x() != pos.x());
-    bool differentY = (pixmapItem->y() != pos.y());
-    if (differentX || differentY) {
-        pixmapItem->setPos(pos);
-        if (differentX)
-            emit canvasFrame()->xChanged();
-        if (differentY)
-            emit canvasFrame()->yChanged();
-        emit canvasFrame()->positionChanged();
+    if (canvasItem->pos() == translation) {
+        return;
     }
+
+    canvasItem->setPos(translation);
+    emit translationChanged();
+    emit transformChanged();
+}
+
+QTransform CanvasView::transform() const
+{
+    return QTransform().scale(scale(), scale()).translate(translation().x(), translation().y());
+}
+
+QPointF CanvasView::mapToCanvas(const QPointF &point) const
+{
+    return (point - translation()) / scale();
+}
+
+QPointF CanvasView::mapFromCanvas(const QPointF &point) const
+{
+    return point * scale() + translation();
+}
+
+void CanvasView::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED(event)
+    layOut();
+}
+
+void CanvasView::layOut()
+{
+    graphicsView->resize(size());
+    graphicsView->setSceneRect(1, 1, width() - 1, height() - 1);
 }

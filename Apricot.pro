@@ -7,6 +7,7 @@ INCLUDEPATH += src
 include(src/main/main.pri)
 include(src/core/core.pri)
 include(src/tools/tools.pri)
+include(src/utils/utils.pri)
 
 RESOURCES += \
     resources.qrc \
@@ -17,4 +18,5 @@ OTHER_FILES += \
 
 HEADERS += \
     ApricotCore.hpp \
-    ApricotTools.hpp
+    ApricotTools.hpp \
+    ApricotUtils.hpp

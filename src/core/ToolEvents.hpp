@@ -37,39 +37,39 @@ class ToolMouseEvent : public ToolEvent
 public:
     ToolMouseEvent(
         QEvent *event,
-        const QPoint &canvasPos,
-        const QPointF &areaPos,
+        const QPointF &canvasPos,
+        const QPointF &viewPos,
         Qt::MouseButton button,
         Qt::MouseButtons buttons,
         Qt::KeyboardModifiers modifiers
     ) :
         ToolEvent(event, modifiers),
         m_canvasPos(canvasPos),
-        m_areaPos(areaPos),
+        m_viewPos(viewPos),
         m_button(button),
         m_buttons(buttons)
     {
         // Do nothing
     }
 
-    int x() const { return pos().x(); }
-    int y() const { return pos().y(); }
-    const QPoint &pos() const { return canvasPos(); }
+    qreal x() const { return pos().x(); }
+    qreal y() const { return pos().y(); }
+    const QPointF &pos() const { return canvasPos(); }
 
-    int canvasX() const { return canvasPos().x(); }
-    int canvasY() const { return canvasPos().y(); }
-    const QPoint &canvasPos() const { return m_canvasPos; }
+    qreal canvasX() const { return canvasPos().x(); }
+    qreal canvasY() const { return canvasPos().y(); }
+    const QPointF &canvasPos() const { return m_canvasPos; }
 
-    qreal areaX() const { return areaPos().x(); }
-    qreal areaY() const { return areaPos().y(); }
-    const QPointF &areaPos() const { return m_areaPos; }
+    qreal viewX() const { return viewPos().x(); }
+    qreal viewY() const { return viewPos().y(); }
+    const QPointF &viewPos() const { return m_viewPos; }
 
     Qt::MouseButton button() const { return m_button; }
     Qt::MouseButtons buttons() const { return m_buttons; }
 
 private:
-    QPoint m_canvasPos;
-    QPointF m_areaPos;
+    QPointF m_canvasPos;
+    QPointF m_viewPos;
     Qt::MouseButton m_button;
     Qt::MouseButtons m_buttons;
 };
@@ -79,48 +79,48 @@ class ToolMouseMoveEvent : public ToolMouseEvent
 public:
     ToolMouseMoveEvent(
         QEvent *event,
-        const QPoint &canvasPos,
-        const QPoint &prevCanvasPos,
-        const QPointF &areaPos,
+        const QPointF &canvasPos,
+        const QPointF &prevCanvasPos,
+        const QPointF &viewPos,
         const QPointF &prevAreaPos,
         Qt::MouseButton button,
         Qt::MouseButtons buttons,
         Qt::KeyboardModifiers modifiers
     ) :
-        ToolMouseEvent(event, canvasPos, areaPos, button, buttons, modifiers),
+        ToolMouseEvent(event, canvasPos, viewPos, button, buttons, modifiers),
         m_prevCanvasPos(prevCanvasPos),
-        m_prevAreaPos(prevAreaPos)
+        m_prevViewPos(prevAreaPos)
     {
         // Do nothing
     }
 
-    int prevX() const { return prevPos().x(); }
-    int prevY() const { return prevPos().y(); }
-    const QPoint &prevPos() const { return prevCanvasPos(); }
+    qreal prevX() const { return prevPos().x(); }
+    qreal prevY() const { return prevPos().y(); }
+    const QPointF &prevPos() const { return prevCanvasPos(); }
 
-    int dX() const { return x() - prevX(); }
-    int dY() const { return y() - prevY(); }
-    QPoint dPos() const { return pos() - prevPos(); }
+    qreal dX() const { return x() - prevX(); }
+    qreal dY() const { return y() - prevY(); }
+    QPointF dPos() const { return pos() - prevPos(); }
 
-    int prevCanvasX() const { return prevCanvasPos().x(); }
-    int prevCanvasY() const { return prevCanvasPos().y(); }
-    const QPoint &prevCanvasPos() const { return m_prevCanvasPos; }
+    qreal prevCanvasX() const { return prevCanvasPos().x(); }
+    qreal prevCanvasY() const { return prevCanvasPos().y(); }
+    const QPointF &prevCanvasPos() const { return m_prevCanvasPos; }
 
-    int dCanvasX() const { return dCanvasPos().x(); }
-    int dCanvasY() const { return dCanvasPos().y(); }
-    QPoint dCanvasPos() const { return canvasPos() - prevCanvasPos(); }
+    qreal dCanvasX() const { return dCanvasPos().x(); }
+    qreal dCanvasY() const { return dCanvasPos().y(); }
+    QPointF dCanvasPos() const { return canvasPos() - prevCanvasPos(); }
 
-    qreal prevAreaX() const { return prevAreaPos().x(); }
-    qreal prevAreaY() const { return prevAreaPos().y(); }
-    const QPointF &prevAreaPos() const { return m_prevAreaPos; }
+    qreal prevViewX() const { return prevViewPos().x(); }
+    qreal prevViewY() const { return prevViewPos().y(); }
+    const QPointF &prevViewPos() const { return m_prevViewPos; }
 
-    qreal dAreaX() const { return areaX() - prevAreaX(); }
-    qreal dAreaY() const { return areaY() - prevAreaY(); }
-    QPointF dAreaPos() const { return areaPos() - prevAreaPos(); }
+    qreal dViewX() const { return viewX() - prevViewX(); }
+    qreal dViewY() const { return viewY() - prevViewY(); }
+    QPointF dViewPos() const { return viewPos() - prevViewPos(); }
 
 private:
-    QPoint m_prevCanvasPos;
-    QPointF m_prevAreaPos;
+    QPointF m_prevCanvasPos;
+    QPointF m_prevViewPos;
 };
 
 class ToolMouseWheelEvent : public ToolMouseEvent
@@ -128,14 +128,14 @@ class ToolMouseWheelEvent : public ToolMouseEvent
 public:
     ToolMouseWheelEvent(
         QEvent *event,
-        const QPoint& canvasPos,
-        const QPointF& areaPos,
+        const QPointF& canvasPos,
+        const QPointF& viewPos,
         const QPoint& pixelDelta,
         const QPoint& angleDelta,
         Qt::MouseButtons buttons,
         Qt::KeyboardModifiers modifiers
     ) :
-        ToolMouseEvent(event, canvasPos, areaPos, Qt::NoButton, buttons, modifiers),
+        ToolMouseEvent(event, canvasPos, viewPos, Qt::NoButton, buttons, modifiers),
         m_pixelDelta(pixelDelta),
         m_angleDelta(angleDelta)
     {

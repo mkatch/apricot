@@ -2,7 +2,7 @@
 
 #include "Application.hpp"
 #include "Project.hpp"
-#include "MainWIndow.hpp"
+#include "MainWindow.hpp"
 #include "ApricotCore.hpp"
 #include "ApricotTools.hpp"
 
@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     ToolActionArea actionArea;
     DragTool dragTool;
     mainWindow.setCentralWidget(&actionArea);
-    //actionArea.setCanvas(application.project().canvas());
+    actionArea.setCanvas(application.project().canvas());
     actionArea.setTool(&dragTool);
 
     mainWindow.show();

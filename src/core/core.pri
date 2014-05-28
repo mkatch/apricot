@@ -11,8 +11,7 @@ HEADERS += \
     src/core/ToolActionArea.hpp \
     src/core/ToolEvents.hpp
 
-FORMS += \
-    src/core/CanvasView.ui
+FORMS +=
 
 OTHER_FILES +=
 
