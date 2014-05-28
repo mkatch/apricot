@@ -1,0 +1,21 @@
+/*!
+    \page index.html
+
+    \indexpage Index
+    \contentspage Table of Contents
+    \nextpage Main module
+
+    \title Index
+
+    \generatelist classes
+*/
+
+/*!
+	\module main
+    \contentspage Table of Contents
+    \previouspage Index
+ 
+    \title Main module
+
+
+*/

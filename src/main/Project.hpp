@@ -14,8 +14,7 @@ class Project : public QObject
 
 public:
     explicit Project(QObject *parent = nullptr);
-
-    Canvas *canvas() { return &m_canvas; }
+    Canvas *canvas();
 
 signals:
     void canvasChanged();

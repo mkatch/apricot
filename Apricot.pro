@@ -14,9 +14,18 @@ RESOURCES += \
     src.qrc
 
 OTHER_FILES += \
-    resources/images/isocastle.png
+    resources/images/isocastle.png \
+    Apricot.qdocconf \
+    theme.css \
+    qdoc-index.qdoc
 
 HEADERS += \
     ApricotCore.hpp \
+<<<<<<< HEAD
     ApricotTools.hpp \
     ApricotUtils.hpp
+=======
+    ApricotTools.hpp
+
+SOURCES +=
+>>>>>>> FETCH_HEAD
