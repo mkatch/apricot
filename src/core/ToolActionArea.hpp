@@ -44,10 +44,11 @@ protected:
 
 private:
     Tool *m_tool;
-
+    bool pressed;
     QPointF lastMousePos;
 
     void applyToolToCanvas(bool preview);
+
 };
 
 

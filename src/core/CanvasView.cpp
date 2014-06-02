@@ -17,6 +17,7 @@ CanvasView::CanvasView(QWidget *parent) :
     graphicsView->setScene(graphicsScene);
     graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    graphicsView->setAttribute(Qt::WA_TransparentForMouseEvents, true);
     layOut();
 }
 

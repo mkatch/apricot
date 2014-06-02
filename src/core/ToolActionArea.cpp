@@ -7,8 +7,10 @@
 
 ToolActionArea::ToolActionArea(QWidget *parent) :
     CanvasView(parent),
-    m_tool(nullptr)
+    m_tool(nullptr),
+    pressed(false)
 {
+
     this->setMouseTracking(true);
 }
 
@@ -37,6 +39,8 @@ bool ToolActionArea::event(QEvent *event)
     }
 
     switch (event->type()) {
+
+
     case QEvent::MouseButtonPress:
         dispatchMousePressEvent(static_cast<QMouseEvent *>(event));
         break;
@@ -50,9 +54,9 @@ bool ToolActionArea::event(QEvent *event)
         break;
 
     case QEvent::MouseMove:
-        qDebug() << "yo mama";
         dispatchMouseMoveEvent(static_cast<QMouseEvent *>(event));
         break;
+
 
     case QEvent::HoverEnter:
     case QEvent::HoverLeave:
@@ -85,6 +89,10 @@ void ToolActionArea::dispatchMousePressEvent(QMouseEvent *event)
     tool()->mousePressEvent(&toolEvent);
     if (event->isAccepted())
         lastMousePos = event->localPos();
+    if(event->button() == Qt::LeftButton) {
+        pressed = true;
+    }
+
 }
 
 
@@ -99,6 +107,7 @@ void ToolActionArea::dispatchMouseReleaseEvent(QMouseEvent *event)
         event->modifiers()
     );
     tool()->mouseReleaseEvent(&toolEvent);
+    pressed = false;
 }
 
 
@@ -118,18 +127,21 @@ void ToolActionArea::dispatchMouseDoubleClickEvent(QMouseEvent *event)
 
 void ToolActionArea::dispatchMouseMoveEvent(QMouseEvent *event)
 {
-    ToolMouseMoveEvent toolEvent(
-        event,
-        mapToCanvas(event->localPos()),
-        mapToCanvas(lastMousePos),
-        event->localPos(),
-        lastMousePos,
-        event->button(),
-        event->buttons(),
-        event->modifiers()
-    );
-    tool()->mouseDragEvent(&toolEvent);
-    lastMousePos = event->localPos();
+    if(pressed)
+    {
+        ToolMouseMoveEvent toolEvent(
+            event,
+            mapToCanvas(event->localPos()),
+            mapToCanvas(lastMousePos),
+            event->localPos(),
+            lastMousePos,
+            event->button(),
+            event->buttons(),
+            event->modifiers()
+        );
+        tool()->mouseDragEvent(&toolEvent);
+        lastMousePos = event->localPos();
+    }
 }
 
 
