@@ -1,6 +1,7 @@
 #include "AnimationFrame.hpp"
 
 #include "layer.hpp"
+#include "Project.hpp"
 
 AnimationFrame::AnimationFrame(Project *project) :
     QObject(project)
@@ -17,8 +18,10 @@ AnimationFrame::AnimationFrame(const AnimationFrame *other, Project *project) :
 
 Layer *AnimationFrame::newLayer(int i)
 {
-    layers.insert(at, new Layer(this));
+    Layer *l = new Layer(this);
+    layers.insert(i, l);
     emit layersChanged();
+    return l;
 }
 
 void AnimationFrame::moveLayer(int from, int to)

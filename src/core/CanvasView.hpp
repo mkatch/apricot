@@ -7,7 +7,7 @@
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
 
-class Canvas;
+#include "Canvas.hpp" // TODO: remove
 
 class CanvasView : public QWidget
 {

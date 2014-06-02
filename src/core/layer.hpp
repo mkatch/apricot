@@ -21,9 +21,9 @@ public:
     explicit Layer(AnimationFrame *frame);
     Layer(const Layer *other, AnimationFrame *frame);
 
-    AnimationFrame *frame() { return static_cast<AnimationFrame *>(parent()); }
+    AnimationFrame *frame() { return reinterpret_cast<AnimationFrame *>(parent()); }
 
-    const Canvas *canvas() const { return m_canvas; }
+    const Canvas *canvas() const { return &m_canvas; }
 
     int width() const { return m_canvas.width(); }
     int height() const { return m_canvas.height(); }

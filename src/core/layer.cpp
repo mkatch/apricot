@@ -17,18 +17,21 @@ Layer::Layer(const Layer *other, AnimationFrame *frame) :
     QObject(frame),
     m_canvas(other->m_canvas)
 {
-    // Do nothing
+    updateSize();
 }
 
 Painter Layer::startPainting()
 {
-    return Painter(m_canvas);
+    return Painter(&m_canvas);
 }
 
 void Layer::updateSize()
 {
+    if (m_canvas.size() == frame()->project()->size())
+        return;
+
     // This is obviously a temporary solution
-    Canvas newCanvas(frame->project()->size());
+    Canvas newCanvas(frame()->project()->size());
     newCanvas.fill(Qt::white);
     QPainter painter(&newCanvas);
     painter.drawPixmap(0, 0, m_canvas);

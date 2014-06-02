@@ -17,7 +17,7 @@ public:
     explicit AnimationFrame(Project *project);
     AnimationFrame(const AnimationFrame *other, Project *project);
 
-    Project *project() { return static_cast<Project *>(parent()); }
+    Project *project() { return reinterpret_cast<Project *>(parent()); }
 
     int layerCount() const { return layers.count(); }
 

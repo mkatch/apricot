@@ -33,7 +33,7 @@ void CanvasView::setCanvas(const Canvas *canvas)
     }
 
     m_canvas = canvas;
-    canvasItem->setPixmap(m_canvas != nullptr ? m_canvas->toPixmap() : placeholderPixmap);
+    canvasItem->setPixmap(m_canvas != nullptr ? *m_canvas : placeholderPixmap);
 
     emit canvasChanged();
 }
@@ -84,5 +84,5 @@ void CanvasView::resizeEvent(QResizeEvent *event)
 void CanvasView::layOut()
 {
     graphicsView->resize(size());
-    graphicsView->setSceneRect(1, 1, width() - 1, height() - 1);
+    graphicsView->setSceneRect(2, 2, width() - 2, height() - 2);
 }

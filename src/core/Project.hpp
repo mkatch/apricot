@@ -1,7 +1,6 @@
 #ifndef CORE_PROJECT_HPP
 #define CORE_PROJECT_HPP
 
-
 #include <QObject>
 #include <QList>
 #include <QSize>
@@ -20,6 +19,7 @@ public:
 
     const QSize &size() const { return m_size; }
     void setSize (QSize const& size);
+    void setSize (int width, int height) { setSize(QSize(width, height)); }
 
     int width() const { return size().width(); }
     int height() const { return size().height(); }

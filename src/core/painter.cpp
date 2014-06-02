@@ -19,7 +19,7 @@ Painter::Painter(const Painter &other) :
 void Painter::load(QString fileName)
 {
     QPixmap pixmap(fileName);
-    QPainter painter(canvas);
     canvas->fill(Qt::transparent);
+    QPainter painter(canvas);
     painter.drawPixmap(0, 0, pixmap);
 }

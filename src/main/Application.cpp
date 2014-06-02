@@ -1,5 +1,6 @@
 #include "Application.hpp"
-#include "Project.hpp"
+
+#include "core/Project.hpp"
 
 /*!
   \class Application
@@ -23,7 +24,7 @@ Application::Application(int argc, char** argv) :
 /*!
   Project getter.
  */
-Project &Application::project()
+Project *Application::project()
 {
-    return *m_project;
+    return m_project;
 }

@@ -14,8 +14,7 @@
   \a parent object.
  */
 Project::Project(QObject *parent) :
-    QObject(parent),
-    m_canvas(":/images/isocastle.png", this)
+    QObject(parent)
 {
     // Do nothing
 }
@@ -42,12 +41,15 @@ AnimationFrame *Project::newFrame(int i)
     emit framesChanged();
     if (f->layerCount() > 0)
         emit layersChanged();
+
+    return f;
 }
 
 void Project::removeFrame(int i)
 {
-    bool anyLayers = frames.layerCount() > 0;
-    delete frames.takeAt(i);
+    AnimationFrame *f = frames.takeAt(i);
+    bool anyLayers = f->layerCount() > 0;
+    delete f;
 
     emit framesChanged();
     if (anyLayers)
