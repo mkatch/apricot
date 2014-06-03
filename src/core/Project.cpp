@@ -4,20 +4,26 @@
 #include "AnimationFrame.hpp"
 
 /*!
-  \class Project
-  \inmodule main
-  \brief The Main Window class.
+    \class Project
+    \inmodule core
+
+    \brief The root of Apricot data model.
  */
 
 /*!
-  Constructor.
-  \a parent object.
+    Constructor.
+    The \a parent is set as parent object in QObject hierarchy.
  */
 Project::Project(QObject *parent) :
     QObject(parent)
 {
     // Do nothing
 }
+
+/*!
+    \property Project::size
+    \brief The dimensions of the image
+ */
 
 void Project::setSize(const QSize &size)
 {
@@ -27,6 +33,20 @@ void Project::setSize(const QSize &size)
     }
 }
 
+/*!
+    \property Project::width
+    \brief The width of the image
+ */
+
+/*!
+    \property Project::height
+    \brief The height of the image
+ */
+
+/*!
+    \brief Creates new AnimationFrame at index \a i and returns it. The new frame is a copy of the
+    frame at \a i - 1 if it is present.
+ */
 AnimationFrame *Project::newFrame(int i)
 {
     i = clamp(i, 0, frameCount());
@@ -45,6 +65,15 @@ AnimationFrame *Project::newFrame(int i)
     return f;
 }
 
+/*!
+    \fn Project::newFrame()
+    \brief Creats new AnimationFrame at the end of animation and returns it. The new frame is a copy
+    of the last frame if present.
+ */
+
+/*!
+    Removes AnimationFrame at index \a i.
+ */
 void Project::removeFrame(int i)
 {
     AnimationFrame *f = frames.takeAt(i);

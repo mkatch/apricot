@@ -14,7 +14,10 @@
 
 *.pro.user
 *.pro.user.*
+*.autosave
 moc_*.cpp
 qrc_*.cpp
 Makefile
 *-build-*
+
+doc
