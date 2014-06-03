@@ -10,6 +10,38 @@
     \brief The root of Apricot data model.
  */
 
+// Properties
+
+/*!
+    \property Project::size
+    \brief The dimensions of the image
+ */
+/*!
+    \property Project::width
+    \brief The width of the image
+ */
+/*!
+    \property Project::height
+    \brief The height of the image
+ */
+/*!
+    \property Project::frameCount
+    \brief The number of animation frames
+ */
+
+// Signals
+
+/*!
+    \fn Project::framesChanged()
+    \brief Emitted when animation frames are added, removed or change order.
+ */
+/*!
+    \fn Project::layersChanged()
+    \brief Emitted when layers are added, removed or change order.
+ */
+
+// Methods
+
 /*!
     Constructor.
     The \a parent is set as parent object in QObject hierarchy.
@@ -20,11 +52,6 @@ Project::Project(QObject *parent) :
     // Do nothing
 }
 
-/*!
-    \property Project::size
-    \brief The dimensions of the image
- */
-
 void Project::setSize(const QSize &size)
 {
     if (m_size != size) {
@@ -34,13 +61,8 @@ void Project::setSize(const QSize &size)
 }
 
 /*!
-    \property Project::width
-    \brief The width of the image
- */
-
-/*!
-    \property Project::height
-    \brief The height of the image
+    \fn Project::frame(int i)
+    \brief Returns AnimationFrame at index \a i.
  */
 
 /*!

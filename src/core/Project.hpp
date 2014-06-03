@@ -13,6 +13,7 @@ class Project : public QObject
     Q_PROPERTY(const QSize &size READ size WRITE setSize NOTIFY sizeChanged)
     Q_PROPERTY(int width READ width)
     Q_PROPERTY(int height READ height)
+    Q_PROPERTY(int frameCount READ frameCount)
 
 public:
     explicit Project(QObject *parent = nullptr);
