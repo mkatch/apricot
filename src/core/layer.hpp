@@ -3,8 +3,8 @@
 
 #include <QObject>
 
-#include "Canvas.hpp"
-#include "Painter.hpp"
+#include "canvas.hpp"
+#include "painter.hpp"
 
 class AnimationFrame;
 

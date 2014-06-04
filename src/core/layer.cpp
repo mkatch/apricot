@@ -2,8 +2,8 @@
 
 #include <QPainter>
 
-#include "Project.hpp"
-#include "AnimationFrame.hpp"
+#include "project.hpp"
+#include "animationframe.hpp"
 
 /*!
     \class Layer

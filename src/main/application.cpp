@@ -1,6 +1,6 @@
-#include "Application.hpp"
+#include "application.hpp"
 
-#include "core/Project.hpp"
+#include "core/project.hpp"
 
 /*!
   \class Application

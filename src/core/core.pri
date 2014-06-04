@@ -1,25 +1,25 @@
 SOURCES += \
-    src/core/Canvas.cpp \
-    src/core/CanvasView.cpp \
-    src/core/Tool.cpp \
-    src/core/ToolActionArea.cpp \
-    src/core/Palette.cpp \
-    src/core/AnimationFrame.cpp \
-    src/core/Project.cpp \
     src/core/layer.cpp \
-    src/core/painter.cpp
+    src/core/painter.cpp \
+    src/core/animationframe.cpp \
+    src/core/canvas.cpp \
+    src/core/canvasview.cpp \
+    src/core/palette.cpp \
+    src/core/project.cpp \
+    src/core/tool.cpp \
+    src/core/toolactionarea.cpp
 
 HEADERS += \
-    src/core/Canvas.hpp \
-    src/core/CanvasView.hpp \
-    src/core/Tool.hpp \
-    src/core/ToolActionArea.hpp \
-    src/core/ToolEvents.hpp \
-    src/core/Palette.hpp \
-    src/core/AnimationFrame.hpp \
-    src/core/Project.hpp \
     src/core/layer.hpp \
-    src/core/painter.hpp
+    src/core/painter.hpp \
+    src/core/animationframe.hpp \
+    src/core/canvas.hpp \
+    src/core/canvasview.hpp \
+    src/core/palette.hpp \
+    src/core/project.hpp \
+    src/core/tool.hpp \
+    src/core/toolactionarea.hpp \
+    src/core/toolevents.hpp
 
 FORMS += \
     src/core/palette.ui

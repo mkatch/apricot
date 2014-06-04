@@ -1,9 +1,9 @@
 #include <QDebug>
 
-#include "Application.hpp"
-#include "MainWindow.hpp"
-#include "ApricotCore.hpp"
-#include "ApricotTools.hpp"
+#include "application.hpp"
+#include "mainwindow.hpp"
+#include "apricotcore.hpp"
+#include "apricottools.hpp"
 
 int main(int argc, char *argv[])
 {

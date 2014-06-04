@@ -1,5 +1,5 @@
 SOURCES += \
-    src/tools/DragTool.cpp
+    src/tools/dragtool.cpp
 
 HEADERS += \
-    src/tools/DragTool.hpp
+    src/tools/dragtool.hpp

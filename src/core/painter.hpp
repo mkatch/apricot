@@ -3,7 +3,7 @@
 
 #include <QString>
 
-#include "Canvas.hpp" // TODO: remove
+#include "canvas.hpp" // TODO: remove
 
 class Painter
 {
