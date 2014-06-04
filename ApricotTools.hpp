@@ -1,6 +1,6 @@
 #ifndef APRICOTTOOLS_HPP
 #define APRICOTTOOLS_HPP
 
-#include "tools/DragTool.hpp"
+#include "tools/dragtool.hpp"
 
 #endif // APRICOTTOOLS_HPP

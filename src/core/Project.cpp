@@ -1,7 +1,7 @@
-#include "Project.hpp"
+#include "project.hpp"
 
-#include "ApricotUtils.hpp"
-#include "AnimationFrame.hpp"
+#include "apricotutils.hpp"
+#include "animationframe.hpp"
 
 /*!
     \class Project

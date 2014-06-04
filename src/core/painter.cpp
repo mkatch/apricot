@@ -2,7 +2,7 @@
 
 #include <QPainter>
 
-#include "Canvas.hpp"
+#include "canvas.hpp"
 
 Painter::Painter(Canvas *canvas) :
     canvas(canvas)

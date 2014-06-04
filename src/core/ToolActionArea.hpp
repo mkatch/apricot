@@ -2,7 +2,7 @@
 #define CORE_TOOL_ACTION_AREA_HPP
 
 
-#include "CanvasView.hpp"
+#include "canvasview.hpp"
 
 
 class Tool;

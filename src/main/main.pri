@@ -1,13 +1,13 @@
 HEADERS += \
-    src/main/Application.hpp \
-    src/main/MainWindow.hpp
+    src/main/application.hpp \
+    src/main/mainwindow.hpp
 
 SOURCES += \
     src/main/main.cpp \
-    src/main/Application.cpp \
-    src/main/MainWindow.cpp
+    src/main/application.cpp \
+    src/main/mainwindow.cpp
 
 FORMS += \
-    src/main/MainWindow.ui
+    src/main/mainwindow.ui
 
 RESOURCES +=

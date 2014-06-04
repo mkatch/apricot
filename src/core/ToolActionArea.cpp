@@ -1,8 +1,8 @@
-#include "ToolActionArea.hpp"
+#include "toolactionarea.hpp"
 
-#include "ApricotUtils.hpp"
-#include "Tool.hpp"
-#include "ToolEvents.hpp"
+#include "apricotutils.hpp"
+#include "tool.hpp"
+#include "toolevents.hpp"
 
 
 ToolActionArea::ToolActionArea(QWidget *parent) :

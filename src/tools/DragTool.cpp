@@ -1,4 +1,4 @@
-#include "DragTool.hpp"
+#include "dragtool.hpp"
 
 
 DragTool::DragTool(QObject *parent) :

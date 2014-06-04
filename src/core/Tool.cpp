@@ -1,6 +1,6 @@
-#include "Tool.hpp"
-#include "ToolActionArea.hpp"
-#include "ToolEvents.hpp"
+#include "tool.hpp"
+#include "toolactionarea.hpp"
+#include "toolevents.hpp"
 
 
 Tool::Tool(QObject *parent) :

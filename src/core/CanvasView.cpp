@@ -1,10 +1,10 @@
-#include "CanvasView.hpp"
+#include "canvasview.hpp"
 
 #include <algorithm>
 using std::max;
 
-#include "ApricotUtils.hpp"
-#include "Canvas.hpp"
+#include "apricotutils.hpp"
+#include "canvas.hpp"
 
 /*!
     \class CanvasView

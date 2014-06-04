@@ -1,7 +1,7 @@
-#include "AnimationFrame.hpp"
+#include "animationframe.hpp"
 
 #include "layer.hpp"
-#include "Project.hpp"
+#include "project.hpp"
 
 /*!
     \class AnimationFrame

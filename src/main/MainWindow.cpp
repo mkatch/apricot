@@ -1,5 +1,5 @@
-#include "MainWindow.hpp"
-#include "ui_MainWindow.h"
+#include "mainwindow.hpp"
+#include "ui_mainwindow.h"
 
 /*!
   \class MainWindow
