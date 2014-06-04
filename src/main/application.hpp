@@ -11,7 +11,7 @@ class Application : public QApplication
     Q_PROPERTY(Project *project READ project)
 
 public:
-    Application(int argc, char **argv);
+    Application(int &argc, char **argv);
 
     Project *project();
 

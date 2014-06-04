@@ -20,7 +20,7 @@
   \brief Constructor which is an entry point for the application. Designed to receive \a argc and
   \a argv from the call for \c main.
  */
-Application::Application(int argc, char** argv) :
+Application::Application(int &argc, char** argv) :
     QApplication(argc, argv),
     m_project(new Project(this))
 {
