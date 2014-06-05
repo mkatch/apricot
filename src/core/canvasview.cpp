@@ -3,7 +3,7 @@
 #include <algorithm>
 using std::max;
 
-#include "apricotutils.hpp"
+#include <ApricotUtils>
 #include "canvas.hpp"
 
 /*!

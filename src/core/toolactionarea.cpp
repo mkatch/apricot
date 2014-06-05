@@ -1,6 +1,6 @@
 #include "toolactionarea.hpp"
 
-#include "apricotutils.hpp"
+#include <ApricotUtils>
 #include "tool.hpp"
 #include "toolevents.hpp"
 

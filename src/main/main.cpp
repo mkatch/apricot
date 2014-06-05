@@ -1,9 +1,10 @@
 #include <QDebug>
 
+#include <ApricotCore>
+#include <ApricotTools>
+
 #include "application.hpp"
 #include "mainwindow.hpp"
-#include "apricotcore.hpp"
-#include "apricottools.hpp"
 
 int main(int argc, char *argv[])
 {
