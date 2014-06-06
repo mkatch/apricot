@@ -12,7 +12,7 @@
 
     \brief An image layer.
 
-    Provides a Canvas to draw on via Painter. Every AnimationFram may contain multiple layers.
+    Provides a Canvas to draw on via QPainter. Every AnimationFram may contain multiple layers.
  */
 
 // Properties
