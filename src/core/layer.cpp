@@ -2,6 +2,7 @@
 
 #include <QPainter>
 
+#include "canvas.hpp"
 #include "project.hpp"
 #include "animationframe.hpp"
 
@@ -73,27 +74,11 @@ Layer::Layer(const Layer *other, AnimationFrame *frame) :
 }
 
 /*!
-    \brief Gets a Painter bound to the undelying Canvas.
-*/
-Painter Layer::startPainting()
-{
-    return Painter(&m_canvas);
-}
-
-/*!
     \brief Called when the dimensions of the project change.
 
     Updates the dimensions of the undelying canvas to be in sync with the rest.
  */
 void Layer::updateSize()
 {
-    if (m_canvas.size() == frame()->project()->size())
-        return;
-
-    // This is obviously a temporary solution
-    Canvas newCanvas(frame()->project()->size());
-    newCanvas.fill(Qt::white);
-    QPainter painter(&newCanvas);
-    painter.drawPixmap(0, 0, m_canvas);
-    m_canvas.swap(newCanvas);
+    m_canvas.setSize(frame()->project()->size());
 }

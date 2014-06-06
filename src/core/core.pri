@@ -1,6 +1,5 @@
 SOURCES += \
     src/core/layer.cpp \
-    src/core/painter.cpp \
     src/core/animationframe.cpp \
     src/core/canvas.cpp \
     src/core/canvasview.cpp \
@@ -11,7 +10,6 @@ SOURCES += \
 
 HEADERS += \
     src/core/layer.hpp \
-    src/core/painter.hpp \
     src/core/animationframe.hpp \
     src/core/canvas.hpp \
     src/core/canvasview.hpp \

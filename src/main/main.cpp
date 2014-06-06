@@ -13,8 +13,8 @@ int main(int argc, char *argv[])
 
     application.project()->setSize(918, 655);
     Layer *layer = application.project()->newFrame()->newLayer();
-    Painter painter = layer->startPainting();
-    painter.load(":/images/isocastle.png");
+    QPainter painter(&layer->pixmap());
+    painter.drawPixmap(0, 0, QPixmap(":/images/isocastle.png"));
 
     ToolActionArea actionArea;
     DragTool dragTool;

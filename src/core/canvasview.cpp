@@ -74,7 +74,11 @@ void CanvasView::setCanvas(const Canvas *canvas)
     }
 
     m_canvas = canvas;
-    canvasItem->setPixmap(m_canvas != nullptr ? *m_canvas : placeholderPixmap);
+    if(m_canvas != nullptr) {
+        canvasItem->setPixmap(m_canvas->pixmap());
+    } else {
+        canvasItem->setPixmap(placeholderPixmap);
+    }
 
     emit canvasChanged();
 }

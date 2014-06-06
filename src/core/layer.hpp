@@ -2,10 +2,9 @@
 #define CORE_LAYER_HPP
 
 #include <QObject>
+#include <QPixmap>
 
 #include "canvas.hpp"
-#include "painter.hpp"
-
 class AnimationFrame;
 
 class Layer : public QObject
@@ -24,17 +23,15 @@ public:
     AnimationFrame *frame() { return reinterpret_cast<AnimationFrame *>(parent()); }
 
     const Canvas *canvas() const { return &m_canvas; }
+    const QPixmap &pixmap() const { return m_canvas.pixmap(); }
+    QPixmap &pixmap() { return m_canvas.pixmap(); }
 
     int width() const { return m_canvas.width(); }
     int height() const { return m_canvas.height(); }
     QSize size() const { return m_canvas.size(); }
 
-    Painter startPainting();
-
 private:
     Canvas m_canvas;
-
-    void setSize(const QSize &size);
 
 private slots:
     void updateSize();
