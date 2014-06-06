@@ -24,15 +24,6 @@
     It is also the QObject parent of the layer.
  */
 /*!
-    \property Layer::canvas
-    \brief The underlying Canvas.
-
-    The returned canvas is immutable. To be able to draw on the canvas, request a Painter through
-    startPainting().
-
-    \sa startPainting()
- */
-/*!
     \property Layer::width
     \brief The width of the canvas
  */
@@ -43,6 +34,20 @@
 /*!
     \property Layer::size
     \brief The dimenstions of the canvas
+ */
+
+// Getters
+
+/*!
+    \fn const Canvas *Layer::canvas() const
+    \brief Returns immutable pointer to underlying Canvas object.
+ */
+/*!
+    \fn Canvas *Layer::canvas()
+    \brief Returns pointer to underlying Canvas objects.
+
+    \preliminary
+    This function is only temporary solution and will be removed in the near future.
  */
 
 // Methods

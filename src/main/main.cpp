@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 
     application.project()->setSize(918, 655);
     Layer *layer = application.project()->newFrame()->newLayer();
-    QPainter painter(&layer->pixmap());
+    QPainter painter(&layer->canvas()->pixmap());
     painter.drawPixmap(0, 0, QPixmap(":/images/isocastle.png"));
 
     ToolActionArea actionArea;

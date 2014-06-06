@@ -9,24 +9,30 @@
  * It is a more restricted version of QPixmap.
  */
 
-// Properties
+// Getters
 
 /*!
- * \property Canvas::pixmap
- * \brief Returns underlying QPixmap object.
+ * \fn const QPixmap &Canvas::pixmap() const
+ * \brief Returns immutable reference to underlying QPixmap object.
  */
 /*!
- * \property Canvas::width
+ * \fn QPixmap &Canvas::pixmap()
+ * \brief Returns reference to underlying QPixmap object.
+ */
+/*!
+ * \fn int Canvas::width() const
  * \brief Returns width of the canvas.
  */
 /*!
- * \property Canvas::height
+ * \fn int Canvas::height() const
  * \brief Returns height of the canvas.
  */
 /*!
- * \property Canvas::size
+ * \fn int Canvas::size() const
  * \brief Returns size of the canvas.
  */
+
+// Methods
 
 /*!
  * \brief Creates a null canvas.
@@ -74,7 +80,7 @@ Canvas::Canvas(const QPixmap &pixmap) :
 }
 
 /*!
- * \brief Fills the pixmap with the given color.
+ * \brief Fills the pixmap with the given \a color.
  */
 void Canvas::fill(const QColor &color)
 {
