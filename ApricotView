@@ -3,5 +3,7 @@
 
 #include "view/animationview.hpp"
 #include "view/graphicsanimationframeitem.hpp"
+#include "view/graphicsemptyitem.hpp"
+#include "view/qpainterextensions.hpp"
 
 #endif // APRICOTVIEW
