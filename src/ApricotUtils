@@ -1,0 +1,9 @@
+#ifndef MODULE_APRICOTUTILS
+#define MODULE_APRICOTUTILS
+
+#include <algorithm>
+
+#include "utils/debug.hpp"
+#include "utils/math.hpp"
+
+#endif // MODULE_APRICOTUTILS

@@ -1,7 +1,5 @@
 #include "application.hpp"
 
-#include "core/project.hpp"
-
 /*!
  * \class Application
  * \inmodule main

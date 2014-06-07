@@ -1,5 +1,5 @@
-#ifndef CORE_ANIMATION_FRAME_HPP
-#define CORE_ANIMATION_FRAME_HPP
+#ifndef CORE_ANIMATIONFRAME_HPP
+#define CORE_ANIMATIONFRAME_HPP
 
 #include <QObject>
 #include <QList>
@@ -49,4 +49,4 @@ private:
     QList<Layer *> m_layers;
 };
 
-#endif // CORE_ANIMATION_FRAME_HPP
+#endif // CORE_ANIMATIONFRAME_HPP

@@ -4,8 +4,7 @@
 #include <QObject>
 #include <QPixmap>
 
-#include "canvas.hpp"
-#include "painter.hpp"
+#include <ApricotCore>
 
 class AnimationFrame;
 

@@ -1,10 +1,10 @@
-#ifndef MATH_HPP
-#define MATH_HPP
+#ifndef UTILS_MATH_HPP
+#define UTILS_MATH_HPP
 
-#ifdef APRICOTUTILS_HPP
+#ifdef MODULE_APRICOTUTILS
     using std::min;
     using std::max;
-#endif // APRICOTUTILS_HPP
+#endif // MODULE_APRICOTUTILS
 
 template <typename T>
 inline const T& clamp(const T& a, const T& min, const T& max)
@@ -17,4 +17,4 @@ inline const T& clamp(const T& a, const T& min, const T& max)
         return a;
 }
 
-#endif // MATH_HPP
+#endif // UTILS_MATH_HPP

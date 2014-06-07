@@ -1,16 +1,15 @@
 #include "toolactionarea.hpp"
 
 #include <ApricotUtils>
+
 #include "tool.hpp"
 #include "toolevents.hpp"
-
 
 ToolActionArea::ToolActionArea(QWidget *parent) :
     CanvasView(parent),
     m_tool(nullptr),
     pressed(false)
 {
-
     this->setMouseTracking(true);
 }
 
@@ -39,8 +38,6 @@ bool ToolActionArea::event(QEvent *event)
     }
 
     switch (event->type()) {
-
-
     case QEvent::MouseButtonPress:
         dispatchMousePressEvent(static_cast<QMouseEvent *>(event));
         break;
@@ -57,11 +54,9 @@ bool ToolActionArea::event(QEvent *event)
         dispatchMouseMoveEvent(static_cast<QMouseEvent *>(event));
         break;
 
-
     case QEvent::HoverEnter:
     case QEvent::HoverLeave:
     case QEvent::HoverMove:
-        qDebug() << "hello lady";
         dispatchHoverMoveEvent(static_cast<QHoverEvent *>(event));
         break;
 
@@ -89,12 +84,9 @@ void ToolActionArea::dispatchMousePressEvent(QMouseEvent *event)
     tool()->mousePressEvent(&toolEvent);
     if (event->isAccepted())
         lastMousePos = event->localPos();
-    if(event->button() == Qt::LeftButton) {
+    if(event->button() == Qt::LeftButton)
         pressed = true;
-    }
-
 }
-
 
 void ToolActionArea::dispatchMouseReleaseEvent(QMouseEvent *event)
 {
@@ -110,7 +102,6 @@ void ToolActionArea::dispatchMouseReleaseEvent(QMouseEvent *event)
     pressed = false;
 }
 
-
 void ToolActionArea::dispatchMouseDoubleClickEvent(QMouseEvent *event)
 {
     ToolMouseEvent toolEvent(
@@ -123,7 +114,6 @@ void ToolActionArea::dispatchMouseDoubleClickEvent(QMouseEvent *event)
     );
     tool()->mouseDoubleClickEvent(&toolEvent);
 }
-
 
 void ToolActionArea::dispatchMouseMoveEvent(QMouseEvent *event)
 {
@@ -144,7 +134,6 @@ void ToolActionArea::dispatchMouseMoveEvent(QMouseEvent *event)
     }
 }
 
-
 void ToolActionArea::dispatchHoverMoveEvent(QHoverEvent *event)
 {
     ToolMouseMoveEvent toolEvent(
@@ -159,7 +148,6 @@ void ToolActionArea::dispatchHoverMoveEvent(QHoverEvent *event)
     );
     tool()->mouseHoverEvent(&toolEvent);
 }
-
 
 void ToolActionArea::dispatchWheelEvent(QWheelEvent *event)
 {

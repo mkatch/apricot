@@ -3,7 +3,7 @@
 
 #include <QGraphicsItem>
 
-#include <ApricotCore>
+#include <ApricotModel>
 
 class GraphicsAnimationFrameItem : public QGraphicsItem
 {

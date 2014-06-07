@@ -11,9 +11,7 @@
  */
 
 /*!
- * \brief Constructs the item.
- *
- * The \a parent item becoms the parent of the created item.
+ * \brief Constructs the item with parent item \a parent.em.
  */
 GraphicsEmptyItem::GraphicsEmptyItem(QGraphicsItem *parent) :
     QGraphicsItem(parent)
@@ -22,7 +20,7 @@ GraphicsEmptyItem::GraphicsEmptyItem(QGraphicsItem *parent) :
 }
 
 /*!
- * \brief Returns the bounding rectngle of the item
+ * \brief Returns the bounding rectangle of the item.
  */
 QRectF GraphicsEmptyItem::boundingRect() const
 {
@@ -49,7 +47,7 @@ void GraphicsEmptyItem::paint(
 }
 
 /*!
- * \brief Sets the parent item of all \a childItems to \a this.
+ * \brief Sets the parent item of all \a childItems to \i this.
  */
 void GraphicsEmptyItem::addChildItems(QList<QGraphicsItem *> childItems)
 {

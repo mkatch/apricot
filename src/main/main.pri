@@ -9,5 +9,3 @@ SOURCES += \
 
 FORMS += \
     src/main/mainwindow.ui
-
-RESOURCES +=

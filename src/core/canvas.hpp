@@ -3,7 +3,8 @@
 
 #include <QPixmap>
 
-class Canvas {
+class Canvas
+{
 public:
     Canvas();
     Canvas(int width, int height);

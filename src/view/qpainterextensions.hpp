@@ -4,8 +4,7 @@
 #include <QPainter>
 
 #include <ApricotCore>
-
-class AnimationFrame;
+#include <ApricotModel>
 
 class QPainterExtensions
 {

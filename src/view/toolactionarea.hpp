@@ -1,9 +1,7 @@
-#ifndef CORE_TOOL_ACTION_AREA_HPP
-#define CORE_TOOL_ACTION_AREA_HPP
-
+#ifndef VIEW_TOOLACTIONAREA_HPP
+#define VIEW_TOOLACTIONAREA_HPP
 
 #include "canvasview.hpp"
-
 
 class Tool;
 
@@ -48,8 +46,6 @@ private:
     QPointF lastMousePos;
 
     void applyToolToCanvas(bool preview);
-
 };
 
-
-#endif // CORE_TOOL_ACTION_AREA_HPP
+#endif // VIEW_TOOLACTIONAREA_HPP

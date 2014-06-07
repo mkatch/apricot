@@ -1,14 +1,11 @@
-#ifndef CORE_TOOL_HPP
-#define CORE_TOOL_HPP
-
+#ifndef VIEW_TOOL_HPP
+#define VIEW_TOOL_HPP
 
 #include <QObject>
 
+#include "toolevents.hpp"
 
 class ToolActionArea;
-class ToolMouseEvent;
-class ToolMouseMoveEvent;
-class ToolMouseWheelEvent;
 
 class Tool : public QObject
 {
@@ -30,8 +27,6 @@ signals:
     void deactivating();
     void deactivated();
 
-public slots:
-
 protected:
     virtual void onActivated();
     virtual void onDeactivating();
@@ -52,4 +47,4 @@ private:
 };
 
 
-#endif // CORE_TOOL_HPP
+#endif // VIEW_TOOL_HPP

@@ -1,0 +1,13 @@
+#ifndef MODULE_APRICOTVIEW
+#define MODULE_APRICOTVIEW
+
+#include "view/animationview.hpp"
+#include "view/canvasview.hpp"
+#include "view/graphicsanimationframeitem.hpp"
+#include "view/graphicsemptyitem.hpp"
+#include "view/qpainterextensions.hpp"
+#include "view/tool.hpp"
+#include "view/toolactionarea.hpp"
+#include "view/toolevents.hpp"
+
+#endif // MODULE_APRICOTVIEW

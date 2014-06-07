@@ -5,7 +5,7 @@
 
 /*!
  * \class AnimationFrame
- * \inmodule core
+ * \inmodule model
  *
  * \brief A single frame of animation.
  *

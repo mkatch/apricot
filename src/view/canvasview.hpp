@@ -1,5 +1,5 @@
-#ifndef WIDGETS_CANVASVIEW_HPP
-#define WIDGETS_CANVASVIEW_HPP
+#ifndef VIEW_CANVASVIEW_HPP
+#define VIEW_CANVASVIEW_HPP
 
 #include <QWidget>
 #include <QGraphicsView>
@@ -7,7 +7,7 @@
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
 
-#include "canvas.hpp" // TODO: remove
+#include <ApricotCore>
 
 class CanvasView : public QWidget
 {
@@ -59,4 +59,4 @@ private:
     void layOut();
 };
 
-#endif // WIDGETS_CANVASVIEW_HPP
+#endif // VIEW_CANVASVIEW_HPP

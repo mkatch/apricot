@@ -1,9 +1,7 @@
 #ifndef TOOLS_DRAG_TOOL_HPP
 #define TOOLS_DRAG_TOOL_HPP
 
-
-#include <ApricotCore>
-
+#include <ApricotView>
 
 class DragTool : public Tool
 {

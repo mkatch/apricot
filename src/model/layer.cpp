@@ -7,7 +7,7 @@
 
 /*!
  * \class Layer
- * \inmodule core
+ * \inmodule model
  *
  * \brief An image layer.
  *

@@ -12,9 +12,7 @@
  */
 
 /*!
- * \brief Contructor.
- *
- * Creates an item that displays \a frame and sets \a parent as the parent item.
+ * \brief Constructs an item displaying \a frame with paren item \a parent.item.
  */
 GraphicsAnimationFrameItem::GraphicsAnimationFrameItem(
     const AnimationFrame *frame,

@@ -1,0 +1,7 @@
+#ifndef MODULE_APRICOTCORE
+#define MODULE_APRICOTCORE
+
+#include "core/canvas.hpp"
+#include "core/painter.hpp"
+
+#endif // MODULE_APRICOTCORE

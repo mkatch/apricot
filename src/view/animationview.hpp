@@ -7,7 +7,7 @@
 #include <QSize>
 #include <QParallelAnimationGroup>
 
-#include <ApricotCore>
+#include <ApricotModel>
 
 #include "graphicsanimationframeitem.hpp"
 #include "graphicsemptyitem.hpp"
@@ -22,7 +22,7 @@ class AnimationView : public QWidget
 public:
     explicit AnimationView(QWidget *parent = 0);
 
-    Project *project() const { return m_project; }
+    Project *project() const;
     void setProject(Project *project);
 
 signals:
@@ -75,12 +75,12 @@ public:
 
     const AnimationFrame *frame() const { return m_frame; }
 
-    const QSize &size() const { return m_size; }
-    void setSize(const QSize &size) { m_size = size; }
-    void setSize(qreal width, qreal height) { setSize(QSize(width, height)); }
+    const QSize &size() const;
+    void setSize(const QSize &size);
+    void setSize(qreal width, qreal height);
 
-    int width() const { return m_size.width(); }
-    int height() const { return m_size.height(); }
+    int width() const;
+    int height() const;
 
     QRectF boundingRect() const override;
 
@@ -92,5 +92,35 @@ private:
     QSize m_size;
     const AnimationFrame *m_frame;
 };
+
+inline Project *AnimationView::project() const
+{
+    return m_project;
+}
+
+inline const QSize &AnimationViewItem::size() const
+{
+    return m_size;
+}
+
+inline void AnimationViewItem::setSize(const QSize &size)
+{
+    m_size = size;
+}
+
+inline void AnimationViewItem::setSize(qreal width, qreal height)
+{
+    setSize(QSize(width, height));
+}
+
+inline int AnimationViewItem::width() const
+{
+    return size().width();
+}
+
+inline int AnimationViewItem::height() const
+{
+    return size().height();
+}
 
 #endif // VIEW_ANIMATIONVIEW_HPP

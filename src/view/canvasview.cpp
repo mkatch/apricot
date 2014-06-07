@@ -4,46 +4,46 @@
 using std::max;
 
 #include <ApricotUtils>
-#include "canvas.hpp"
 
 /*!
-    \class CanvasView
-    \inmodule core
-
-    \brief A widget for displaying Canvas.
-
-    The displayed canvas may be dragged around and zoomed in and out.
+ * \class CanvasView
+ * \inmodule view
+ *
+ * \brief A widget for displaying Canvas.
+ *
+ * The displayed canvas may be dragged around and zoomed in and out.
  */
 
 // Properties
 
 /*!
-    \property CanvasView::canvas
-    \brief The displayed Canvas.
+ * \property CanvasView::canvas
+ * \brief The displayed Canvas.
  */
-/*!
-    \property CanvasView::scale
-    \brief The zoom factor.
- */
-/*!
-    \property CanvasView::translation
-    \brief The display offset.
 
-    \sa translate()
- */
 /*!
-    \property CanvasView::transform
-    \brief Tha transformation for transition from Canvas coordinate system to the view's
-    coordinates.
+ * \property CanvasView::scale
+ * \brief The zoom factor.
+ */
+
+/*!
+ * \property CanvasView::translation
+ * \brief The display offset.
+ *
+ * \sa translate()
+ */
+
+/*!
+ * \property CanvasView::transform
+ * \brief Tha transformation for transition from Canvas coordinate system to the view's
+ * coordinates.
  */
 
 // Methods
 
 /*!
-    \brief Contructor.
-
-    The created CanvasView becomes a child of \a parent.
-*/
+ * \brief Constructs the view with parent widget \a parent.
+ */
 CanvasView::CanvasView(QWidget *parent) :
     QWidget(parent),
     graphicsView(new QGraphicsView(this)),
@@ -60,7 +60,7 @@ CanvasView::CanvasView(QWidget *parent) :
 }
 
 /*!
-    \brief Destroys the CanvasView
+ * \brief Destroys the CanvasView
  */
 CanvasView::~CanvasView()
 {
@@ -95,9 +95,9 @@ void CanvasView::setScale(qreal scale)
 }
 
 /*!
-    \fn CanvasView::scale(qreal scale)
-    \brief mutiply tcurrent scale by \a scale.
-*/
+ * \fn CanvasView::scale(qreal scale)
+ * \brief mutiply tcurrent scale by \a scale.
+ */
 
 void CanvasView::setTranslation(const QPointF &translation)
 {
@@ -111,13 +111,13 @@ void CanvasView::setTranslation(const QPointF &translation)
 }
 
 /*!
-    \fn CanvasView::translate(const QPointF &translation)
-    \brief Adds \a translation to current translation.
-*/
+ * \fn CanvasView::translate(const QPointF &translation)
+ * \brief Adds \a translation to current translation.
+ */
 
 /*!
-    \fn CanvasView::translate(qreal x, qreal y)
-    \brief Adds (\a x, \a y) to current translation.
+ * \fn CanvasView::translate(qreal x, qreal y)
+ * \brief Adds (\a x, \a y) to current translation.
  */
 
 QTransform CanvasView::transform() const
@@ -126,20 +126,20 @@ QTransform CanvasView::transform() const
 }
 
 /*!
-    \brief Maps \a point from view coordinate system to the coordinate system of the dispayed Canvas.
-
-    \sa mapFromCanvas()
-*/
+ * \brief Maps \a point from view coordinate system to the coordinate system of the dispayed Canvas.
+ *
+ * \sa mapFromCanvas()
+ */
 QPointF CanvasView::mapToCanvas(const QPointF &point) const
 {
     return (point - translation()) / scale();
 }
 
 /*!
-    \brief Maps \a point from the coordinate system of the dislayed canvas to view coordinates.
-
-    \sa mapToCanvas()
-*/
+ * \brief Maps \a point from the coordinate system of the dislayed canvas to view coordinates.
+ *
+ * \sa mapToCanvas()
+ */
 QPointF CanvasView::mapFromCanvas(const QPointF &point) const
 {
     return point * scale() + translation();
@@ -157,7 +157,9 @@ void CanvasView::resizeEvent(QResizeEvent *event)
 }
 
 /*!
-    \brief Lays out the child widgets after resize and at creation.
+ * \brief Lays out the child widgets.
+ *
+ * Called after resize and at creation.
  */
 void CanvasView::layOut()
 {

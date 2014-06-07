@@ -1,11 +1,9 @@
-#ifndef CORE_TOOL_EVENTS_HPP
-#define CORE_TOOL_EVENTS_HPP
-
+#ifndef VIEW_TOOLEVENTS_HPP
+#define VIEW_TOOLEVENTS_HPP
 
 #include <QEvent>
 #include <QInputEvent>
 #include <QMouseEvent>
-
 
 class ToolEvent
 {

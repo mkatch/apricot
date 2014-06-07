@@ -4,40 +4,44 @@
 #include "animationframe.hpp"
 
 /*!
-    \class Project
-    \inmodule core
-
-    \brief The root of Apricot data model.
+ * \class Project
+ * \inmodule model
+ *
+ * \brief The root of Apricot data model.
  */
 
 // Properties
 
 /*!
-    \property Project::size
-    \brief The dimensions of the image
+ * \property Project::size
+ * \brief The dimensions of the image
  */
+
 /*!
-    \property Project::width
-    \brief The width of the image
+ * \property Project::width
+ * \brief The width of the image
  */
+
 /*!
-    \property Project::height
-    \brief The height of the image
+ * \property Project::height
+ * \brief The height of the image
  */
+
 /*!
-    \property Project::frameCount
-    \brief The number of animation frames
+ * \property Project::frameCount
+ * \brief The number of animation frames
  */
 
 // Signals
 
 /*!
-    \fn Project::framesChanged()
-    \brief Emitted when animation frames are added, removed or change order.
+ * \fn Project::framesChanged()
+ * \brief Emitted when animation frames are added, removed or change order.
  */
+
 /*!
-    \fn Project::layersChanged()
-    \brief Emitted when layers are added, removed or change order.
+ * \fn Project::layersChanged()
+ * \brief Emitted when layers are added, removed or change order.
  */
 
 // Methods

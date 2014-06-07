@@ -1,0 +1,6 @@
+#ifndef MODULE_APRICOTTOOLS
+#define MODULE_APRICOTTOOLS
+
+#include "tools/dragtool.hpp"
+
+#endif // MODULE_APRICOTTOOLS

@@ -1,13 +1,7 @@
 #include <QDebug>
 #include <QDockWidget>
 
-#include <ApricotCore>
-#include <ApricotTools>
-
 #include "application.hpp"
-#include "mainwindow.hpp"
-
-#include <ApricotView>
 
 int main(int argc, char *argv[])
 {

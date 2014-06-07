@@ -1,0 +1,8 @@
+#ifndef APRICOTMODEL
+#define APRICOTMODEL
+
+#include "model/animationframe.hpp"
+#include "model/layer.hpp"
+#include "model/project.hpp"
+
+#endif // APRICOTMODEL
