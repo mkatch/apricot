@@ -1,0 +1,7 @@
+#ifndef APRICOTVIEW
+#define APRICOTVIEW
+
+#include "view/animationview.hpp"
+#include "view/graphicsanimationframeitem.hpp"
+
+#endif // APRICOTVIEW

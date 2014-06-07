@@ -43,8 +43,7 @@
 // Methods
 
 /*!
-    Constructor.
-    The \a parent is set as parent object in QObject hierarchy.
+ * \brief Constructs Project with parent object \a parent.
  */
 Project::Project(QObject *parent) :
     QObject(parent)
@@ -61,13 +60,22 @@ void Project::setSize(const QSize &size)
 }
 
 /*!
-    \fn Project::frame(int i)
-    \brief Returns AnimationFrame at index \a i.
+ * \fn Project::frame(int i)
+ * \brief Returns AnimationFrame at index \a i.
  */
 
 /*!
-    \brief Creates new AnimationFrame at index \a i and returns it. The new frame is a copy of the
-    frame at \a i - 1 if it is present.
+ * \brief Returns index of \a frame.
+ */
+int Project::indexOfFrame(const AnimationFrame *frame) const
+{
+    return frames.indexOf(const_cast<AnimationFrame *>(frame));
+}
+
+/*!
+ * \brief Creates new AnimationFrame at index \a i and returns it.
+ *
+ * The new frame is a copy of the frame at \a i - 1 if it is present.
  */
 AnimationFrame *Project::newFrame(int i)
 {
@@ -88,13 +96,14 @@ AnimationFrame *Project::newFrame(int i)
 }
 
 /*!
-    \fn Project::newFrame()
-    \brief Creats new AnimationFrame at the end of animation and returns it. The new frame is a copy
-    of the last frame if present.
+ * \fn Project::newFrame()
+ * \brief Creats new AnimationFrame at the end of animation and returns it.
+ *
+ * The new frame is a copy of the last frame if present.
  */
 
 /*!
-    Removes AnimationFrame at index \a i.
+ * Removes AnimationFrame at index \a i.
  */
 void Project::removeFrame(int i)
 {

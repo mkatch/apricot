@@ -29,10 +29,15 @@ public:
 
     AnimationFrame *frame(int i) { return frames.at(i); }
 
+    int indexOfFrame(const AnimationFrame *frame) const;
+
     AnimationFrame *newFrame(int i);
     AnimationFrame *newFrame() { return newFrame(frameCount()); }
 
     void removeFrame(int i);
+
+    void moveFrame(int from, int to) { frames.move(from, to); }
+    void moveFrame(const AnimationFrame *frame, int to) { moveFrame(indexOfFrame(frame), to); }
 
 signals:
     void sizeChanged();
