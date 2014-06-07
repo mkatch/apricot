@@ -1,6 +1,6 @@
 #include "project.hpp"
 
-#include "apricotutils.hpp"
+#include <ApricotUtils>
 #include "animationframe.hpp"
 
 /*!

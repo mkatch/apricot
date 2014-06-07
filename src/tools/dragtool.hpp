@@ -2,7 +2,7 @@
 #define TOOLS_DRAG_TOOL_HPP
 
 
-#include <apricotcore.hpp>
+#include <ApricotCore>
 
 
 class DragTool : public Tool

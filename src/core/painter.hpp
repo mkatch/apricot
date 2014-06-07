@@ -1,20 +1,21 @@
 #ifndef CORE_PAINTER_HPP
 #define CORE_PAINTER_HPP
 
+#include <QPainter>
 #include <QString>
+#include <memory>
 
-#include "canvas.hpp" // TODO: remove
+class Canvas;
 
 class Painter
 {
 public:
-    explicit Painter(Canvas *canvas);
-    Painter(const Painter& other);
+    explicit Painter(Canvas &canvas);
 
-    void load(QString fileName);
+    void drawImage(QString fileName);
 
 private:
-    Canvas *canvas;
+    std::shared_ptr<QPainter> painter;
 };
 
 #endif // CORE_PAINTER_HPP

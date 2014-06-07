@@ -4,8 +4,8 @@
 #include <QGraphicsSceneEvent>
 #include <QPropertyAnimation>
 
-#include <apricotutils.hpp>
-#include <apricotcore.hpp>
+#include <ApricotUtils>
+#include <ApricotCore>
 
 #include "qpainterextensions.hpp"
 

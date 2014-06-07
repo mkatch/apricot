@@ -2,6 +2,7 @@
 #define CORE_LAYER_HPP
 
 #include <QObject>
+#include <QPixmap>
 
 #include "canvas.hpp"
 #include "painter.hpp"
@@ -12,7 +13,6 @@ class Layer : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(AnimationFrame *frame READ frame)
-    Q_PROPERTY(const Canvas *canvas READ canvas)
     Q_PROPERTY(int width READ width)
     Q_PROPERTY(int height READ height)
     Q_PROPERTY(QSize size READ size)
@@ -29,12 +29,10 @@ public:
     int height() const { return m_canvas.height(); }
     QSize size() const { return m_canvas.size(); }
 
-    Painter startPainting();
+    Painter getPainter();
 
 private:
     Canvas m_canvas;
-
-    void setSize(const QSize &size);
 
 private slots:
     void updateSize();

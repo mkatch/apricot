@@ -7,7 +7,7 @@
 #include <QSize>
 #include <QParallelAnimationGroup>
 
-#include "apricotcore.hpp"
+#include <ApricotCore>
 
 #include "graphicsanimationframeitem.hpp"
 #include "graphicsemptyitem.hpp"

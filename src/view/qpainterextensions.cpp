@@ -27,7 +27,7 @@ QPainterExtensions::QPainterExtensions(QPainter *painter) :
 void QPainterExtensions::drawAnimationFrame(const QRect &targetRect, const AnimationFrame *frame)
 {
     foreach (Layer* layer, frame->layers())
-        painter->drawPixmap(targetRect, *layer->canvas());
+        painter->drawPixmap(targetRect, layer->canvas()->pixmap());
 }
 
 /*!

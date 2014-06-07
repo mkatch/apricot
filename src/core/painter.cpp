@@ -4,22 +4,13 @@
 
 #include "canvas.hpp"
 
-Painter::Painter(Canvas *canvas) :
-    canvas(canvas)
+Painter::Painter(Canvas &canvas) :
+    painter(new QPainter(&canvas.m_pixmap))
 {
     // Do nothing
 }
 
-Painter::Painter(const Painter &other) :
-    canvas(other.canvas)
+void Painter::drawImage(QString fileName)
 {
-    // Do nothing
-}
-
-void Painter::load(QString fileName)
-{
-    QPixmap pixmap(fileName);
-    canvas->fill(Qt::transparent);
-    QPainter painter(canvas);
-    painter.drawPixmap(0, 0, pixmap);
+    painter->drawPixmap(0, 0, QPixmap(fileName));
 }

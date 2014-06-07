@@ -21,9 +21,9 @@ OTHER_FILES += \
     qdoc-index.qdoc
 
 HEADERS += \
-    apricotcore.hpp \
-    apricottools.hpp \
-    apricotutils.hpp \
+    ApricotCore \
+    ApricotTools \
+    ApricotUtils \
     ApricotView
 
 SOURCES +=

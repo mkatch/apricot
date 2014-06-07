@@ -3,7 +3,7 @@
 
 #include <QPainter>
 
-#include <apricotcore.hpp>
+#include <ApricotCore>
 
 class AnimationFrame;
 

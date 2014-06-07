@@ -5,7 +5,6 @@
 #include "core/canvas.hpp"
 #include "core/canvasview.hpp"
 #include "core/layer.hpp"
-#include "core/painter.hpp"
 #include "core/project.hpp"
 #include "core/tool.hpp"
 #include "core/toolactionarea.hpp"
