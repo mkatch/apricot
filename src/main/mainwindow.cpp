@@ -1,27 +1,56 @@
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 
-/*!
-  \class MainWindow
-  \inmodule main
-  \brief The Main Window class.
- */
+#include <QDockWidget>
 
 /*!
-  Constructor.
-  \a parent parent widget.
+ * \class MainWindow
+ * \inmodule main
+ *
+ * \brief The main window of the application.
+ */
+
+// Properties
+
+/*!
+ * \property MainWindow::project
+ * \brief The displayed Project.
+ */
+
+// Methods
+
+/*!
+ * Constructs MainWindow with parent widget \a parent
  */
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    m_actionArea(new ToolActionArea),
+    m_animationView(new AnimationView)
 {
     ui->setupUi(this);
+
+    setCentralWidget(actionArea());
+
+    QDockWidget *dockableAnimationView = new QDockWidget;
+    dockableAnimationView->setWidget(animationView());
+    this->addDockWidget(Qt::BottomDockWidgetArea, dockableAnimationView);
 }
 
 /*!
-  Destructor.
+ * Destroys the widget.
  */
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+
+void MainWindow::setProject(Project *project)
+{
+    if (m_project == project)
+        return;
+
+    m_project = project;
+    animationView()->setProject(project);
 }

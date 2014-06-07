@@ -50,6 +50,7 @@ void AnimationView::setProject(Project *project)
         return;
 
     m_project = project;
+    connect(project, SIGNAL(framesChanged()), this, SLOT(onFramesChanged()));
     setupScene();
     emit projectChanged();
 }
@@ -63,6 +64,7 @@ void AnimationView::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
     layOut();
+    updateSceneRect();
 }
 
 /*!
@@ -99,8 +101,6 @@ bool AnimationView::eventFilter(QObject *object, QEvent *event)
 
 /*!
  * \brief Creates the scene.
- *
- * Called when the project changes.
  */
 void AnimationView::setupScene()
 {
@@ -125,6 +125,18 @@ void AnimationView::setupScene()
     layOutScene(false);
 }
 
+/*!
+ * \brief Sets the scene rect of the QGraphicsView to tigtly fit contents.
+ */
+void AnimationView::updateSceneRect()
+{
+    graphicsView->setSceneRect(
+        0, 0,
+        (items.count() + 1) * SPACING_UNIT + items.count() * ITEM_WIDTH,
+        height()
+    );
+}
+
 /*! \brief Lays out the child widgets and graphics scene.
  *
  * Called at construction time and after resize.
@@ -132,11 +144,6 @@ void AnimationView::setupScene()
 void AnimationView::layOut()
 {
     graphicsView->setGeometry(0, 0, width(), height());
-    graphicsView->setSceneRect(
-        0, 0,
-        (items.count() + 1) * SPACING_UNIT + items.count() * ITEM_WIDTH,
-        height()
-    );
     layOutScene(false);
 }
 
@@ -267,11 +274,22 @@ void AnimationView::endDrag()
     dropIndex = -1;
 
     // Aply the reordering to the model
+    disconnect(project(), SIGNAL(framesChanged()), this, SLOT(onFramesChanged()));
     sort(items.begin(), items.end(), compareItemsByX);
     for (int i = 0; i < items.count(); ++i)
         project()->moveFrame(items[i]->frame(), i);
+    connect(project(), SIGNAL(framesChanged()), this, SLOT(onFramesChanged()));
 
     layOutItems(true);
+}
+
+/*!
+ * \brief Handles the framesChanged signal of the displayed project.
+ */
+void AnimationView::onFramesChanged()
+{
+    setupScene();
+    updateSceneRect();
 }
 
 /*!

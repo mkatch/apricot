@@ -48,6 +48,7 @@ private:
     Project *m_project;
 
     void setupScene();
+    void updateSceneRect();
 
     void layOut();
     void layOutScene(bool animate);
@@ -56,6 +57,9 @@ private:
     bool tryBeginDrag(QPointF dragBeginPos);
     void drag(QPointF dPos);
     void endDrag();
+
+private slots:
+    void onFramesChanged();
 };
 
 class AnimationViewItem : public QGraphicsObject
