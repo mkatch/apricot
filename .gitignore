@@ -20,4 +20,4 @@ qrc_*.cpp
 Makefile
 *-build-*
 
-doc/html
+doc
