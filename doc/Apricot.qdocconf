@@ -1,7 +1,5 @@
 #Include this file to inherit configuration related to Qt Project based modules.
 
-#C:\Qt\Tools\QtCreator\bin\mkacz91-apricot>C:\Qt\5.2.1\mingw48_32\bin\qdoc.exe .\Apricot.qdocconf
-
 dita.metadata.default.author      = Marcin Kaczmarek, Łukasz Hanuszczak, Adam Laskowski
 dita.metadata.default.permissions = all
 dita.metadata.default.publisher   = Uniwersytet Wrocławski
@@ -10,7 +8,7 @@ dita.metadata.default.copyrholder = Uniwersytet Wrocławski
 dita.metadata.default.audience = programmer
 
 #Set the main Qt index.html
-navigation.homepage = qdoc-index
+#navigation.homepage = index.html
 buildversion = "Qt 5.3 Reference Documentation"
 
 headerdirs = ../src
