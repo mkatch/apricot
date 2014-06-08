@@ -9,5 +9,6 @@
 #include "view/tool.hpp"
 #include "view/toolactionarea.hpp"
 #include "view/toolevents.hpp"
+#include "view/layerview.hpp"
 
 #endif // MODULE_APRICOTVIEW

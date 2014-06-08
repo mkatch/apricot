@@ -24,6 +24,7 @@ public:
 
     ToolActionArea *actionArea();
     AnimationView *animationView();
+    LayerView *layerView();
 
 signals:
     void projectChanged();
@@ -34,6 +35,7 @@ private:
     Project *m_project;
     ToolActionArea *m_actionArea;
     AnimationView *m_animationView;
+    LayerView *m_layerView;
 };
 
 inline Project *MainWindow::project()
@@ -49,6 +51,11 @@ inline ToolActionArea *MainWindow::actionArea()
 inline AnimationView *MainWindow::animationView()
 {
     return m_animationView;
+}
+
+inline LayerView *MainWindow::layerView()
+{
+    return m_layerView;
 }
 
 #endif // MAINWINDOW_HPP

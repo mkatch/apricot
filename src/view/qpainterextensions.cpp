@@ -52,3 +52,36 @@ void QPainterExtensions::drawAnimationFrame(
 {
     drawAnimationFrame(QRect(x, y, width, height), frame);
 }
+
+/*!
+ * \brief Draws a given \a layer into given \a targetRect.
+ *
+ * This is an overloaded method.
+ */
+void QPainterExtensions::drawLayer(const QRect &targetRect, const Layer *layer)
+{
+    painter->drawPixmap(targetRect, layer->canvas()->pixmap());
+}
+
+/*!
+ * \brief Draws a given \a layer at coordinates (\a x, \a y).
+ *
+ * This is an overloaded method.
+ */
+void QPainterExtensions::drawLayer(int x, int y, const Layer *layer)
+{
+    drawLayer(QRect(x, y, layer->width(), layer->height()), layer);
+}
+
+/*!
+ * \brief Draws a given \a layer into rect defined by \a x, \a y, \a width, \a height.
+ *
+ * This is an overloaded method.
+ */
+void QPainterExtensions::drawLayer(
+    int x, int y, int width, int height,
+    const Layer *layer
+)
+{
+    drawLayer(QRect(x, y, width, height), layer);
+}

@@ -18,5 +18,9 @@ int main(int argc, char *argv[])
     application.project()->newFrame()->newLayer()->getPainter().drawImage(":/images/isocastle.png");
     application.project()->newFrame()->newLayer()->getPainter().drawImage(":/images/isocastle.png");
 
+    AnimationFrame *frame = application.project()->frame(0);
+    frame->newLayer()->getPainter().drawImage(":/images/isocastle.png");
+    application.mainWindow()->layerView()->setFrame(frame);
+
     return application.exec();
 }

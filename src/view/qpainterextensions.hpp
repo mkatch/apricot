@@ -13,7 +13,11 @@ public:
 
     void drawAnimationFrame(const QRect &targetRect, const AnimationFrame *frame);
     void drawAnimationFrame(int x, int y, const AnimationFrame *frame);
-    void drawAnimationFrame(int x, int y, int width, int height, const AnimationFrame * frame);
+    void drawAnimationFrame(int x, int y, int width, int height, const AnimationFrame *frame);
+
+    void drawLayer(const QRect &targetRect, const Layer *layer);
+    void drawLayer(int x, int y, const Layer *layer);
+    void drawLayer(int x, int y, int width, int height, const Layer *layer);
 
 private:
     QPainter *painter;

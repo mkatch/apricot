@@ -26,7 +26,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     m_actionArea(new ToolActionArea),
-    m_animationView(new AnimationView)
+    m_animationView(new AnimationView),
+    m_layerView(new LayerView)
 {
     ui->setupUi(this);
 
@@ -35,6 +36,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QDockWidget *dockableAnimationView = new QDockWidget;
     dockableAnimationView->setWidget(animationView());
     this->addDockWidget(Qt::BottomDockWidgetArea, dockableAnimationView);
+
+    QDockWidget *dockableLayerView = new QDockWidget;
+    dockableLayerView->setWidget(layerView());
+    this->addDockWidget(Qt::RightDockWidgetArea, dockableLayerView);
 }
 
 /*!

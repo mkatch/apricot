@@ -34,12 +34,17 @@ public:
     Layer *layer(int i);
     const Layer *layer(int i) const;
 
+    int indexOfLayer(const Layer *layer);
+
     Layer *newLayer(int i);
     Layer *newLayer();
 
-    void moveLayer(int from, int to);
-
     void removeLayer(int i);
+
+    void moveLayer(int from, int to);
+    void moveLayer(const Layer *layer, int to);
+
+
 
 signals:
     void layersChanged();
@@ -88,9 +93,19 @@ inline const Layer *AnimationFrame::layer(int i) const
     return m_layers.at(i);
 }
 
+inline int AnimationFrame::indexOfLayer(const Layer *layer)
+{
+    return m_layers.indexOf(const_cast<Layer *>(layer));
+}
+
 inline Layer *AnimationFrame::newLayer()
 {
     return newLayer(0);
+}
+
+inline void AnimationFrame::moveLayer(const Layer *layer, int to)
+{
+    moveLayer(indexOfLayer(layer), to);
 }
 
 #endif // CORE_ANIMATIONFRAME_HPP
