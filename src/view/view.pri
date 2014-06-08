@@ -1,6 +1,7 @@
 HEADERS += \
     src/view/animationview.hpp \
     src/view/canvasview.hpp \
+    src/view/colorpicker.hpp \
     src/view/graphicsanimationframeitem.hpp \
     src/view/graphicsemptyitem.hpp \
     src/view/qpainterextensions.hpp \
@@ -11,6 +12,7 @@ HEADERS += \
 SOURCES += \
     src/view/animationview.cpp \
     src/view/canvasview.cpp \
+    src/view/colorpicker.cpp \
     src/view/graphicsanimationframeitem.cpp \
     src/view/graphicsemptyitem.cpp \
     src/view/qpainterextensions.cpp \
