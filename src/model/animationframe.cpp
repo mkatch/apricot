@@ -22,13 +22,23 @@
  */
 
 /*!
- * \property AnimationFrame::layerCount
- * \brief The number of layers
+ * \property AnimationFrame::size
+ * \brief The dimensins of the frame
  */
 
 /*!
- * \property AnimationFrame::size
- * \brief The dimensins of the frame
+ * \property AnimationFrame::width
+ * \brief The width of the frame.
+ */
+
+/*!
+ * \property AnimationFrame::height
+ * \brief The height of the frame.
+ */
+
+/*!
+ * \property AnimationFrame::layerCount
+ * \brief The number of layers
  */
 
 // Signals
@@ -41,9 +51,9 @@
 // Methods
 
 /*!
- * \brief Constructor.
+ * \brief Constructs a frame with parent project \a project.
  *
- * The \a project is set as QObject parent of the frame.
+ * The \a project is also the parent object of the newly created AnimationFrame.
  */
 AnimationFrame::AnimationFrame(Project *project) :
     QObject(project)
@@ -52,8 +62,10 @@ AnimationFrame::AnimationFrame(Project *project) :
 }
 
 /*!
- * \brief Contstructor for duplicating a frame. Newly created AnimationFrame receives a copy of all
- * layers of \a other. The \a project is set as QObject parent of the frame.
+ * Constructs a copy of \a \other with parent project \a project.
+ *
+ * Newly created AnimationFrame receives a copy of all layers of \a other. The \a project is also
+ * the parent object of the frame.
 */
 AnimationFrame::AnimationFrame(const AnimationFrame *other, Project *project) :
     QObject(project)
@@ -64,8 +76,15 @@ AnimationFrame::AnimationFrame(const AnimationFrame *other, Project *project) :
 
 const QSize &AnimationFrame::size() const
 {
+    // This has to be implemented here because of dependency loop that would arise if
+    // animationframe.hpp included project.hpp.
     return project()->size();
 }
+
+/*!
+ * \fn AnimationFrame::layers() const
+ * \brief Returns a list of layers that make up the animation frame.
+ */
 
 /*!
  * \fn AnimationFrame::layer(int i)
@@ -75,7 +94,14 @@ const QSize &AnimationFrame::size() const
  */
 
 /*!
- * \brief Creates new layer at index \a i and returns it.
+ * \fn AnimationFrame::layer(int i) const
+ * \brief Returns immutable layer at index \a i.
+ *
+ * The topmost layer has index 0.
+ */
+
+/*!
+ * \brief Creates a new layer at index \a i and returns it.
  */
 Layer *AnimationFrame::newLayer(int i)
 {

@@ -45,7 +45,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
 void MainWindow::setProject(Project *project)
 {
     if (m_project == project)
@@ -54,3 +53,13 @@ void MainWindow::setProject(Project *project)
     m_project = project;
     animationView()->setProject(project);
 }
+
+/*!
+ * \fn MainWindow::actionArea()
+ * \brief Returns the ToolActionArea child.
+ */
+
+/*!
+ * \fn MainWindow::animationView()
+ * \brief Returns the AnimationView child.
+ */

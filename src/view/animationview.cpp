@@ -71,7 +71,8 @@ void AnimationView::resizeEvent(QResizeEvent *event)
  * \brief Filters events if this view has been installed as an event filter for \a object.
  *
  * This is an overiden method. AnimationView is installed as an event filter for it's underlying
- * QGraphicsScene. This is done to handle dragging and does not reject any \a event.
+ * QGraphicsScene. This is done to handle dragging and does not reject any \a event. This
+ * implementation always returns \c false which means all events are passed further.
  */
 bool AnimationView::eventFilter(QObject *object, QEvent *event)
 {
@@ -302,6 +303,33 @@ void AnimationView::onFramesChanged()
  * Qt Animation Framework.
  */
 
+// Properties
+
+/*!
+ * \property AnimationViewItem::frame
+ * \brief The displayed frame.
+ */
+
+/*!
+ * \property AnimationViewItem::size
+ * \brief The dimensions of the item in item coordinates.
+ */
+
+/*!
+ * \property AnimationViewItem::width
+ * \brief The width of the item in item coordinates.
+ */
+
+/*!
+ * \property AnimationViewItem::height
+ * \brief The height of the item in item coordinates.
+ */
+
+// Methods
+
+/*!
+ * \brief Construct AnimationViewItem displaying \a frame with parent item \a parent.
+ */
 AnimationViewItem::AnimationViewItem(const AnimationFrame *frame, QGraphicsItem *parent) :
     QGraphicsObject(parent),
     m_size(100, 100),

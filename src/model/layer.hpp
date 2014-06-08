@@ -20,13 +20,13 @@ public:
     explicit Layer(AnimationFrame *frame);
     Layer(const Layer *other, AnimationFrame *frame);
 
-    AnimationFrame *frame() { return reinterpret_cast<AnimationFrame *>(parent()); }
+    AnimationFrame *frame();
 
-    const Canvas *canvas() const { return &m_canvas; }
+    const Canvas *canvas() const;
 
-    int width() const { return m_canvas.width(); }
-    int height() const { return m_canvas.height(); }
-    QSize size() const { return m_canvas.size(); }
+    int width() const;
+    int height() const;
+    QSize size() const;
 
     Painter getPainter();
 
@@ -36,5 +36,30 @@ private:
 private slots:
     void updateSize();
 };
+
+inline AnimationFrame *Layer::frame()
+{
+    return reinterpret_cast<AnimationFrame *>(parent());
+}
+
+inline const Canvas *Layer::canvas() const
+{
+    return &m_canvas;
+}
+
+inline int Layer::width() const
+{
+    return m_canvas.width();
+}
+
+inline int Layer::height() const
+{
+    return m_canvas.height();
+}
+
+inline QSize Layer::size() const
+{
+    return m_canvas.size();
+}
 
 #endif // CORE_LAYER_HPP

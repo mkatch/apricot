@@ -13,10 +13,10 @@ dita.metadata.default.audience = programmer
 navigation.homepage = qdoc-index
 buildversion = "Qt 5.3 Reference Documentation"
 
-headerdirs = ./
-sourcedirs = ./
-imagedirs = ./doc/images
-outputdir = ./doc
+headerdirs = ../src
+sourcedirs = ../src .
+imagedirs = ./html/images
+outputdir = ./html
 sources.fileextensions  = "*.cpp *.qdoc"
 headers.fileextensions  = "*.hpp"
 

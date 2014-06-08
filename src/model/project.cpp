@@ -14,22 +14,22 @@
 
 /*!
  * \property Project::size
- * \brief The dimensions of the image
+ * \brief The dimensions of the image.
  */
 
 /*!
  * \property Project::width
- * \brief The width of the image
+ * \brief The width of the image.
  */
 
 /*!
  * \property Project::height
- * \brief The height of the image
+ * \brief The height of the image.
  */
 
 /*!
  * \property Project::frameCount
- * \brief The number of animation frames
+ * \brief The number of animation frames.
  */
 
 // Signals
@@ -68,13 +68,19 @@ void Project::setSize(const QSize &size)
  * \brief Returns AnimationFrame at index \a i.
  */
 
+/*! \fn Project::frame(int i) const
+ *  \brief Returns an immutable AnimationFrame at index \a i.
+ */
+
 /*!
+ * \fn Project::frames() const
+ * \brief Returns a list of frames that make up the animation.
+ */
+
+/*!
+ * \fn Project::indexOfFrame(const AnimationFrame *frame) const
  * \brief Returns index of \a frame.
  */
-int Project::indexOfFrame(const AnimationFrame *frame) const
-{
-    return frames.indexOf(const_cast<AnimationFrame *>(frame));
-}
 
 /*!
  * \brief Creates new AnimationFrame at index \a i and returns it.
@@ -89,7 +95,7 @@ AnimationFrame *Project::newFrame(int i)
         ? new AnimationFrame(frame(i - 1), this)
         : new AnimationFrame(this); // Typically this should only happen in an empty project
 
-    frames.insert(i, f);
+    m_frames.insert(i, f);
     connect(f, SIGNAL(layersChanged()), this, SIGNAL(layersChanged()));
 
     emit framesChanged();
@@ -111,7 +117,7 @@ AnimationFrame *Project::newFrame(int i)
  */
 void Project::removeFrame(int i)
 {
-    AnimationFrame *f = frames.takeAt(i);
+    AnimationFrame *f = m_frames.takeAt(i);
     bool anyLayers = f->layerCount() > 0;
     delete f;
 
@@ -119,3 +125,25 @@ void Project::removeFrame(int i)
     if (anyLayers)
         emit layersChanged();
 }
+
+/*!
+ * \brief Moves the frame at index \a from to index \a to.
+ *
+ * This affects the indices of frames between \a from and \a to inclusive, as the other frames are
+ * moved accordingly.
+ */
+void Project::moveFrame(int from, int to)
+{
+    if (from == to)
+        return;
+
+    m_frames.move(from, to);
+    emit framesChanged();
+}
+
+/*!
+ * \fn Project::moveFrame(const AnimationFrame *frame, int to)
+ * \brief Moves \a frame to index \a to.
+ *
+ * This call is equivalent to moveFrame(indexOfFrame(frame), to).
+ */

@@ -17,18 +17,17 @@
  * \fn const QPixmap &Canvas::pixmap() const
  * \brief Returns immutable reference to underlying QPixmap object.
  */
-/*!
- * \fn QPixmap &Canvas::pixmap()
- * \brief Returns reference to underlying QPixmap object.
- */
+
 /*!
  * \fn int Canvas::width() const
  * \brief Returns width of the canvas.
  */
+
 /*!
  * \fn int Canvas::height() const
  * \brief Returns height of the canvas.
  */
+
 /*!
  * \fn int Canvas::size() const
  * \brief Returns size of the canvas.
@@ -45,8 +44,9 @@ Canvas::Canvas()
 }
 
 /*!
- * \brief Constructs a canvas with the given \a width and \a height. If either \a width
- * or \a height is zero, a null canvas is constructed.
+ * \brief Constructs a canvas with the given \a width and \a height.
+ *
+ * If either \a width or \a height is zero, a null canvas is constructed.
  */
 Canvas::Canvas(int width, int height) :
     m_pixmap(width, height)

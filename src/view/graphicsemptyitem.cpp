@@ -11,7 +11,7 @@
  */
 
 /*!
- * \brief Constructs the item with parent item \a parent.em.
+ * \brief Constructs the item with parent item \a parent.
  */
 GraphicsEmptyItem::GraphicsEmptyItem(QGraphicsItem *parent) :
     QGraphicsItem(parent)
@@ -47,7 +47,7 @@ void GraphicsEmptyItem::paint(
 }
 
 /*!
- * \brief Sets the parent item of all \a childItems to \i this.
+ * \brief Sets the parent item of all \a childItems to \e this.
  */
 void GraphicsEmptyItem::addChildItems(QList<QGraphicsItem *> childItems)
 {

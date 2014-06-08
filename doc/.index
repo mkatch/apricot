@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE QDOCINDEX>
+<INDEX url="" title="" version="0.1" project="">
+    <namespace threadsafety="unspecified" name="" access="public" status="commendable">
+        <page name="view" href="view-module.html" access="private" status="internal" subtype="module" title="" fulltitle="" subtitle=""/>
+        <page name="core" href="core-module.html" access="private" status="internal" subtype="module" title="" fulltitle="" subtitle=""/>
+        <page name="index.html" href="index.html" access="public" status="commendable" location="qdoc-index.qdoc" filepath="/Users/mkacz/Projekty/Apricot/qdoc-index.qdoc" lineno="1" subtype="page" title="Index" fulltitle="Index" subtitle=""/>
+        <page name="main" href="main-module.html" access="public" status="commendable" location="qdoc-index.qdoc" filepath="/Users/mkacz/Projekty/Apricot/qdoc-index.qdoc" lineno="13" subtype="module" title="Main module" fulltitle="Main module" subtitle=""/>
+        <class threadsafety="unspecified" name="AnimationFrame" href="animationframe.html" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="11" bases="" module="core" brief="A single frame of animation.">
+            <function threadsafety="unspecified" name="size" fullname="AnimationFrame::size" href="animationframe.html#size-prop" access="public" status="commendable" location="animationframe.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.cpp" lineno="65" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="size" type="const QSize &amp;" signature="size() const"/>
+            <function threadsafety="unspecified" name="AnimationFrame" fullname="AnimationFrame::AnimationFrame" href="animationframe.html#AnimationFrame" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="22" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" brief="Constructor." signature="AnimationFrame(Project * project)">
+                <parameter left="Project *" right="" name="project" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="AnimationFrame" fullname="AnimationFrame::AnimationFrame" href="animationframe.html#AnimationFrame-2" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="23" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="2" type="" brief="Contstructor for duplicating a frame. Newly created AnimationFrame receives a copy of all * layers of other. The project is set as QObject parent of the frame." signature="AnimationFrame(const AnimationFrame * other, Project * project)">
+                <parameter left="const AnimationFrame *" right="" name="other" default=""/>
+                <parameter left="Project *" right="" name="project" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="height" fullname="AnimationFrame::height" href="animationframe.html#height-prop" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="32" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="height" type="int" signature="height() const"/>
+            <function threadsafety="unspecified" name="layer" fullname="AnimationFrame::layer" href="animationframe.html#layer" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="35" virtual="non" meta="plain" const="false" static="false" overload="false" type="Layer *" brief="Returns layer at index i." signature="layer(int i)">
+                <parameter left="int" right="" name="i" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="layer" fullname="AnimationFrame::layer" href="animationframe.html#layer-2" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="36" virtual="non" meta="plain" const="true" static="false" overload="true" overload-number="2" type="const Layer *" signature="layer(int i) const">
+                <parameter left="int" right="" name="i" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="layerCount" fullname="AnimationFrame::layerCount" href="animationframe.html#layerCount-prop" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="28" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="layerCount" type="int" signature="layerCount() const"/>
+            <function threadsafety="unspecified" name="layers" fullname="AnimationFrame::layers" href="animationframe.html#layers-prop" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="34" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="layers" type="QList&lt;Layer *&gt;" signature="layers() const"/>
+            <function threadsafety="unspecified" name="layersChanged" fullname="AnimationFrame::layersChanged" href="animationframe.html#layers-prop" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="46" virtual="non" meta="signal" const="false" static="false" overload="false" associated-property="layers" type="void" brief="Emitted when layers are added, removed or change order." signature="layersChanged()"/>
+            <function threadsafety="unspecified" name="moveLayer" fullname="AnimationFrame::moveLayer" href="animationframe.html#moveLayer" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="41" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" brief="Moves layer from position from to position to." signature="moveLayer(int from, int to)">
+                <parameter left="int" right="" name="from" default=""/>
+                <parameter left="int" right="" name="to" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="newLayer" fullname="AnimationFrame::newLayer" href="animationframe.html#newLayer-2" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="39" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="Layer *" brief="Creates a new layer above all existing ones and returns it." signature="newLayer()"/>
+            <function threadsafety="unspecified" name="newLayer" fullname="AnimationFrame::newLayer" href="animationframe.html#newLayer" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="38" virtual="non" meta="plain" const="false" static="false" overload="false" type="Layer *" brief="Creates new layer at index i and returns it." signature="newLayer(int i)">
+                <parameter left="int" right="" name="i" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="project" fullname="AnimationFrame::project" href="animationframe.html#project-prop" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="25" virtual="non" meta="plain" const="false" static="false" overload="false" associated-property="project" type="Project *" signature="project()"/>
+            <function threadsafety="unspecified" name="project" fullname="AnimationFrame::project" href="animationframe.html#project-prop" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="26" virtual="non" meta="plain" const="true" static="false" overload="true" overload-number="2" associated-property="project" type="const Project *" signature="project() const"/>
+            <function threadsafety="unspecified" name="removeLayer" fullname="AnimationFrame::removeLayer" href="animationframe.html#removeLayer" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="43" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="removeLayer(int i)">
+                <parameter left="int" right="" name="i" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="width" fullname="AnimationFrame::width" href="animationframe.html#width-prop" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="31" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="width" type="int" signature="width() const"/>
+            <property threadsafety="unspecified" name="height" fullname="AnimationFrame::height" href="animationframe.html#height-prop" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="19" type="int">
+                <getter name="height"/>
+            </property>
+            <property threadsafety="unspecified" name="layerCount" fullname="AnimationFrame::layerCount" href="animationframe.html#layerCount-prop" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="16" type="int" brief="The number of layers">
+                <getter name="layerCount"/>
+            </property>
+            <property threadsafety="unspecified" name="layers" fullname="AnimationFrame::layers" href="animationframe.html#layers-prop" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="15" type="QList&lt;Layer *&gt;">
+                <getter name="layers"/>
+                <notifier name="layersChanged"/>
+            </property>
+            <property threadsafety="unspecified" name="project" fullname="AnimationFrame::project" href="animationframe.html#project-prop" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="14" type="Project *" brief="The parent Project.">
+                <getter name="project"/>
+                <getter name="project"/>
+            </property>
+            <property threadsafety="unspecified" name="size" fullname="AnimationFrame::size" href="animationframe.html#size-prop" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="17" type="const QSize &amp;" brief="The dimensins of the frame">
+                <getter name="size"/>
+            </property>
+            <property threadsafety="unspecified" name="width" fullname="AnimationFrame::width" href="animationframe.html#width-prop" access="public" status="commendable" location="animationframe.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/animationframe.hpp" lineno="18" type="int">
+                <getter name="width"/>
+            </property>
+        </class>
+        <class threadsafety="unspecified" name="Canvas" href="canvas.html" access="public" status="commendable" location="canvas.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvas.hpp" lineno="6" bases="" module="core" brief="A canvas to paint on.">
+            <function threadsafety="unspecified" name="Canvas" fullname="Canvas::Canvas" href="canvas.html#Canvas" access="public" status="commendable" location="canvas.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvas.hpp" lineno="8" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" brief="Creates a null canvas." signature="Canvas()"/>
+            <function threadsafety="unspecified" name="Canvas" fullname="Canvas::Canvas" href="canvas.html#Canvas-4" access="public" status="commendable" location="canvas.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvas.hpp" lineno="11" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="4" type="" brief="Constructs a canvas that is a copy of given canvas." signature="Canvas(const Canvas &amp; canvas)">
+                <parameter left="const Canvas &amp;" right="" name="canvas" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="Canvas" fullname="Canvas::Canvas" href="canvas.html#Canvas-5" access="public" status="commendable" location="canvas.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvas.hpp" lineno="12" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="5" type="" brief="Constructs a canvas that has the same data as given pixmap." signature="Canvas(const QPixmap &amp; pixmap)">
+                <parameter left="const QPixmap &amp;" right="" name="pixmap" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="Canvas" fullname="Canvas::Canvas" href="canvas.html#Canvas-3" access="public" status="commendable" location="canvas.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvas.hpp" lineno="10" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="3" type="" brief="Constructs a canvas of the given size." signature="Canvas(const QSize &amp; size)">
+                <parameter left="const QSize &amp;" right="" name="size" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="Canvas" fullname="Canvas::Canvas" href="canvas.html#Canvas-2" access="public" status="commendable" location="canvas.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvas.hpp" lineno="9" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="2" type="" brief="Constructs a canvas with the given width and height. If either width or height is zero, a null canvas is constructed." signature="Canvas(int width, int height)">
+                <parameter left="int" right="" name="width" default=""/>
+                <parameter left="int" right="" name="height" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="fill" fullname="Canvas::fill" href="canvas.html#fill" access="public" status="commendable" location="canvas.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvas.hpp" lineno="14" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" brief="Fills the pixmap with the given color." signature="fill(const QColor &amp; color)">
+                <parameter left="const QColor &amp;" right="" name="color" default="Qt::white"/>
+            </function>
+            <function threadsafety="unspecified" name="height" fullname="Canvas::height" href="canvas.html#height" access="public" status="commendable" location="canvas.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvas.hpp" lineno="22" virtual="non" meta="plain" const="true" static="false" overload="false" type="int" brief="Returns height of the canvas." signature="height() const"/>
+            <function threadsafety="unspecified" name="pixmap" fullname="Canvas::pixmap" href="canvas.html#pixmap" access="public" status="commendable" location="canvas.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvas.hpp" lineno="30" virtual="non" meta="plain" const="true" static="false" overload="false" type="const QPixmap &amp;" brief="Returns immutable reference to underlying QPixmap object." signature="pixmap() const"/>
+            <function threadsafety="unspecified" name="setSize" fullname="Canvas::setSize" href="canvas.html#setSize-2" access="public" status="commendable" location="canvas.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvas.hpp" lineno="16" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="void" brief="Changes dimmensions of the canvas to given size." signature="setSize(const QSize &amp; size)">
+                <parameter left="const QSize &amp;" right="" name="size" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="setSize" fullname="Canvas::setSize" href="canvas.html#setSize" access="public" status="commendable" location="canvas.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvas.hpp" lineno="15" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" brief="Changes size of the canvas to given width and height." signature="setSize(int width, int height)">
+                <parameter left="int" right="" name="width" default=""/>
+                <parameter left="int" right="" name="height" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="size" fullname="Canvas::size" href="canvas.html#size" access="public" status="commendable" location="canvas.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvas.hpp" lineno="26" virtual="non" meta="plain" const="true" static="false" overload="false" type="QSize" brief="Returns size of the canvas." signature="size() const"/>
+            <function threadsafety="unspecified" name="width" fullname="Canvas::width" href="canvas.html#width" access="public" status="commendable" location="canvas.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvas.hpp" lineno="18" virtual="non" meta="plain" const="true" static="false" overload="false" type="int" brief="Returns width of the canvas." signature="width() const"/>
+        </class>
+        <class threadsafety="unspecified" name="CanvasView" href="canvasview.html" access="public" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="12" bases="" module="core" brief="A widget for displaying Canvas.">
+            <function threadsafety="unspecified" name="setCanvas" fullname="CanvasView::setCanvas" href="canvasview.html#canvas-prop" access="public" status="commendable" location="canvasview.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.cpp" lineno="70" virtual="non" meta="plain" const="false" static="false" overload="false" associated-property="canvas" type="void" signature="setCanvas(const Canvas * canvas)">
+                <parameter left="const Canvas *" right="" name="canvas" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="setScale" fullname="CanvasView::setScale" href="canvasview.html#scale-prop" access="public" status="commendable" location="canvasview.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.cpp" lineno="86" virtual="non" meta="plain" const="false" static="false" overload="false" associated-property="scale" type="void" signature="setScale(qreal scale)">
+                <parameter left="qreal" right="" name="scale" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="setTranslation" fullname="CanvasView::setTranslation" href="canvasview.html#translation-prop" access="public" status="commendable" location="canvasview.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.cpp" lineno="102" virtual="non" meta="plain" const="false" static="false" overload="false" associated-property="translation" type="void" signature="setTranslation(const QPointF &amp; translation)">
+                <parameter left="const QPointF &amp;" right="" name="translation" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="transform" fullname="CanvasView::transform" href="canvasview.html#transform-prop" access="public" status="commendable" location="canvasview.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.cpp" lineno="123" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="transform" type="QTransform" signature="transform() const"/>
+            <function threadsafety="unspecified" name="CanvasView" fullname="CanvasView::CanvasView" href="canvasview.html#CanvasView" access="public" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="21" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" brief="Contructor." signature="CanvasView(QWidget * parent)">
+                <parameter left="QWidget *" right="" name="parent" default="0"/>
+            </function>
+            <function threadsafety="unspecified" name="canvas" fullname="CanvasView::canvas" href="canvasview.html#canvas-prop" access="public" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="24" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="canvas" type="const Canvas *" signature="canvas() const"/>
+            <function threadsafety="unspecified" name="canvasChanged" fullname="CanvasView::canvasChanged" href="canvasview.html#canvas-prop" access="public" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="43" virtual="non" meta="signal" const="false" static="false" overload="false" associated-property="canvas" type="void" signature="canvasChanged()"/>
+            <function threadsafety="unspecified" name="layOut" fullname="CanvasView::layOut" href="canvasview.html#layOut" access="private" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="59" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" brief="Lays out the child widgets after resize and at creation." signature="layOut()"/>
+            <function threadsafety="unspecified" name="mapFromCanvas" fullname="CanvasView::mapFromCanvas" href="canvasview.html#mapFromCanvas" access="public" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="40" virtual="non" meta="plain" const="true" static="false" overload="false" type="QPointF" brief="Maps point from the coordinate system of the dislayed canvas to view coordinates." signature="mapFromCanvas(const QPointF &amp; point) const">
+                <parameter left="const QPointF &amp;" right="" name="point" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="mapToCanvas" fullname="CanvasView::mapToCanvas" href="canvasview.html#mapToCanvas" access="public" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="39" virtual="non" meta="plain" const="true" static="false" overload="false" type="QPointF" brief="Maps point from view coordinate system to the coordinate system of the dispayed Canvas." signature="mapToCanvas(const QPointF &amp; point) const">
+                <parameter left="const QPointF &amp;" right="" name="point" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="resizeEvent" fullname="CanvasView::resizeEvent" href="canvasview.html#resizeEvent" access="protected" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="49" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" brief="Called when the widget is resized." signature="resizeEvent(QResizeEvent * event)">
+                <parameter left="QResizeEvent *" right="" name="event" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="scale" fullname="CanvasView::scale" href="canvasview.html#scale-prop" access="public" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="29" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" associated-property="scale" type="void" brief="mutiply tcurrent scale by scale." signature="scale(qreal scale)">
+                <parameter left="qreal" right="" name="scale" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="scale" fullname="CanvasView::scale" href="canvasview.html#scale-prop" access="public" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="27" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="scale" type="qreal" signature="scale() const"/>
+            <function threadsafety="unspecified" name="scaleChanged" fullname="CanvasView::scaleChanged" href="canvasview.html#scale-prop" access="public" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="44" virtual="non" meta="signal" const="false" static="false" overload="false" associated-property="scale" type="void" signature="scaleChanged()"/>
+            <function threadsafety="unspecified" name="setTranslation" fullname="CanvasView::setTranslation" href="canvasview.html#translation-prop" access="public" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="33" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" associated-property="translation" type="void" signature="setTranslation(qreal x, qreal y)">
+                <parameter left="qreal" right="" name="x" default=""/>
+                <parameter left="qreal" right="" name="y" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="transformChanged" fullname="CanvasView::transformChanged" href="canvasview.html#transform-prop" access="public" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="46" virtual="non" meta="signal" const="false" static="false" overload="false" associated-property="transform" type="void" signature="transformChanged()"/>
+            <function threadsafety="unspecified" name="translate" fullname="CanvasView::translate" href="canvasview.html#translate" access="public" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="34" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" brief="Adds translation to current translation." signature="translate(const QPointF &amp; translation)">
+                <parameter left="const QPointF &amp;" right="" name="translation" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="translate" fullname="CanvasView::translate" href="canvasview.html#translate-2" access="public" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="35" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="void" brief="Adds (x, y) to current translation." signature="translate(qreal x, qreal y)">
+                <parameter left="qreal" right="" name="x" default=""/>
+                <parameter left="qreal" right="" name="y" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="translation" fullname="CanvasView::translation" href="canvasview.html#translation-prop" access="public" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="31" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="translation" type="QPointF" signature="translation() const"/>
+            <function threadsafety="unspecified" name="translationChanged" fullname="CanvasView::translationChanged" href="canvasview.html#translation-prop" access="public" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="45" virtual="non" meta="signal" const="false" static="false" overload="false" associated-property="translation" type="void" signature="translationChanged()"/>
+            <function threadsafety="unspecified" name="~CanvasView" fullname="CanvasView::~CanvasView" href="canvasview.html#dtor.CanvasView" access="public" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="22" virtual="impure" meta="destructor" const="false" static="false" overload="false" type="" brief="Destroys the CanvasView" signature="~CanvasView()"/>
+            <property threadsafety="unspecified" name="canvas" fullname="CanvasView::canvas" href="canvasview.html#canvas-prop" access="public" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="15" type="const Canvas *" brief="The displayed Canvas.">
+                <getter name="canvas"/>
+                <setter name="setCanvas"/>
+                <notifier name="canvasChanged"/>
+            </property>
+            <property threadsafety="unspecified" name="scale" fullname="CanvasView::scale" href="canvasview.html#scale-prop" access="public" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="16" type="qreal" brief="The zoom factor.">
+                <getter name="scale"/>
+                <getter name="scale"/>
+                <setter name="setScale"/>
+                <notifier name="scaleChanged"/>
+            </property>
+            <property threadsafety="unspecified" name="transform" fullname="CanvasView::transform" href="canvasview.html#transform-prop" access="public" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="18" type="QTransform" brief="Tha transformation for transition from Canvas coordinate system to the view's coordinates.">
+                <getter name="transform"/>
+                <notifier name="transformChanged"/>
+            </property>
+            <property threadsafety="unspecified" name="translation" fullname="CanvasView::translation" href="canvasview.html#translation-prop" access="public" status="commendable" location="canvasview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/canvasview.hpp" lineno="17" type="QPointF" brief="The display offset.">
+                <getter name="translation"/>
+                <setter name="setTranslation"/>
+                <setter name="setTranslation"/>
+                <notifier name="translationChanged"/>
+            </property>
+        </class>
+        <class threadsafety="unspecified" name="Layer" href="layer.html" access="public" status="commendable" location="layer.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/layer.hpp" lineno="12" bases="" module="core" brief="An image layer.">
+            <function threadsafety="unspecified" name="Layer" fullname="Layer::Layer" href="layer.html#Layer" access="public" status="commendable" location="layer.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/layer.hpp" lineno="21" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" brief="Constructor." signature="Layer(AnimationFrame * frame)">
+                <parameter left="AnimationFrame *" right="" name="frame" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="Layer" fullname="Layer::Layer" href="layer.html#Layer-2" access="public" status="commendable" location="layer.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/layer.hpp" lineno="22" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="2" type="" brief="Contructor used for duplicating layers." signature="Layer(const Layer * other, AnimationFrame * frame)">
+                <parameter left="const Layer *" right="" name="other" default=""/>
+                <parameter left="AnimationFrame *" right="" name="frame" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="canvas" fullname="Layer::canvas" href="layer.html#canvas" access="public" status="commendable" location="layer.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/layer.hpp" lineno="26" virtual="non" meta="plain" const="true" static="false" overload="false" type="const Canvas *" signature="canvas() const"/>
+            <function threadsafety="unspecified" name="frame" fullname="Layer::frame" href="layer.html#frame-prop" access="public" status="commendable" location="layer.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/layer.hpp" lineno="24" virtual="non" meta="plain" const="false" static="false" overload="false" associated-property="frame" type="AnimationFrame *" signature="frame()"/>
+            <function threadsafety="unspecified" name="getPainter" fullname="Layer::getPainter" href="layer.html#getPainter" access="public" status="commendable" location="layer.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/layer.hpp" lineno="32" virtual="non" meta="plain" const="false" static="false" overload="false" type="Painter" brief="Gets a Painter bound to the undelying Canvas." signature="getPainter()"/>
+            <function threadsafety="unspecified" name="height" fullname="Layer::height" href="layer.html#height-prop" access="public" status="commendable" location="layer.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/layer.hpp" lineno="29" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="height" type="int" signature="height() const"/>
+            <function threadsafety="unspecified" name="size" fullname="Layer::size" href="layer.html#size-prop" access="public" status="commendable" location="layer.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/layer.hpp" lineno="30" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="size" type="QSize" signature="size() const"/>
+            <function threadsafety="unspecified" name="updateSize" fullname="Layer::updateSize" href="layer.html#updateSize" access="private" status="commendable" location="layer.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/layer.hpp" lineno="38" virtual="non" meta="slot" const="false" static="false" overload="false" type="void" brief="Called when the dimensions of the project change." signature="updateSize()"/>
+            <function threadsafety="unspecified" name="width" fullname="Layer::width" href="layer.html#width-prop" access="public" status="commendable" location="layer.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/layer.hpp" lineno="28" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="width" type="int" signature="width() const"/>
+            <property threadsafety="unspecified" name="frame" fullname="Layer::frame" href="layer.html#frame-prop" access="public" status="commendable" location="layer.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/layer.hpp" lineno="15" type="AnimationFrame *" brief="The parent frame.">
+                <getter name="frame"/>
+            </property>
+            <property threadsafety="unspecified" name="height" fullname="Layer::height" href="layer.html#height-prop" access="public" status="commendable" location="layer.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/layer.hpp" lineno="17" type="int" brief="The height of the canvas">
+                <getter name="height"/>
+            </property>
+            <property threadsafety="unspecified" name="size" fullname="Layer::size" href="layer.html#size-prop" access="public" status="commendable" location="layer.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/layer.hpp" lineno="18" type="QSize" brief="The dimenstions of the canvas">
+                <getter name="size"/>
+            </property>
+            <property threadsafety="unspecified" name="width" fullname="Layer::width" href="layer.html#width-prop" access="public" status="commendable" location="layer.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/layer.hpp" lineno="16" type="int" brief="The width of the canvas">
+                <getter name="width"/>
+            </property>
+        </class>
+        <function threadsafety="unspecified" name="clamp" access="private" status="internal" location="math.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/utils/math.hpp" lineno="10" virtual="non" meta="plain" const="false" static="false" overload="false" type="const T &amp;" signature="clamp(const T &amp; a, const T &amp; min, const T &amp; max)">
+            <parameter left="const T &amp;" right="" name="a" default=""/>
+            <parameter left="const T &amp;" right="" name="min" default=""/>
+            <parameter left="const T &amp;" right="" name="max" default=""/>
+        </function>
+        <function threadsafety="unspecified" name="operator&lt;&lt;" access="private" status="internal" location="debug.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/utils/debug.cpp" lineno="5" virtual="non" meta="plain" const="false" static="false" overload="false" type="QDebug" signature="operator&lt;&lt;(QDebug debug, const QEvent * event)">
+            <parameter left="QDebug" right="" name="debug" default=""/>
+            <parameter left="const QEvent *" right="" name="event" default=""/>
+        </function>
+        <class threadsafety="unspecified" name="DragTool" href="dragtool.html" access="private" status="internal" location="dragtool.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/tools/dragtool.hpp" lineno="8" bases="">
+            <function threadsafety="unspecified" name="DragTool" fullname="DragTool::DragTool" href="dragtool.html#DragTool" access="public" status="commendable" location="dragtool.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/tools/dragtool.cpp" lineno="4" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="DragTool(QObject * parent)">
+                <parameter left="QObject *" right="" name="parent" default="nullptr"/>
+            </function>
+            <function threadsafety="unspecified" name="mouseDragEvent" fullname="DragTool::mouseDragEvent" href="dragtool.html#mouseDragEvent" access="protected" status="commendable" location="dragtool.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/tools/dragtool.cpp" lineno="17" virtual="impure" meta="plain" const="false" static="false" overload="false" type="void" signature="mouseDragEvent(ToolMouseMoveEvent * event)">
+                <parameter left="ToolMouseMoveEvent *" right="" name="event" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="mousePressEvent" fullname="DragTool::mousePressEvent" href="dragtool.html#mousePressEvent" access="protected" status="commendable" location="dragtool.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/tools/dragtool.cpp" lineno="11" virtual="impure" meta="plain" const="false" static="false" overload="false" type="void" signature="mousePressEvent(ToolMouseEvent * event)">
+                <parameter left="ToolMouseEvent *" right="" name="event" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="mouseWheelEvent" fullname="DragTool::mouseWheelEvent" href="dragtool.html#mouseWheelEvent" access="protected" status="commendable" location="dragtool.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/tools/dragtool.cpp" lineno="24" virtual="impure" meta="plain" const="false" static="false" overload="false" type="void" signature="mouseWheelEvent(ToolMouseWheelEvent * event)">
+                <parameter left="ToolMouseWheelEvent *" right="" name="event" default=""/>
+            </function>
+        </class>
+        <class threadsafety="unspecified" name="ToolMouseWheelEvent" href="toolmousewheelevent.html" access="private" status="internal" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="126" bases="">
+            <function threadsafety="unspecified" name="ToolMouseWheelEvent" fullname="ToolMouseWheelEvent::ToolMouseWheelEvent" href="toolmousewheelevent.html#ToolMouseWheelEvent" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="130" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="ToolMouseWheelEvent(QEvent * event, const QPointF &amp; canvasPos, const QPointF &amp; viewPos, const QPoint &amp; pixelDelta, const QPoint &amp; angleDelta, Qt::MouseButtons buttons, Qt::KeyboardModifiers modifiers)">
+                <parameter left="QEvent *" right="" name="event" default=""/>
+                <parameter left="const QPointF &amp;" right="" name="canvasPos" default=""/>
+                <parameter left="const QPointF &amp;" right="" name="viewPos" default=""/>
+                <parameter left="const QPoint &amp;" right="" name="pixelDelta" default=""/>
+                <parameter left="const QPoint &amp;" right="" name="angleDelta" default=""/>
+                <parameter left="Qt::MouseButtons" right="" name="buttons" default=""/>
+                <parameter left="Qt::KeyboardModifiers" right="" name="modifiers" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="angleDelta" fullname="ToolMouseWheelEvent::angleDelta" href="toolmousewheelevent.html#angleDelta" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="146" virtual="non" meta="plain" const="true" static="false" overload="false" type="const QPoint &amp;" signature="angleDelta() const"/>
+            <function threadsafety="unspecified" name="pixelDelta" fullname="ToolMouseWheelEvent::pixelDelta" href="toolmousewheelevent.html#pixelDelta" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="145" virtual="non" meta="plain" const="true" static="false" overload="false" type="const QPoint &amp;" signature="pixelDelta() const"/>
+        </class>
+        <class threadsafety="unspecified" name="ToolMouseMoveEvent" href="toolmousemoveevent.html" access="private" status="internal" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="77" bases="">
+            <function threadsafety="unspecified" name="ToolMouseMoveEvent" fullname="ToolMouseMoveEvent::ToolMouseMoveEvent" href="toolmousemoveevent.html#ToolMouseMoveEvent" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="81" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="ToolMouseMoveEvent(QEvent * event, const QPointF &amp; canvasPos, const QPointF &amp; prevCanvasPos, const QPointF &amp; viewPos, const QPointF &amp; prevAreaPos, Qt::MouseButton button, Qt::MouseButtons buttons, Qt::KeyboardModifiers modifiers)">
+                <parameter left="QEvent *" right="" name="event" default=""/>
+                <parameter left="const QPointF &amp;" right="" name="canvasPos" default=""/>
+                <parameter left="const QPointF &amp;" right="" name="prevCanvasPos" default=""/>
+                <parameter left="const QPointF &amp;" right="" name="viewPos" default=""/>
+                <parameter left="const QPointF &amp;" right="" name="prevAreaPos" default=""/>
+                <parameter left="Qt::MouseButton" right="" name="button" default=""/>
+                <parameter left="Qt::MouseButtons" right="" name="buttons" default=""/>
+                <parameter left="Qt::KeyboardModifiers" right="" name="modifiers" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="dCanvasPos" fullname="ToolMouseMoveEvent::dCanvasPos" href="toolmousemoveevent.html#dCanvasPos" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="111" virtual="non" meta="plain" const="true" static="false" overload="false" type="QPointF" signature="dCanvasPos() const"/>
+            <function threadsafety="unspecified" name="dCanvasX" fullname="ToolMouseMoveEvent::dCanvasX" href="toolmousemoveevent.html#dCanvasX" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="109" virtual="non" meta="plain" const="true" static="false" overload="false" type="qreal" signature="dCanvasX() const"/>
+            <function threadsafety="unspecified" name="dCanvasY" fullname="ToolMouseMoveEvent::dCanvasY" href="toolmousemoveevent.html#dCanvasY" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="110" virtual="non" meta="plain" const="true" static="false" overload="false" type="qreal" signature="dCanvasY() const"/>
+            <function threadsafety="unspecified" name="dPos" fullname="ToolMouseMoveEvent::dPos" href="toolmousemoveevent.html#dPos" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="103" virtual="non" meta="plain" const="true" static="false" overload="false" type="QPointF" signature="dPos() const"/>
+            <function threadsafety="unspecified" name="dViewPos" fullname="ToolMouseMoveEvent::dViewPos" href="toolmousemoveevent.html#dViewPos" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="119" virtual="non" meta="plain" const="true" static="false" overload="false" type="QPointF" signature="dViewPos() const"/>
+            <function threadsafety="unspecified" name="dViewX" fullname="ToolMouseMoveEvent::dViewX" href="toolmousemoveevent.html#dViewX" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="117" virtual="non" meta="plain" const="true" static="false" overload="false" type="qreal" signature="dViewX() const"/>
+            <function threadsafety="unspecified" name="dViewY" fullname="ToolMouseMoveEvent::dViewY" href="toolmousemoveevent.html#dViewY" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="118" virtual="non" meta="plain" const="true" static="false" overload="false" type="qreal" signature="dViewY() const"/>
+            <function threadsafety="unspecified" name="dX" fullname="ToolMouseMoveEvent::dX" href="toolmousemoveevent.html#dX" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="101" virtual="non" meta="plain" const="true" static="false" overload="false" type="qreal" signature="dX() const"/>
+            <function threadsafety="unspecified" name="dY" fullname="ToolMouseMoveEvent::dY" href="toolmousemoveevent.html#dY" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="102" virtual="non" meta="plain" const="true" static="false" overload="false" type="qreal" signature="dY() const"/>
+            <function threadsafety="unspecified" name="prevCanvasPos" fullname="ToolMouseMoveEvent::prevCanvasPos" href="toolmousemoveevent.html#prevCanvasPos" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="107" virtual="non" meta="plain" const="true" static="false" overload="false" type="const QPointF &amp;" signature="prevCanvasPos() const"/>
+            <function threadsafety="unspecified" name="prevCanvasX" fullname="ToolMouseMoveEvent::prevCanvasX" href="toolmousemoveevent.html#prevCanvasX" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="105" virtual="non" meta="plain" const="true" static="false" overload="false" type="qreal" signature="prevCanvasX() const"/>
+            <function threadsafety="unspecified" name="prevCanvasY" fullname="ToolMouseMoveEvent::prevCanvasY" href="toolmousemoveevent.html#prevCanvasY" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="106" virtual="non" meta="plain" const="true" static="false" overload="false" type="qreal" signature="prevCanvasY() const"/>
+            <function threadsafety="unspecified" name="prevPos" fullname="ToolMouseMoveEvent::prevPos" href="toolmousemoveevent.html#prevPos" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="99" virtual="non" meta="plain" const="true" static="false" overload="false" type="const QPointF &amp;" signature="prevPos() const"/>
+            <function threadsafety="unspecified" name="prevViewPos" fullname="ToolMouseMoveEvent::prevViewPos" href="toolmousemoveevent.html#prevViewPos" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="115" virtual="non" meta="plain" const="true" static="false" overload="false" type="const QPointF &amp;" signature="prevViewPos() const"/>
+            <function threadsafety="unspecified" name="prevViewX" fullname="ToolMouseMoveEvent::prevViewX" href="toolmousemoveevent.html#prevViewX" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="113" virtual="non" meta="plain" const="true" static="false" overload="false" type="qreal" signature="prevViewX() const"/>
+            <function threadsafety="unspecified" name="prevViewY" fullname="ToolMouseMoveEvent::prevViewY" href="toolmousemoveevent.html#prevViewY" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="114" virtual="non" meta="plain" const="true" static="false" overload="false" type="qreal" signature="prevViewY() const"/>
+            <function threadsafety="unspecified" name="prevX" fullname="ToolMouseMoveEvent::prevX" href="toolmousemoveevent.html#prevX" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="97" virtual="non" meta="plain" const="true" static="false" overload="false" type="qreal" signature="prevX() const"/>
+            <function threadsafety="unspecified" name="prevY" fullname="ToolMouseMoveEvent::prevY" href="toolmousemoveevent.html#prevY" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="98" virtual="non" meta="plain" const="true" static="false" overload="false" type="qreal" signature="prevY() const"/>
+        </class>
+        <class threadsafety="unspecified" name="Painter" href="painter.html" access="private" status="internal" location="painter.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/painter.hpp" lineno="11" bases="">
+            <function threadsafety="unspecified" name="Painter" fullname="Painter::Painter" href="painter.html#Painter" access="public" status="commendable" location="painter.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/painter.cpp" lineno="7" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="Painter(Canvas &amp; canvas)">
+                <parameter left="Canvas &amp;" right="" name="canvas" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="drawImage" fullname="Painter::drawImage" href="painter.html#drawImage" access="public" status="commendable" location="painter.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/painter.cpp" lineno="13" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="drawImage(QString fileName)">
+                <parameter left="QString" right="" name="fileName" default=""/>
+            </function>
+        </class>
+        <namespace threadsafety="unspecified" name="Ui" href="ui.html" access="private" status="internal" location="palette.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/palette.hpp" lineno="11"/>
+        <class threadsafety="unspecified" name="ColorListModel" href="colorlistmodel.html" access="private" status="internal" location="palette.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/palette.hpp" lineno="16" bases="">
+            <function threadsafety="unspecified" name="ColorListModel" fullname="ColorListModel::ColorListModel" href="colorlistmodel.html#ColorListModel" access="public" status="commendable" location="palette.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/palette.cpp" lineno="7" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="ColorListModel(QObject * parent)">
+                <parameter left="QObject *" right="" name="parent" default="nullptr"/>
+            </function>
+            <function threadsafety="unspecified" name="data" fullname="ColorListModel::data" href="colorlistmodel.html#data" access="public" status="commendable" location="palette.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/palette.cpp" lineno="31" virtual="non" meta="plain" const="true" static="false" overload="false" type="QVariant" signature="data(const QModelIndex &amp; index, int role) const">
+                <parameter left="const QModelIndex &amp;" right="" name="index" default=""/>
+                <parameter left="int" right="" name="role" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="flags" fullname="ColorListModel::flags" href="colorlistmodel.html#flags" access="public" status="commendable" location="palette.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/palette.cpp" lineno="21" virtual="non" meta="plain" const="true" static="false" overload="false" type="Qt::ItemFlags" signature="flags(const QModelIndex &amp; index) const">
+                <parameter left="const QModelIndex &amp;" right="" name="index" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="insertRows" fullname="ColorListModel::insertRows" href="colorlistmodel.html#insertRows" access="public" status="commendable" location="palette.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/palette.cpp" lineno="57" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" signature="insertRows(int row, int count, const QModelIndex &amp; parent)">
+                <parameter left="int" right="" name="row" default=""/>
+                <parameter left="int" right="" name="count" default=""/>
+                <parameter left="const QModelIndex &amp;" right="" name="parent" default="QModelIndex()"/>
+            </function>
+            <function threadsafety="unspecified" name="removeRows" fullname="ColorListModel::removeRows" href="colorlistmodel.html#removeRows" access="public" status="commendable" location="palette.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/palette.cpp" lineno="68" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" signature="removeRows(int row, int count, const QModelIndex &amp; parent)">
+                <parameter left="int" right="" name="row" default=""/>
+                <parameter left="int" right="" name="count" default=""/>
+                <parameter left="const QModelIndex &amp;" right="" name="parent" default="QModelIndex()"/>
+            </function>
+            <function threadsafety="unspecified" name="rowCount" fullname="ColorListModel::rowCount" href="colorlistmodel.html#rowCount" access="public" status="commendable" location="palette.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/palette.cpp" lineno="13" virtual="non" meta="plain" const="true" static="false" overload="false" type="int" signature="rowCount(const QModelIndex &amp; parent) const">
+                <parameter left="const QModelIndex &amp;" right="" name="parent" default="QModelIndex()"/>
+            </function>
+            <function threadsafety="unspecified" name="setData" fullname="ColorListModel::setData" href="colorlistmodel.html#setData" access="public" status="commendable" location="palette.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/palette.cpp" lineno="45" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" signature="setData(const QModelIndex &amp; index, const QVariant &amp; value, int role)">
+                <parameter left="const QModelIndex &amp;" right="" name="index" default=""/>
+                <parameter left="const QVariant &amp;" right="" name="value" default=""/>
+                <parameter left="int" right="" name="role" default="Qt::EditRole"/>
+            </function>
+        </class>
+        <class threadsafety="unspecified" name="ColorDialogDelegate" href="colordialogdelegate.html" access="private" status="internal" location="palette.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/palette.hpp" lineno="37" bases="">
+            <function threadsafety="unspecified" name="ColorDialogDelegate" fullname="ColorDialogDelegate::ColorDialogDelegate" href="colordialogdelegate.html#ColorDialogDelegate" access="public" status="commendable" location="palette.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/palette.cpp" lineno="80" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="ColorDialogDelegate(QObject * parent)">
+                <parameter left="QObject *" right="" name="parent" default="nullptr"/>
+            </function>
+            <function threadsafety="unspecified" name="createEditor" fullname="ColorDialogDelegate::createEditor" href="colordialogdelegate.html#createEditor" access="public" status="commendable" location="palette.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/palette.cpp" lineno="86" virtual="non" meta="plain" const="true" static="false" overload="false" type="QWidget *" signature="createEditor(QWidget * parent, const QStyleOptionViewItem &amp; option, const QModelIndex &amp; index) const">
+                <parameter left="QWidget *" right="" name="parent" default=""/>
+                <parameter left="const QStyleOptionViewItem &amp;" right="" name="option" default=""/>
+                <parameter left="const QModelIndex &amp;" right="" name="index" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="setEditorData" fullname="ColorDialogDelegate::setEditorData" href="colordialogdelegate.html#setEditorData" access="public" status="commendable" location="palette.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/palette.cpp" lineno="96" virtual="non" meta="plain" const="true" static="false" overload="false" type="void" signature="setEditorData(QWidget * editor, const QModelIndex &amp; index) const">
+                <parameter left="QWidget *" right="" name="editor" default=""/>
+                <parameter left="const QModelIndex &amp;" right="" name="index" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="setModelData" fullname="ColorDialogDelegate::setModelData" href="colordialogdelegate.html#setModelData" access="public" status="commendable" location="palette.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/palette.cpp" lineno="105" virtual="non" meta="plain" const="true" static="false" overload="false" type="void" signature="setModelData(QWidget * editor, QAbstractItemModel * model, const QModelIndex &amp; index) const">
+                <parameter left="QWidget *" right="" name="editor" default=""/>
+                <parameter left="QAbstractItemModel *" right="" name="model" default=""/>
+                <parameter left="const QModelIndex &amp;" right="" name="index" default=""/>
+            </function>
+        </class>
+        <class threadsafety="unspecified" name="Palette" href="palette.html" access="private" status="internal" location="palette.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/palette.hpp" lineno="50" bases="">
+            <function threadsafety="unspecified" name="Palette" fullname="Palette::Palette" href="palette.html#Palette" access="public" status="commendable" location="palette.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/palette.cpp" lineno="112" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="Palette(QWidget * parent)">
+                <parameter left="QWidget *" right="" name="parent" default="nullptr"/>
+            </function>
+            <function threadsafety="unspecified" name="on_addButton_clicked" fullname="Palette::on_addButton_clicked" href="palette.html#on_addButton_clicked" access="private" status="commendable" location="palette.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/palette.cpp" lineno="132" virtual="non" meta="slot" const="false" static="false" overload="false" type="void" signature="on_addButton_clicked()"/>
+            <function threadsafety="unspecified" name="on_removeButton_clicked" fullname="Palette::on_removeButton_clicked" href="palette.html#on_removeButton_clicked" access="private" status="commendable" location="palette.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/palette.cpp" lineno="138" virtual="non" meta="slot" const="false" static="false" overload="false" type="void" signature="on_removeButton_clicked()"/>
+            <function threadsafety="unspecified" name="~Palette" fullname="Palette::~Palette" href="palette.html#dtor.Palette" access="public" status="commendable" location="palette.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/palette.cpp" lineno="126" virtual="non" meta="destructor" const="false" static="false" overload="false" type="" signature="~Palette()"/>
+        </class>
+        <class threadsafety="unspecified" name="Project" href="project.html" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="10" bases="" module="core" brief="The root of Apricot data model.">
+            <function threadsafety="unspecified" name="Project" fullname="Project::Project" href="project.html#Project" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="19" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" brief="Constructs Project with parent object parent." signature="Project(QObject * parent)">
+                <parameter left="QObject *" right="" name="parent" default="nullptr"/>
+            </function>
+            <function threadsafety="unspecified" name="frame" fullname="Project::frame" href="project.html#frame" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="30" virtual="non" meta="plain" const="false" static="false" overload="false" type="AnimationFrame *" brief="Returns AnimationFrame at index i." signature="frame(int i)">
+                <parameter left="int" right="" name="i" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="frameCount" fullname="Project::frameCount" href="project.html#frameCount-prop" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="28" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="frameCount" type="int" signature="frameCount() const"/>
+            <function threadsafety="unspecified" name="framesChanged" fullname="Project::framesChanged" href="project.html#framesChanged" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="44" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" brief="Emitted when animation frames are added, removed or change order." signature="framesChanged()"/>
+            <function threadsafety="unspecified" name="height" fullname="Project::height" href="project.html#height-prop" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="26" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="height" type="int" signature="height() const"/>
+            <function threadsafety="unspecified" name="indexOfFrame" fullname="Project::indexOfFrame" href="project.html#indexOfFrame" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="32" virtual="non" meta="plain" const="true" static="false" overload="false" type="int" brief="Returns index of frame." signature="indexOfFrame(const AnimationFrame * frame) const">
+                <parameter left="const AnimationFrame *" right="" name="frame" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="layersChanged" fullname="Project::layersChanged" href="project.html#layersChanged" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="45" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" brief="Emitted when layers are added, removed or change order." signature="layersChanged()"/>
+            <function threadsafety="unspecified" name="moveFrame" fullname="Project::moveFrame" href="project.html#moveFrame-2" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="40" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="void" signature="moveFrame(const AnimationFrame * frame, int to)">
+                <parameter left="const AnimationFrame *" right="" name="frame" default=""/>
+                <parameter left="int" right="" name="to" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="moveFrame" fullname="Project::moveFrame" href="project.html#moveFrame" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="39" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="moveFrame(int from, int to)">
+                <parameter left="int" right="" name="from" default=""/>
+                <parameter left="int" right="" name="to" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="newFrame" fullname="Project::newFrame" href="project.html#newFrame-2" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="35" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="AnimationFrame *" brief="Creats new AnimationFrame at the end of animation and returns it." signature="newFrame()"/>
+            <function threadsafety="unspecified" name="newFrame" fullname="Project::newFrame" href="project.html#newFrame" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="34" virtual="non" meta="plain" const="false" static="false" overload="false" type="AnimationFrame *" brief="Creates new AnimationFrame at index i and returns it." signature="newFrame(int i)">
+                <parameter left="int" right="" name="i" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="removeFrame" fullname="Project::removeFrame" href="project.html#removeFrame" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="37" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="removeFrame(int i)">
+                <parameter left="int" right="" name="i" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="setSize" fullname="Project::setSize" href="project.html#size-prop" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="22" virtual="non" meta="plain" const="false" static="false" overload="false" associated-property="size" type="void" signature="setSize(QSize const &amp; size)">
+                <parameter left="QSize const &amp;" right="" name="size" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="setSize" fullname="Project::setSize" href="project.html#size-prop" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="23" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" associated-property="size" type="void" signature="setSize(int width, int height)">
+                <parameter left="int" right="" name="width" default=""/>
+                <parameter left="int" right="" name="height" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="size" fullname="Project::size" href="project.html#size-prop" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="21" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="size" type="const QSize &amp;" signature="size() const"/>
+            <function threadsafety="unspecified" name="sizeChanged" fullname="Project::sizeChanged" href="project.html#size-prop" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="43" virtual="non" meta="signal" const="false" static="false" overload="false" associated-property="size" type="void" signature="sizeChanged()"/>
+            <function threadsafety="unspecified" name="width" fullname="Project::width" href="project.html#width-prop" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="25" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="width" type="int" signature="width() const"/>
+            <property threadsafety="unspecified" name="frameCount" fullname="Project::frameCount" href="project.html#frameCount-prop" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="16" type="int" brief="The number of animation frames">
+                <getter name="frameCount"/>
+            </property>
+            <property threadsafety="unspecified" name="height" fullname="Project::height" href="project.html#height-prop" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="15" type="int" brief="The height of the image">
+                <getter name="height"/>
+            </property>
+            <property threadsafety="unspecified" name="size" fullname="Project::size" href="project.html#size-prop" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="13" type="const QSize &amp;" brief="The dimensions of the image">
+                <getter name="size"/>
+                <setter name="setSize"/>
+                <setter name="setSize"/>
+                <notifier name="sizeChanged"/>
+            </property>
+            <property threadsafety="unspecified" name="width" fullname="Project::width" href="project.html#width-prop" access="public" status="commendable" location="project.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/project.hpp" lineno="14" type="int" brief="The width of the image">
+                <getter name="width"/>
+            </property>
+        </class>
+        <class threadsafety="unspecified" name="Tool" href="tool.html" access="private" status="internal" location="tool.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/tool.hpp" lineno="13" bases="">
+            <function threadsafety="unspecified" name="Tool" fullname="Tool::Tool" href="tool.html#Tool" access="public" status="commendable" location="tool.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/tool.cpp" lineno="6" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="Tool(QObject * parent)">
+                <parameter left="QObject *" right="" name="parent" default="nullptr"/>
+            </function>
+            <function threadsafety="unspecified" name="mouseDoubleClickEvent" fullname="Tool::mouseDoubleClickEvent" href="tool.html#mouseDoubleClickEvent" access="protected" status="commendable" location="tool.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/tool.cpp" lineno="37" virtual="impure" meta="plain" const="false" static="false" overload="false" type="void" signature="mouseDoubleClickEvent(ToolMouseEvent * event)">
+                <parameter left="ToolMouseEvent *" right="" name="event" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="mouseDragEvent" fullname="Tool::mouseDragEvent" href="tool.html#mouseDragEvent" access="protected" status="commendable" location="tool.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/tool.cpp" lineno="49" virtual="impure" meta="plain" const="false" static="false" overload="false" type="void" signature="mouseDragEvent(ToolMouseMoveEvent * event)">
+                <parameter left="ToolMouseMoveEvent *" right="" name="event" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="mouseHoverEvent" fullname="Tool::mouseHoverEvent" href="tool.html#mouseHoverEvent" access="protected" status="commendable" location="tool.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/tool.cpp" lineno="43" virtual="impure" meta="plain" const="false" static="false" overload="false" type="void" signature="mouseHoverEvent(ToolMouseMoveEvent * event)">
+                <parameter left="ToolMouseMoveEvent *" right="" name="event" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="mousePressEvent" fullname="Tool::mousePressEvent" href="tool.html#mousePressEvent" access="protected" status="commendable" location="tool.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/tool.cpp" lineno="25" virtual="impure" meta="plain" const="false" static="false" overload="false" type="void" signature="mousePressEvent(ToolMouseEvent * event)">
+                <parameter left="ToolMouseEvent *" right="" name="event" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="mouseReleaseEvent" fullname="Tool::mouseReleaseEvent" href="tool.html#mouseReleaseEvent" access="protected" status="commendable" location="tool.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/tool.cpp" lineno="31" virtual="impure" meta="plain" const="false" static="false" overload="false" type="void" signature="mouseReleaseEvent(ToolMouseEvent * event)">
+                <parameter left="ToolMouseEvent *" right="" name="event" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="mouseWheelEvent" fullname="Tool::mouseWheelEvent" href="tool.html#mouseWheelEvent" access="protected" status="commendable" location="tool.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/tool.cpp" lineno="55" virtual="impure" meta="plain" const="false" static="false" overload="false" type="void" signature="mouseWheelEvent(ToolMouseWheelEvent * event)">
+                <parameter left="ToolMouseWheelEvent *" right="" name="event" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="onActivated" fullname="Tool::onActivated" href="tool.html#onActivated" access="protected" status="commendable" location="tool.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/tool.cpp" lineno="13" virtual="impure" meta="plain" const="false" static="false" overload="false" type="void" signature="onActivated()"/>
+            <function threadsafety="unspecified" name="onDeactivating" fullname="Tool::onDeactivating" href="tool.html#onDeactivating" access="protected" status="commendable" location="tool.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/tool.cpp" lineno="19" virtual="impure" meta="plain" const="false" static="false" overload="false" type="void" signature="onDeactivating()"/>
+            <function threadsafety="unspecified" name="setActionArea" fullname="Tool::setActionArea" href="tool.html#setActionArea" access="private" status="commendable" location="tool.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/tool.cpp" lineno="61" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setActionArea(ToolActionArea * actionArea)">
+                <parameter left="ToolActionArea *" right="" name="actionArea" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="actionArea" fullname="Tool::actionArea" href="tool.html#actionArea-prop" access="public" status="commendable" location="tool.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/tool.hpp" lineno="22" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="actionArea" type="ToolActionArea *" signature="actionArea() const"/>
+            <function threadsafety="unspecified" name="actionAreaChanged" fullname="Tool::actionAreaChanged" href="tool.html#actionArea-prop" access="public" status="commendable" location="tool.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/tool.hpp" lineno="27" virtual="non" meta="signal" const="false" static="false" overload="false" associated-property="actionArea" type="void" signature="actionAreaChanged()"/>
+            <function threadsafety="unspecified" name="activated" fullname="Tool::activated" href="tool.html#activated" access="public" status="commendable" location="tool.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/tool.hpp" lineno="29" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="activated()"/>
+            <function threadsafety="unspecified" name="active" fullname="Tool::active" href="tool.html#active-prop" access="public" status="commendable" location="tool.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/tool.hpp" lineno="24" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="active" type="bool" signature="active() const"/>
+            <function threadsafety="unspecified" name="activeChanged" fullname="Tool::activeChanged" href="tool.html#active-prop" access="public" status="commendable" location="tool.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/tool.hpp" lineno="28" virtual="non" meta="signal" const="false" static="false" overload="false" associated-property="active" type="void" signature="activeChanged()"/>
+            <function threadsafety="unspecified" name="deactivated" fullname="Tool::deactivated" href="tool.html#deactivated" access="public" status="commendable" location="tool.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/tool.hpp" lineno="31" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="deactivated()"/>
+            <function threadsafety="unspecified" name="deactivating" fullname="Tool::deactivating" href="tool.html#deactivating" access="public" status="commendable" location="tool.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/tool.hpp" lineno="30" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="deactivating()"/>
+            <property threadsafety="unspecified" name="actionArea" fullname="Tool::actionArea" href="tool.html#actionArea-prop" access="public" status="commendable" location="tool.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/tool.hpp" lineno="16" type="ToolActionArea *">
+                <getter name="actionArea"/>
+                <notifier name="actionAreaChanged"/>
+            </property>
+            <property threadsafety="unspecified" name="active" fullname="Tool::active" href="tool.html#active-prop" access="public" status="commendable" location="tool.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/tool.hpp" lineno="17" type="bool">
+                <getter name="active"/>
+                <notifier name="activeChanged"/>
+            </property>
+        </class>
+        <class threadsafety="unspecified" name="ToolActionArea" href="toolactionarea.html" access="private" status="internal" location="toolactionarea.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolactionarea.hpp" lineno="10" bases="CanvasView">
+            <function threadsafety="unspecified" name="ToolActionArea" fullname="ToolActionArea::ToolActionArea" href="toolactionarea.html#ToolActionArea" access="public" status="commendable" location="toolactionarea.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolactionarea.cpp" lineno="8" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="ToolActionArea(QWidget * parent)">
+                <parameter left="QWidget *" right="" name="parent" default="nullptr"/>
+            </function>
+            <function threadsafety="unspecified" name="dispatchHoverMoveEvent" fullname="ToolActionArea::dispatchHoverMoveEvent" href="toolactionarea.html#dispatchHoverMoveEvent" access="protected" status="commendable" location="toolactionarea.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolactionarea.cpp" lineno="148" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="dispatchHoverMoveEvent(QHoverEvent * event)">
+                <parameter left="QHoverEvent *" right="" name="event" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="dispatchMouseDoubleClickEvent" fullname="ToolActionArea::dispatchMouseDoubleClickEvent" href="toolactionarea.html#dispatchMouseDoubleClickEvent" access="protected" status="commendable" location="toolactionarea.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolactionarea.cpp" lineno="114" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="dispatchMouseDoubleClickEvent(QMouseEvent * event)">
+                <parameter left="QMouseEvent *" right="" name="event" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="dispatchMouseMoveEvent" fullname="ToolActionArea::dispatchMouseMoveEvent" href="toolactionarea.html#dispatchMouseMoveEvent" access="protected" status="commendable" location="toolactionarea.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolactionarea.cpp" lineno="128" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="dispatchMouseMoveEvent(QMouseEvent * event)">
+                <parameter left="QMouseEvent *" right="" name="event" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="dispatchMousePressEvent" fullname="ToolActionArea::dispatchMousePressEvent" href="toolactionarea.html#dispatchMousePressEvent" access="protected" status="commendable" location="toolactionarea.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolactionarea.cpp" lineno="79" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="dispatchMousePressEvent(QMouseEvent * event)">
+                <parameter left="QMouseEvent *" right="" name="event" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="dispatchMouseReleaseEvent" fullname="ToolActionArea::dispatchMouseReleaseEvent" href="toolactionarea.html#dispatchMouseReleaseEvent" access="protected" status="commendable" location="toolactionarea.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolactionarea.cpp" lineno="99" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="dispatchMouseReleaseEvent(QMouseEvent * event)">
+                <parameter left="QMouseEvent *" right="" name="event" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="dispatchWheelEvent" fullname="ToolActionArea::dispatchWheelEvent" href="toolactionarea.html#dispatchWheelEvent" access="protected" status="commendable" location="toolactionarea.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolactionarea.cpp" lineno="164" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="dispatchWheelEvent(QWheelEvent * event)">
+                <parameter left="QWheelEvent *" right="" name="event" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="event" fullname="ToolActionArea::event" href="toolactionarea.html#event" access="protected" status="commendable" location="toolactionarea.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolactionarea.cpp" lineno="35" virtual="impure" meta="plain" const="false" static="false" overload="false" type="bool" signature="event(QEvent * event)">
+                <parameter left="QEvent *" right="" name="event" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="setTool" fullname="ToolActionArea::setTool" href="toolactionarea.html#tool-prop" access="public" status="commendable" location="toolactionarea.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolactionarea.cpp" lineno="18" virtual="non" meta="plain" const="false" static="false" overload="false" associated-property="tool" type="void" signature="setTool(Tool * tool)">
+                <parameter left="Tool *" right="" name="tool" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="active" fullname="ToolActionArea::active" href="toolactionarea.html#active-prop" access="public" status="commendable" location="toolactionarea.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolactionarea.hpp" lineno="22" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="active" type="bool" signature="active() const"/>
+            <function threadsafety="unspecified" name="activeChanged" fullname="ToolActionArea::activeChanged" href="toolactionarea.html#active-prop" access="public" status="commendable" location="toolactionarea.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolactionarea.hpp" lineno="26" virtual="non" meta="signal" const="false" static="false" overload="false" associated-property="active" type="void" signature="activeChanged()"/>
+            <function threadsafety="unspecified" name="applyToolToCanvas" fullname="ToolActionArea::applyToolToCanvas" href="toolactionarea.html#applyToolToCanvas" access="private" status="commendable" location="toolactionarea.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolactionarea.hpp" lineno="50" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="applyToolToCanvas(bool preview)">
+                <parameter left="bool" right="" name="preview" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="tool" fullname="ToolActionArea::tool" href="toolactionarea.html#tool-prop" access="public" status="commendable" location="toolactionarea.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolactionarea.hpp" lineno="19" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="tool" type="Tool *" signature="tool() const"/>
+            <function threadsafety="unspecified" name="toolChanged" fullname="ToolActionArea::toolChanged" href="toolactionarea.html#tool-prop" access="public" status="commendable" location="toolactionarea.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolactionarea.hpp" lineno="25" virtual="non" meta="signal" const="false" static="false" overload="false" associated-property="tool" type="void" signature="toolChanged()"/>
+            <property threadsafety="unspecified" name="active" fullname="ToolActionArea::active" href="toolactionarea.html#active-prop" access="public" status="commendable" location="toolactionarea.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolactionarea.hpp" lineno="14" type="bool">
+                <getter name="active"/>
+                <notifier name="activeChanged"/>
+            </property>
+            <property threadsafety="unspecified" name="tool" fullname="ToolActionArea::tool" href="toolactionarea.html#tool-prop" access="public" status="commendable" location="toolactionarea.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolactionarea.hpp" lineno="13" type="Tool *">
+                <getter name="tool"/>
+                <setter name="setTool"/>
+                <notifier name="toolChanged"/>
+            </property>
+        </class>
+        <class threadsafety="unspecified" name="ToolEvent" href="toolevent.html" access="private" status="internal" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="11" bases="">
+            <function threadsafety="unspecified" name="ToolEvent" fullname="ToolEvent::ToolEvent" href="toolevent.html#ToolEvent" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="14" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="ToolEvent(QEvent * event, Qt::KeyboardModifiers modifiers)">
+                <parameter left="QEvent *" right="" name="event" default=""/>
+                <parameter left="Qt::KeyboardModifiers" right="" name="modifiers" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="accept" fullname="ToolEvent::accept" href="toolevent.html#accept" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="25" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="accept()"/>
+            <function threadsafety="unspecified" name="accepted" fullname="ToolEvent::accepted" href="toolevent.html#accepted" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="23" virtual="non" meta="plain" const="true" static="false" overload="false" type="bool" signature="accepted() const"/>
+            <function threadsafety="unspecified" name="ignore" fullname="ToolEvent::ignore" href="toolevent.html#ignore" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="26" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="ignore()"/>
+            <function threadsafety="unspecified" name="modifiers" fullname="ToolEvent::modifiers" href="toolevent.html#modifiers" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="28" virtual="non" meta="plain" const="false" static="false" overload="false" type="Qt::KeyboardModifiers" signature="modifiers()"/>
+            <function threadsafety="unspecified" name="setAccepted" fullname="ToolEvent::setAccepted" href="toolevent.html#setAccepted" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="24" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setAccepted(bool accepted)">
+                <parameter left="bool" right="" name="accepted" default=""/>
+            </function>
+        </class>
+        <class threadsafety="unspecified" name="ToolMouseEvent" href="toolmouseevent.html" access="private" status="internal" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="35" bases="">
+            <function threadsafety="unspecified" name="ToolMouseEvent" fullname="ToolMouseEvent::ToolMouseEvent" href="toolmouseevent.html#ToolMouseEvent" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="39" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="ToolMouseEvent(QEvent * event, const QPointF &amp; canvasPos, const QPointF &amp; viewPos, Qt::MouseButton button, Qt::MouseButtons buttons, Qt::KeyboardModifiers modifiers)">
+                <parameter left="QEvent *" right="" name="event" default=""/>
+                <parameter left="const QPointF &amp;" right="" name="canvasPos" default=""/>
+                <parameter left="const QPointF &amp;" right="" name="viewPos" default=""/>
+                <parameter left="Qt::MouseButton" right="" name="button" default=""/>
+                <parameter left="Qt::MouseButtons" right="" name="buttons" default=""/>
+                <parameter left="Qt::KeyboardModifiers" right="" name="modifiers" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="button" fullname="ToolMouseEvent::button" href="toolmouseevent.html#button" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="67" virtual="non" meta="plain" const="true" static="false" overload="false" type="Qt::MouseButton" signature="button() const"/>
+            <function threadsafety="unspecified" name="buttons" fullname="ToolMouseEvent::buttons" href="toolmouseevent.html#buttons" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="68" virtual="non" meta="plain" const="true" static="false" overload="false" type="Qt::MouseButtons" signature="buttons() const"/>
+            <function threadsafety="unspecified" name="canvasPos" fullname="ToolMouseEvent::canvasPos" href="toolmouseevent.html#canvasPos" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="61" virtual="non" meta="plain" const="true" static="false" overload="false" type="const QPointF &amp;" signature="canvasPos() const"/>
+            <function threadsafety="unspecified" name="canvasX" fullname="ToolMouseEvent::canvasX" href="toolmouseevent.html#canvasX" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="59" virtual="non" meta="plain" const="true" static="false" overload="false" type="qreal" signature="canvasX() const"/>
+            <function threadsafety="unspecified" name="canvasY" fullname="ToolMouseEvent::canvasY" href="toolmouseevent.html#canvasY" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="60" virtual="non" meta="plain" const="true" static="false" overload="false" type="qreal" signature="canvasY() const"/>
+            <function threadsafety="unspecified" name="pos" fullname="ToolMouseEvent::pos" href="toolmouseevent.html#pos" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="57" virtual="non" meta="plain" const="true" static="false" overload="false" type="const QPointF &amp;" signature="pos() const"/>
+            <function threadsafety="unspecified" name="viewPos" fullname="ToolMouseEvent::viewPos" href="toolmouseevent.html#viewPos" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="65" virtual="non" meta="plain" const="true" static="false" overload="false" type="const QPointF &amp;" signature="viewPos() const"/>
+            <function threadsafety="unspecified" name="viewX" fullname="ToolMouseEvent::viewX" href="toolmouseevent.html#viewX" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="63" virtual="non" meta="plain" const="true" static="false" overload="false" type="qreal" signature="viewX() const"/>
+            <function threadsafety="unspecified" name="viewY" fullname="ToolMouseEvent::viewY" href="toolmouseevent.html#viewY" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="64" virtual="non" meta="plain" const="true" static="false" overload="false" type="qreal" signature="viewY() const"/>
+            <function threadsafety="unspecified" name="x" fullname="ToolMouseEvent::x" href="toolmouseevent.html#x" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="55" virtual="non" meta="plain" const="true" static="false" overload="false" type="qreal" signature="x() const"/>
+            <function threadsafety="unspecified" name="y" fullname="ToolMouseEvent::y" href="toolmouseevent.html#y" access="public" status="commendable" location="toolevents.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/core/toolevents.hpp" lineno="56" virtual="non" meta="plain" const="true" static="false" overload="false" type="qreal" signature="y() const"/>
+        </class>
+        <class threadsafety="unspecified" name="Application" href="application.html" access="public" status="commendable" location="application.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/main/application.hpp" lineno="8" bases="" module="main" brief="Hold the application state and contains the entry point. It is a singleton.">
+            <function threadsafety="unspecified" name="project" fullname="Application::project" href="application.html#project-prop" access="public" status="commendable" location="application.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/main/application.cpp" lineno="31" virtual="non" meta="plain" const="false" static="false" overload="false" associated-property="project" type="Project *" signature="project()"/>
+            <function threadsafety="unspecified" name="Application" fullname="Application::Application" href="application.html#Application" access="public" status="commendable" location="application.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/main/application.hpp" lineno="14" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" brief="Constructor which is an entry point for the application." signature="Application(int &amp; argc, char ** argv)">
+                <parameter left="int &amp;" right="" name="argc" default=""/>
+                <parameter left="char **" right="" name="argv" default=""/>
+            </function>
+            <property threadsafety="unspecified" name="project" fullname="Application::project" href="application.html#project-prop" access="public" status="commendable" location="application.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/main/application.hpp" lineno="11" type="Project *" brief="The root of application data model.">
+                <getter name="project"/>
+            </property>
+        </class>
+        <class threadsafety="unspecified" name="MainWindow" href="mainwindow.html" access="public" status="commendable" location="mainwindow.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/main/mainwindow.hpp" lineno="10" bases="" module="main" brief="The Main Window class.">
+            <function threadsafety="unspecified" name="MainWindow" fullname="MainWindow::MainWindow" href="mainwindow.html#MainWindow" access="public" status="commendable" location="mainwindow.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/main/mainwindow.hpp" lineno="15" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="MainWindow(QWidget * parent)">
+                <parameter left="QWidget *" right="" name="parent" default="0"/>
+            </function>
+            <function threadsafety="unspecified" name="~MainWindow" fullname="MainWindow::~MainWindow" href="mainwindow.html#dtor.MainWindow" access="public" status="commendable" location="mainwindow.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/main/mainwindow.hpp" lineno="16" virtual="non" meta="destructor" const="false" static="false" overload="false" type="" signature="~MainWindow()"/>
+        </class>
+        <class threadsafety="unspecified" name="AnimationView" href="animationview.html" access="public" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="17" bases="" module="view" brief="A widget to manage animation frames">
+            <function threadsafety="unspecified" name="setProject" fullname="AnimationView::setProject" href="animationview.html#project-prop" access="public" status="commendable" location="animationview.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.cpp" lineno="47" virtual="non" meta="plain" const="false" static="false" overload="false" associated-property="project" type="void" signature="setProject(Project * project)">
+                <parameter left="Project *" right="" name="project" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="AnimationView" fullname="AnimationView::AnimationView" href="animationview.html#AnimationView" access="public" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="23" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" brief="Constructs AnimationView with parent widget parent." signature="AnimationView(QWidget * parent)">
+                <parameter left="QWidget *" right="" name="parent" default="0"/>
+            </function>
+            <function threadsafety="unspecified" name="eventFilter" fullname="AnimationView::eventFilter" href="animationview.html#eventFilter" access="protected" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="33" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" brief="Filters events if this view has been installed as an event filter for object." signature="eventFilter(QObject * object, QEvent * event)">
+                <parameter left="QObject *" right="" name="object" default=""/>
+                <parameter left="QEvent *" right="" name="event" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="project" fullname="AnimationView::project" href="animationview.html#project-prop" access="public" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="25" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="project" type="Project *" signature="project() const"/>
+            <function threadsafety="unspecified" name="projectChanged" fullname="AnimationView::projectChanged" href="animationview.html#project-prop" access="public" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="29" virtual="non" meta="signal" const="false" static="false" overload="false" associated-property="project" type="void" signature="projectChanged()"/>
+            <function threadsafety="unspecified" name="resizeEvent" fullname="AnimationView::resizeEvent" href="animationview.html#resizeEvent" access="protected" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="32" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" brief="Occurs when the widget is resized." signature="resizeEvent(QResizeEvent * event)">
+                <parameter left="QResizeEvent *" right="" name="event" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="setupScene" fullname="AnimationView::setupScene" href="animationview.html#setupScene" access="private" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="50" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" brief="Creates the scene." signature="setupScene()"/>
+            <function threadsafety="unspecified" name="layOut" fullname="AnimationView::layOut" href="animationview.html#layOut" access="private" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="52" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" brief="Lays out the child widgets and graphics scene." signature="layOut()"/>
+            <function threadsafety="unspecified" name="layOutScene" fullname="AnimationView::layOutScene" href="animationview.html#layOutScene" access="private" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="53" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" brief="Lays out the scene items." signature="layOutScene(bool animate)">
+                <parameter left="bool" right="" name="animate" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="layOutItems" fullname="AnimationView::layOutItems" href="animationview.html#layOutItems" access="private" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="54" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" brief="Lays out scene items that represent the animation frames." signature="layOutItems(bool animate)">
+                <parameter left="bool" right="" name="animate" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="tryBeginDrag" fullname="AnimationView::tryBeginDrag" href="animationview.html#tryBeginDrag" access="private" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="56" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" brief="Initiates dragging." signature="tryBeginDrag(QPointF dragBeginPos)">
+                <parameter left="QPointF" right="" name="dragBeginPos" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="drag" fullname="AnimationView::drag" href="animationview.html#drag" access="private" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="57" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" brief="Performs dragging." signature="drag(QPointF dPos)">
+                <parameter left="QPointF" right="" name="dPos" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="endDrag" fullname="AnimationView::endDrag" href="animationview.html#endDrag" access="private" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="58" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" brief="Finalizes dragging." signature="endDrag()"/>
+            <property threadsafety="unspecified" name="project" fullname="AnimationView::project" href="animationview.html#project-prop" access="public" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="20" type="Project *" brief="The project the animation frames of which are displayed.">
+                <getter name="project"/>
+                <setter name="setProject"/>
+                <notifier name="projectChanged"/>
+            </property>
+        </class>
+        <class threadsafety="unspecified" name="AnimationViewItem" href="animationviewitem.html" access="public" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="61" bases="" module="view" brief="QGraphicsItem to visualize a frame thumbnail in AnimationView.">
+            <function threadsafety="unspecified" name="AnimationViewItem" fullname="AnimationViewItem::AnimationViewItem" href="animationviewitem.html#AnimationViewItem" access="public" status="commendable" location="animationview.cpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.cpp" lineno="287" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="AnimationViewItem(const AnimationFrame * frame, QGraphicsItem * parent)">
+                <parameter left="const AnimationFrame *" right="" name="frame" default=""/>
+                <parameter left="QGraphicsItem *" right="" name="parent" default="nullptr"/>
+            </function>
+            <function threadsafety="unspecified" name="boundingRect" fullname="AnimationViewItem::boundingRect" href="animationviewitem.html#boundingRect" access="public" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="81" virtual="non" meta="plain" const="true" static="false" overload="false" type="QRectF" brief="Returns the bounds of the item." signature="boundingRect() const"/>
+            <function threadsafety="unspecified" name="frame" fullname="AnimationViewItem::frame" href="animationviewitem.html#frame-prop" access="public" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="72" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="frame" type="const AnimationFrame *" signature="frame() const"/>
+            <function threadsafety="unspecified" name="height" fullname="AnimationViewItem::height" href="animationviewitem.html#height-prop" access="public" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="79" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="height" type="int" signature="height() const"/>
+            <function threadsafety="unspecified" name="paint" fullname="AnimationViewItem::paint" href="animationviewitem.html#paint" access="public" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="83" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" brief="Paints the content of the item using painter." signature="paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)">
+                <parameter left="QPainter *" right="" name="painter" default=""/>
+                <parameter left="const QStyleOptionGraphicsItem *" right="" name="option" default=""/>
+                <parameter left="QWidget *" right="" name="widget" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="setSize" fullname="AnimationViewItem::setSize" href="animationviewitem.html#size-prop" access="public" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="75" virtual="non" meta="plain" const="false" static="false" overload="false" associated-property="size" type="void" signature="setSize(const QSize &amp; size)">
+                <parameter left="const QSize &amp;" right="" name="size" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="setSize" fullname="AnimationViewItem::setSize" href="animationviewitem.html#size-prop" access="public" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="76" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" associated-property="size" type="void" signature="setSize(qreal width, qreal height)">
+                <parameter left="qreal" right="" name="width" default=""/>
+                <parameter left="qreal" right="" name="height" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="size" fullname="AnimationViewItem::size" href="animationviewitem.html#size-prop" access="public" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="74" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="size" type="const QSize &amp;" signature="size() const"/>
+            <function threadsafety="unspecified" name="width" fullname="AnimationViewItem::width" href="animationviewitem.html#width-prop" access="public" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="78" virtual="non" meta="plain" const="true" static="false" overload="false" associated-property="width" type="int" signature="width() const"/>
+            <property threadsafety="unspecified" name="frame" fullname="AnimationViewItem::frame" href="animationviewitem.html#frame-prop" access="public" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="64" type="const AnimationFrame *">
+                <getter name="frame"/>
+            </property>
+            <property threadsafety="unspecified" name="height" fullname="AnimationViewItem::height" href="animationviewitem.html#height-prop" access="public" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="67" type="int">
+                <getter name="height"/>
+            </property>
+            <property threadsafety="unspecified" name="size" fullname="AnimationViewItem::size" href="animationviewitem.html#size-prop" access="public" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="65" type="const QSize &amp;">
+                <getter name="size"/>
+                <setter name="setSize"/>
+                <setter name="setSize"/>
+            </property>
+            <property threadsafety="unspecified" name="width" fullname="AnimationViewItem::width" href="animationviewitem.html#width-prop" access="public" status="commendable" location="animationview.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/animationview.hpp" lineno="66" type="int">
+                <getter name="width"/>
+            </property>
+        </class>
+        <class threadsafety="unspecified" name="GraphicsAnimationFrameItem" href="graphicsanimationframeitem.html" access="public" status="commendable" location="graphicsanimationframeitem.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/graphicsanimationframeitem.hpp" lineno="8" bases="" module="view" brief="A QGraphicsItem to display AnimationFrame.">
+            <function threadsafety="unspecified" name="GraphicsAnimationFrameItem" fullname="GraphicsAnimationFrameItem::GraphicsAnimationFrameItem" href="graphicsanimationframeitem.html#GraphicsAnimationFrameItem" access="public" status="commendable" location="graphicsanimationframeitem.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/graphicsanimationframeitem.hpp" lineno="11" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" brief="Contructor." signature="GraphicsAnimationFrameItem(const AnimationFrame * frame, QGraphicsItem * parent)">
+                <parameter left="const AnimationFrame *" right="" name="frame" default=""/>
+                <parameter left="QGraphicsItem *" right="" name="parent" default="nullptr"/>
+            </function>
+            <function threadsafety="unspecified" name="boundingRect" fullname="GraphicsAnimationFrameItem::boundingRect" href="graphicsanimationframeitem.html#boundingRect" access="public" status="commendable" location="graphicsanimationframeitem.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/graphicsanimationframeitem.hpp" lineno="13" virtual="non" meta="plain" const="true" static="false" overload="false" type="QRectF" brief="Returns the bounding rectangle." signature="boundingRect() const"/>
+            <function threadsafety="unspecified" name="paint" fullname="GraphicsAnimationFrameItem::paint" href="graphicsanimationframeitem.html#paint" access="public" status="commendable" location="graphicsanimationframeitem.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/graphicsanimationframeitem.hpp" lineno="15" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" brief="Paints the item using painter." signature="paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)">
+                <parameter left="QPainter *" right="" name="painter" default=""/>
+                <parameter left="const QStyleOptionGraphicsItem *" right="" name="option" default=""/>
+                <parameter left="QWidget *" right="" name="widget" default=""/>
+            </function>
+        </class>
+        <class threadsafety="unspecified" name="GraphicsEmptyItem" href="graphicsemptyitem.html" access="public" status="commendable" location="graphicsemptyitem.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/graphicsemptyitem.hpp" lineno="6" bases="" module="view" brief="A QGraphicsItem with no visual representation">
+            <function threadsafety="unspecified" name="GraphicsEmptyItem" fullname="GraphicsEmptyItem::GraphicsEmptyItem" href="graphicsemptyitem.html#GraphicsEmptyItem" access="public" status="commendable" location="graphicsemptyitem.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/graphicsemptyitem.hpp" lineno="9" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" brief="Constructs the item." signature="GraphicsEmptyItem(QGraphicsItem * parent)">
+                <parameter left="QGraphicsItem *" right="" name="parent" default="nullptr"/>
+            </function>
+            <function threadsafety="unspecified" name="addChildItems" fullname="GraphicsEmptyItem::addChildItems" href="graphicsemptyitem.html#addChildItems" access="public" status="commendable" location="graphicsemptyitem.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/graphicsemptyitem.hpp" lineno="15" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" brief="Sets the parent item of all childItems to this." signature="addChildItems(QList&lt;QGraphicsItem *&gt; childItems)">
+                <parameter left="QList&lt;QGraphicsItem *&gt;" right="" name="childItems" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="boundingRect" fullname="GraphicsEmptyItem::boundingRect" href="graphicsemptyitem.html#boundingRect" access="public" status="commendable" location="graphicsemptyitem.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/graphicsemptyitem.hpp" lineno="11" virtual="non" meta="plain" const="true" static="false" overload="false" type="QRectF" brief="Returns the bounding rectngle of the item" signature="boundingRect() const"/>
+            <function threadsafety="unspecified" name="clearChildItems" fullname="GraphicsEmptyItem::clearChildItems" href="graphicsemptyitem.html#clearChildItems" access="public" status="commendable" location="graphicsemptyitem.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/graphicsemptyitem.hpp" lineno="16" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" brief="Sets the parent item of all child items to the parent of the GraphicsEmptyItem." signature="clearChildItems()"/>
+            <function threadsafety="unspecified" name="paint" fullname="GraphicsEmptyItem::paint" href="graphicsemptyitem.html#paint" access="public" status="commendable" location="graphicsemptyitem.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/graphicsemptyitem.hpp" lineno="13" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" brief="Paints the item using painter." signature="paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)">
+                <parameter left="QPainter *" right="" name="painter" default=""/>
+                <parameter left="const QStyleOptionGraphicsItem *" right="" name="option" default=""/>
+                <parameter left="QWidget *" right="" name="widget" default=""/>
+            </function>
+        </class>
+        <class threadsafety="unspecified" name="QPainterExtensions" href="qpainterextensions.html" access="public" status="commendable" location="qpainterextensions.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/qpainterextensions.hpp" lineno="11" bases="" module="view" brief="Provides additional drawing routines for QPainter">
+            <function threadsafety="unspecified" name="QPainterExtensions" fullname="QPainterExtensions::QPainterExtensions" href="qpainterextensions.html#QPainterExtensions" access="public" status="commendable" location="qpainterextensions.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/qpainterextensions.hpp" lineno="13" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" brief="Constructs QPainteExtensions with underlying QPainter painter." signature="QPainterExtensions(QPainter * painter)">
+                <parameter left="QPainter *" right="" name="painter" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="drawAnimationFrame" fullname="QPainterExtensions::drawAnimationFrame" href="qpainterextensions.html#drawAnimationFrame" access="public" status="commendable" location="qpainterextensions.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/qpainterextensions.hpp" lineno="15" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" brief="Draws a given frame into given targetRect." signature="drawAnimationFrame(const QRect &amp; targetRect, const AnimationFrame * frame)">
+                <parameter left="const QRect &amp;" right="" name="targetRect" default=""/>
+                <parameter left="const AnimationFrame *" right="" name="frame" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="drawAnimationFrame" fullname="QPainterExtensions::drawAnimationFrame" href="qpainterextensions.html#drawAnimationFrame-2" access="public" status="commendable" location="qpainterextensions.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/qpainterextensions.hpp" lineno="16" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="void" brief="Draws a given frame at coordinates (x, y)." signature="drawAnimationFrame(int x, int y, const AnimationFrame * frame)">
+                <parameter left="int" right="" name="x" default=""/>
+                <parameter left="int" right="" name="y" default=""/>
+                <parameter left="const AnimationFrame *" right="" name="frame" default=""/>
+            </function>
+            <function threadsafety="unspecified" name="drawAnimationFrame" fullname="QPainterExtensions::drawAnimationFrame" href="qpainterextensions.html#drawAnimationFrame-3" access="public" status="commendable" location="qpainterextensions.hpp" filepath="/Users/mkacz/Projekty/Apricot/src/view/qpainterextensions.hpp" lineno="17" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="3" type="void" brief="Draws a given frame into rect defined by x, y, width, height." signature="drawAnimationFrame(int x, int y, int width, int height, const AnimationFrame * frame)">
+                <parameter left="int" right="" name="x" default=""/>
+                <parameter left="int" right="" name="y" default=""/>
+                <parameter left="int" right="" name="width" default=""/>
+                <parameter left="int" right="" name="height" default=""/>
+                <parameter left="const AnimationFrame *" right="" name="frame" default=""/>
+            </function>
+        </class>
+    </namespace>
+</INDEX>

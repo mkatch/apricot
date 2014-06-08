@@ -12,31 +12,30 @@ class AnimationFrame : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(Project *project READ project)
-    Q_PROPERTY(QList<Layer *> layers READ layers NOTIFY layersChanged)
-    Q_PROPERTY(int layerCount READ layerCount)
     Q_PROPERTY(const QSize &size READ size)
     Q_PROPERTY(int width READ width)
     Q_PROPERTY(int height READ height)
+    Q_PROPERTY(int layerCount READ layerCount)
 
 public:
     explicit AnimationFrame(Project *project);
     AnimationFrame(const AnimationFrame *other, Project *project);
 
-    Project *project() { return reinterpret_cast<Project *>(parent()); }
-    const Project *project() const { return reinterpret_cast<const Project*>(parent()); }
-
-    int layerCount() const { return m_layers.count(); }
+    Project *project();
+    const Project *project() const;
 
     const QSize &size() const;
-    int width() const { return size().width(); }
-    int height() const { return size().height(); }
+    int width() const;
+    int height() const;
 
-    QList<Layer *> layers() const { return m_layers; }
-    Layer *layer(int i) { return m_layers.at(i); }
-    const Layer *layer(int i) const { return m_layers.at(i); }
+    int layerCount() const;
+    QList<Layer *> layers() const;
+
+    Layer *layer(int i);
+    const Layer *layer(int i) const;
 
     Layer *newLayer(int i);
-    Layer *newLayer() { return newLayer(0); }
+    Layer *newLayer();
 
     void moveLayer(int from, int to);
 
@@ -48,5 +47,50 @@ signals:
 private:
     QList<Layer *> m_layers;
 };
+
+inline Project *AnimationFrame::project()
+{
+    return reinterpret_cast<Project *>(parent());
+}
+
+inline const Project *AnimationFrame::project() const
+{
+    return reinterpret_cast<Project *>(parent());
+}
+
+inline int AnimationFrame::width() const
+{
+    return size().width();
+}
+
+inline int AnimationFrame::height() const
+{
+    return size().height();
+}
+
+inline int AnimationFrame::layerCount() const
+{
+    return m_layers.count();
+}
+
+inline QList<Layer *> AnimationFrame::layers() const
+{
+    return m_layers;
+}
+
+inline Layer *AnimationFrame::layer(int i)
+{
+    return m_layers.at(i);
+}
+
+inline const Layer *AnimationFrame::layer(int i) const
+{
+    return m_layers.at(i);
+}
+
+inline Layer *AnimationFrame::newLayer()
+{
+    return newLayer(0);
+}
 
 #endif // CORE_ANIMATIONFRAME_HPP

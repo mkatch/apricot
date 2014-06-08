@@ -18,26 +18,28 @@ class Project : public QObject
 public:
     explicit Project(QObject *parent = nullptr);
 
-    const QSize &size() const { return m_size; }
+    const QSize &size() const;
     void setSize (QSize const& size);
-    void setSize (int width, int height) { setSize(QSize(width, height)); }
+    void setSize (int width, int height);
 
-    int width() const { return size().width(); }
-    int height() const { return size().height(); }
+    int width() const;
+    int height() const;
 
-    int frameCount() const { return frames.count(); }
+    int frameCount() const;
+    QList<AnimationFrame *> frames() const;
 
-    AnimationFrame *frame(int i) { return frames.at(i); }
+    AnimationFrame *frame(int i);
+    const AnimationFrame *frame(int i) const;
 
     int indexOfFrame(const AnimationFrame *frame) const;
 
     AnimationFrame *newFrame(int i);
-    AnimationFrame *newFrame() { return newFrame(frameCount()); }
+    AnimationFrame *newFrame();
 
     void removeFrame(int i);
 
-    void moveFrame(int from, int to) { frames.move(from, to); }
-    void moveFrame(const AnimationFrame *frame, int to) { moveFrame(indexOfFrame(frame), to); }
+    void moveFrame(int from, int to);
+    void moveFrame(const AnimationFrame *frame, int to);
 
 signals:
     void sizeChanged();
@@ -46,9 +48,62 @@ signals:
 
 private:
     QSize m_size;
-    QList<AnimationFrame *> frames;
-
+    QList<AnimationFrame *> m_frames;
 };
 
+inline const QSize &Project::size() const
+{
+    return m_size;
+}
+
+inline void Project::setSize(int width, int height)
+{
+    setSize(QSize(width, height));
+}
+
+inline int Project::width() const
+{
+    return size().width();
+}
+
+inline int Project::height() const
+{
+    return size().height();
+}
+
+inline int Project::frameCount() const
+{
+    return m_frames.count();
+}
+
+inline QList<AnimationFrame *> Project::frames() const
+{
+    return m_frames;
+}
+
+inline AnimationFrame *Project::frame(int i)
+{
+    return m_frames.at(i);
+}
+
+inline const AnimationFrame *Project::frame(int i) const
+{
+    return m_frames.at(i);
+}
+
+inline int Project::indexOfFrame(const AnimationFrame *frame) const
+{
+    return m_frames.indexOf(const_cast<AnimationFrame *>(frame));
+}
+
+inline AnimationFrame *Project::newFrame()
+{
+    return newFrame(frameCount());
+}
+
+inline void Project::moveFrame(const AnimationFrame *frame, int to)
+{
+    moveFrame(indexOfFrame(frame), to);
+}
 
 #endif // CORE_PROJECT_HPP

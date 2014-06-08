@@ -73,7 +73,7 @@ class AnimationViewItem : public QGraphicsObject
 public:
     AnimationViewItem(const AnimationFrame *frame, QGraphicsItem *parent = nullptr);
 
-    const AnimationFrame *frame() const { return m_frame; }
+    const AnimationFrame *frame() const;
 
     const QSize &size() const;
     void setSize(const QSize &size);
@@ -96,6 +96,11 @@ private:
 inline Project *AnimationView::project() const
 {
     return m_project;
+}
+
+inline const AnimationFrame *AnimationViewItem::frame() const
+{
+    return m_frame;
 }
 
 inline const QSize &AnimationViewItem::size() const

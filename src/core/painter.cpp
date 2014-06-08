@@ -11,6 +11,9 @@
  * \brief Allows drawing on Canvas.
  */
 
+/*!
+ * \brief Constructs a painter that paints on \a canvas.
+ */
 Painter::Painter(Canvas &canvas) :
     painter(new QPainter(&canvas.m_pixmap))
 {

@@ -23,7 +23,6 @@ public:
     void setProject(Project *project);
 
     ToolActionArea *actionArea();
-
     AnimationView *animationView();
 
 signals:

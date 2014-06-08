@@ -24,16 +24,6 @@
  */
 
 /*!
- * \property Layer::canvas
- * \brief The underlying Canvas.
- *
- * The returned canvas is immutable. To be able to draw on the canvas, request a Painter through
- * startPainting().
- *
- * \sa startPainting()
- */
-
-/*!
  * \property Layer::width
  * \brief The width of the canvas
  */
@@ -75,6 +65,14 @@ Layer::Layer(const Layer *other, AnimationFrame *frame) :
 {
     updateSize();
 }
+
+/*!
+ * \fn Layer::canvas() const
+ * \brief Returns the underlying canvas.
+ *
+ * The returned canvas is immutable. To be able to draw on the canvas, request a Painter through
+ * getPainter().
+ */
 
 /*!
  * \brief Gets a Painter bound to the undelying Canvas.

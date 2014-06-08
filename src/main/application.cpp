@@ -43,3 +43,9 @@ void Application::setProject(Project *project)
     mainWindow()->setProject(project);
     emit projectChanged();
 }
+
+
+/*!
+ * \fn Application::mainWindow()
+ * \brief Returns the main window of the application.
+ */

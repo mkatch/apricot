@@ -1,0 +1,69 @@
+/*!
+    \page index.html
+    \indexpage Apricot Documentation Index
+    \title Apricot Documentation Index
+
+    \nextpage Core Module
+
+    \chapter Modules
+
+    \list
+        \li \l {Core Module}
+        \li \l {Main Module}
+        \li \l {Model Module}
+        \li \l {Tools Module}
+        \li \l {Utils Module}
+        \li \l {View Module}
+    \endlist
+
+    \chapter All Classes
+
+    \generatelist classes
+*/
+
+/*!
+    \module core
+    \title Core module
+
+    \previouspage Apricot Documentation Index
+    \nextpage Main Module
+ */
+
+/*!
+    \module main
+    \title Main Module
+
+    \previouspage Core Module
+    \nextpage Model Module
+*/
+
+/*!
+    \module model
+    \title Model Module
+
+    \previouspage Main Module
+    \nextpage Tools Module
+*/
+
+/*!
+    \module tools
+    \title Tools Module
+
+    \previouspage Model Module
+    \nextpage Utils Module
+ */
+
+/*!
+    \module utils
+    \title Utils Module
+
+    \previouspage Tools Module
+    \nextpage View Module
+ */
+
+/*!
+    \module view
+    \title View Module
+
+    \previouspage Utils Module
+ */

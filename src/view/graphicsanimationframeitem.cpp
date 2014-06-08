@@ -12,7 +12,7 @@
  */
 
 /*!
- * \brief Constructs an item displaying \a frame with paren item \a parent.item.
+ * \brief Constructs an item displaying \a frame with paren item \a parent.
  */
 GraphicsAnimationFrameItem::GraphicsAnimationFrameItem(
     const AnimationFrame *frame,
