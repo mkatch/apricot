@@ -28,9 +28,8 @@
  */
 Application::Application(int &argc, char** argv) :
     QApplication(argc, argv),
-    m_project(new Project(this))
+    m_project(nullptr)
 {
-    mainWindow()->animationView()->setProject(project());
     mainWindow()->show();
 }
 
