@@ -1,29 +1,24 @@
 #ifndef VIEW_TOOLACTIONAREA_HPP
 #define VIEW_TOOLACTIONAREA_HPP
 
-#include "canvasview.hpp"
+#include "animationframeview.hpp"
 
 class Tool;
 
-class ToolActionArea : public CanvasView
+class ToolActionArea : public AnimationFrameView
 {
     Q_OBJECT
     Q_PROPERTY(Tool *tool READ tool WRITE setTool NOTIFY toolChanged)
-    Q_PROPERTY(bool active READ active NOTIFY activeChanged)
 
 public:
     explicit ToolActionArea(QWidget *parent = nullptr);
 
-    Tool *tool() const { return m_tool; }
+    Tool *tool();
+    const Tool *tool() const;
     void setTool(Tool *tool);
-
-    bool active() const { return tool() != nullptr; }
 
 signals:
     void toolChanged();
-    void activeChanged();
-
-public slots:
 
 protected:
     virtual bool event(QEvent* event) override;
@@ -44,8 +39,16 @@ private:
     Tool *m_tool;
     bool pressed;
     QPointF lastMousePos;
-
-    void applyToolToCanvas(bool preview);
 };
+
+inline Tool *ToolActionArea::tool()
+{
+    return m_tool;
+}
+
+inline const Tool *ToolActionArea::tool() const
+{
+    return m_tool;
+}
 
 #endif // VIEW_TOOLACTIONAREA_HPP

@@ -6,36 +6,30 @@
 #include "toolevents.hpp"
 
 ToolActionArea::ToolActionArea(QWidget *parent) :
-    CanvasView(parent),
+    AnimationFrameView(parent),
     m_tool(nullptr),
     pressed(false)
 {
     this->setMouseTracking(true);
 }
 
-
 void ToolActionArea::setTool(Tool *tool)
 {
     if (m_tool == tool)
         return;
 
-    bool emitActiveChanged = (tool == nullptr) || (m_tool == nullptr);
     if (m_tool != nullptr)
         m_tool->setActionArea(nullptr);
     m_tool = tool;
     m_tool->setActionArea(this);
     emit toolChanged();
     update();
-    if (emitActiveChanged)
-        emit activeChanged();
 }
-
 
 bool ToolActionArea::event(QEvent *event)
 {
-    if (!active()) {
-        return CanvasView::event(event);
-    }
+    if (tool() == nullptr)
+        return AnimationFrameView::event(event);
 
     switch (event->type()) {
     case QEvent::MouseButtonPress:
@@ -65,7 +59,7 @@ bool ToolActionArea::event(QEvent *event)
         break;
 
     default:
-        return CanvasView::event(event);
+        return AnimationFrameView::event(event);
     }
 
     return true;
@@ -75,7 +69,7 @@ void ToolActionArea::dispatchMousePressEvent(QMouseEvent *event)
 {
     ToolMouseEvent toolEvent(
         event,
-        mapToCanvas(event->localPos()),
+        mapToFrame(event->localPos()),
         event->localPos(),
         event->button(),
         event->buttons(),
@@ -92,7 +86,7 @@ void ToolActionArea::dispatchMouseReleaseEvent(QMouseEvent *event)
 {
     ToolMouseEvent toolEvent(
         event,
-        mapToCanvas(event->localPos()),
+        mapToFrame(event->localPos()),
         event->localPos(),
         event->button(),
         event->buttons(),
@@ -106,7 +100,7 @@ void ToolActionArea::dispatchMouseDoubleClickEvent(QMouseEvent *event)
 {
     ToolMouseEvent toolEvent(
         event,
-        mapToCanvas(event->localPos()),
+        mapToFrame(event->localPos()),
         event->localPos(),
         event->button(),
         event->buttons(),
@@ -121,8 +115,8 @@ void ToolActionArea::dispatchMouseMoveEvent(QMouseEvent *event)
     {
         ToolMouseMoveEvent toolEvent(
             event,
-            mapToCanvas(event->localPos()),
-            mapToCanvas(lastMousePos),
+            mapToFrame(event->localPos()),
+            mapToFrame(lastMousePos),
             event->localPos(),
             lastMousePos,
             event->button(),
@@ -138,8 +132,8 @@ void ToolActionArea::dispatchHoverMoveEvent(QHoverEvent *event)
 {
     ToolMouseMoveEvent toolEvent(
         event,
-        mapToCanvas(event->posF()),
-        mapToCanvas(event->oldPosF()),
+        mapToFrame(event->posF()),
+        mapToFrame(event->oldPosF()),
         event->posF(),
         event->oldPosF(),
         Qt::NoButton,
@@ -153,7 +147,7 @@ void ToolActionArea::dispatchWheelEvent(QWheelEvent *event)
 {
     ToolMouseWheelEvent toolEvent(
         event,
-        mapToCanvas(event->posF()),
+        mapToFrame(event->posF()),
         event->posF(),
         event->pixelDelta(),
         event->angleDelta(),
