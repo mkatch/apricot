@@ -60,6 +60,11 @@ AnimationFrameView::AnimationFrameView(QWidget *parent) :
     layOut();
 }
 
+/*!
+ * \fn AnimationFrameView::~AnimationFrameView()
+ * \brief Destroys the view.
+ */
+
 void AnimationFrameView::setFrame(const AnimationFrame *frame)
 {
     if (m_frame == frame)

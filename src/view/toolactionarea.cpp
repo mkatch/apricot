@@ -3,6 +3,31 @@
 #include "tool.hpp"
 #include "toolevents.hpp"
 
+/*!
+ * \class ToolActionArea
+ * \inmodule view
+ *
+ * \brief A widget for displaying and acting upon an animation frame.
+ *
+ * This widget extends AnimationFrameView with the possibility of performing actions on the
+ * displayed frame using tools. A tool is any specialization of Tool class. Once a tool is attached
+ * to ToolActionArea, it receives mouse and keyboard events.
+ */
+
+// Properties
+
+/*!
+ * \property ToolActionArea::tool
+ * \brief The active tool.
+ *
+ * This property may be `nullptr` meaning that the tool is not set and ToolActionArea is inactive.
+ */
+
+// Methods
+
+/*!
+ * \brief Constructs the widget with parent widget \a parent.
+ */
 ToolActionArea::ToolActionArea(QWidget *parent) :
     AnimationFrameView(parent),
     m_tool(nullptr)
@@ -23,6 +48,11 @@ void ToolActionArea::setTool(Tool *tool)
     update();
 }
 
+/*!
+ * \brief Handles mouse press event \a event.
+ *
+ * This results in invoking Tool::mousePressEvent() of the active tool.
+ */
 void ToolActionArea::mousePressEvent(QMouseEvent *event)
 {
     if (tool() == nullptr)
@@ -41,6 +71,11 @@ void ToolActionArea::mousePressEvent(QMouseEvent *event)
         lastMousePos = event->localPos();
 }
 
+/*!
+ * \brief Handles mouse release event \a event.
+ *
+ * This results in invoking Tool::mouseReleaseEvent() of the active tool.
+ */
 void ToolActionArea::mouseReleaseEvent(QMouseEvent *event)
 {
     if (tool() == nullptr)
@@ -57,6 +92,11 @@ void ToolActionArea::mouseReleaseEvent(QMouseEvent *event)
     tool()->mouseReleaseEvent(&toolEvent);
 }
 
+/*!
+ * \brief Handles double click event \a event.
+ *
+ * This results in invoking Tool::mouseDoubleClickEvent() of the active tool.
+ */
 void ToolActionArea::mouseDoubleClickEvent(QMouseEvent *event)
 {
     if (tool() == nullptr)
@@ -73,6 +113,11 @@ void ToolActionArea::mouseDoubleClickEvent(QMouseEvent *event)
     tool()->mouseDoubleClickEvent(&toolEvent);
 }
 
+/*!
+ * \brief Handles mouse move event \a event.
+ *
+ * This results in invoking Tool::mouseMoveEvent() of the active tool.
+ */
 void ToolActionArea::mouseMoveEvent(QMouseEvent *event)
 {
     if (tool() == nullptr)
@@ -92,6 +137,11 @@ void ToolActionArea::mouseMoveEvent(QMouseEvent *event)
     lastMousePos = event->localPos();
 }
 
+/*!
+ * \brief Handles mouse wheel event \a event.
+ *
+ * This results in invoking Tool::wheelEvent() of the active tool.
+ */
 void ToolActionArea::wheelEvent(QWheelEvent *event)
 {
     if (tool() == nullptr)
@@ -109,6 +159,11 @@ void ToolActionArea::wheelEvent(QWheelEvent *event)
     tool()->wheelEvent(&toolEvent);
 }
 
+/*!
+ * \brief Handles key press event \a event.
+ *
+ * This results in invoking Tool::keyPressEvent() of the active tool.
+ */
 void ToolActionArea::keyPressEvent(QKeyEvent *event)
 {
     if (tool() == nullptr)
@@ -122,6 +177,11 @@ void ToolActionArea::keyPressEvent(QKeyEvent *event)
     tool()->keyPressEvent(&toolEvent);
 }
 
+/*!
+ * \brief Handles key release event \a event.
+ *
+ * This results in invoking Tool::keyReleaseEvent() of the active tool.
+ */
 void ToolActionArea::keyReleaseEvent(QKeyEvent *event)
 {
     if (tool() == nullptr)
