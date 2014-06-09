@@ -25,13 +25,13 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    m_actionArea(new ToolActionArea),
+    m_frameView(new AnimationFrameView),
     m_animationView(new AnimationView),
     m_layerView(new LayerView)
 {
     ui->setupUi(this);
 
-    setCentralWidget(actionArea());
+    setCentralWidget(frameView());
 
     QDockWidget *dockableAnimationView = new QDockWidget;
     dockableAnimationView->setWidget(animationView());
@@ -57,8 +57,8 @@ void MainWindow::setProject(Project *project)
 
     m_project = project;
     animationView()->setProject(project);
-    actionArea()->setFrame(project->frame(0));
-    layerView()->setFrame(project->frame(0) );
+    frameView()->setFrame(project->frame(0));
+    layerView()->setFrame(project->frame(0));
 }
 
 /*!

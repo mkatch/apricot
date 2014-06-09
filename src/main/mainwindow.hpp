@@ -22,7 +22,7 @@ public:
     Project *project();
     void setProject(Project *project);
 
-    ToolActionArea *actionArea();
+    AnimationFrameView *frameView();
     AnimationView *animationView();
     LayerView *layerView();
 
@@ -33,7 +33,7 @@ private:
     Ui::MainWindow *ui;
 
     Project *m_project;
-    ToolActionArea *m_actionArea;
+    AnimationFrameView *m_frameView;
     AnimationView *m_animationView;
     LayerView *m_layerView;
 };
@@ -43,9 +43,9 @@ inline Project *MainWindow::project()
     return m_project;
 }
 
-inline ToolActionArea *MainWindow::actionArea()
+inline AnimationFrameView *MainWindow::frameView()
 {
-    return m_actionArea;
+    return m_frameView;
 }
 
 inline AnimationView *MainWindow::animationView()

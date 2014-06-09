@@ -6,6 +6,8 @@ using std::max;
 #include <ApricotUtils>
 
 #include "graphicsanimationframeitem.hpp"
+#include "tool.hpp"
+#include "toolevents.hpp"
 
 /*!
  * \class AnimationFrameView
@@ -13,7 +15,10 @@ using std::max;
  *
  * \brief A widget for displaying a single animation frame.
  *
- * The displayed frame may be dragged around and zoomed in and out programmatically.
+ * The displayed frame may be dragged around and zoomed in and out programmatically. User can
+ * perform actions on this view and the underlying frame using tools. A tool is any specialization
+ * of Tool class. Once a tool is attached to AnimationFrameView, it receives mouse and keyboard
+ * events.
  */
 
 // Properties
@@ -38,6 +43,13 @@ using std::max;
 /*!
  * \property AnimationFrameView::transform
  * \brief Tha transformation for transition frame coordinate system to the view coordinates.
+ */
+
+/*!
+ * \property AnimationFrameView::tool
+ * \brief The active tool.
+ *
+ * This property may be \c nullptr meaning that the tool is not set.
  */
 
 // Methods
@@ -65,7 +77,7 @@ AnimationFrameView::AnimationFrameView(QWidget *parent) :
  * \brief Destroys the view.
  */
 
-void AnimationFrameView::setFrame(const AnimationFrame *frame)
+void AnimationFrameView::setFrame(AnimationFrame *frame)
 {
     if (m_frame == frame)
         return;
@@ -127,6 +139,20 @@ QTransform AnimationFrameView::transform() const
     return QTransform().scale(scale(), scale()).translate(translation().x(), translation().y());
 }
 
+void AnimationFrameView::setTool(Tool *tool)
+{
+    if (m_tool == tool)
+        return;
+
+    if (m_tool != nullptr)
+        m_tool->setView(nullptr);
+    m_tool = tool;
+    if (m_tool != nullptr)
+        m_tool->setView(this);
+    emit toolChanged();
+    update();
+}
+
 /*!
  * \brief Maps \a point from view coordinates to frame coordinates.
  *
@@ -156,6 +182,151 @@ void AnimationFrameView::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event)
     layOut();
+}
+
+/*!
+ * \brief Handles mouse press event \a event.
+ *
+ * This results in invoking Tool::mousePressEvent() of the active tool.
+ */
+void AnimationFrameView::mousePressEvent(QMouseEvent *event)
+{
+    if (tool() == nullptr)
+        return event->ignore();
+
+    ToolMouseEvent toolEvent(
+        event,
+        mapToFrame(event->localPos()),
+        event->localPos(),
+        event->button(),
+        event->buttons(),
+        event->modifiers()
+    );
+    tool()->mousePressEvent(&toolEvent);
+    lastMousePos = event->localPos();
+}
+
+/*!
+ * \brief Handles mouse release event \a event.
+ *
+ * This results in invoking Tool::mouseReleaseEvent() of the active tool.
+ */
+void AnimationFrameView::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (tool() == nullptr)
+        return event->ignore();
+
+    ToolMouseEvent toolEvent(
+        event,
+        mapToFrame(event->localPos()),
+        event->localPos(),
+        event->button(),
+        event->buttons(),
+        event->modifiers()
+    );
+    tool()->mouseReleaseEvent(&toolEvent);
+}
+
+/*!
+ * \brief Handles double click event \a event.
+ *
+ * This results in invoking Tool::mouseDoubleClickEvent() of the active tool.
+ */
+void AnimationFrameView::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    if (tool() == nullptr)
+        return event->ignore();
+
+    ToolMouseEvent toolEvent(
+        event,
+        mapToFrame(event->localPos()),
+        event->localPos(),
+        event->button(),
+        event->buttons(),
+        event->modifiers()
+    );
+    tool()->mouseDoubleClickEvent(&toolEvent);
+}
+
+/*!
+ * \brief Handles mouse move event \a event.
+ *
+ * This results in invoking Tool::mouseMoveEvent() of the active tool.
+ */
+void AnimationFrameView::mouseMoveEvent(QMouseEvent *event)
+{
+    if (tool() == nullptr)
+        return event->ignore();
+
+    ToolMouseMoveEvent toolEvent(
+        event,
+        mapToFrame(event->localPos()),
+        mapToFrame(lastMousePos),
+        event->localPos(),
+        lastMousePos,
+        event->buttons(),
+        event->modifiers()
+    );
+    tool()->mouseMoveEvent(&toolEvent);
+    lastMousePos = event->localPos();
+}
+
+/*!
+ * \brief Handles mouse wheel event \a event.
+ *
+ * This results in invoking Tool::wheelEvent() of the active tool.
+ */
+void AnimationFrameView::wheelEvent(QWheelEvent *event)
+{
+    if (tool() == nullptr)
+        return event->ignore();
+
+    ToolWheelEvent toolEvent(
+        event,
+        mapToFrame(event->posF()),
+        event->posF(),
+        event->pixelDelta(),
+        event->angleDelta(),
+        event->buttons(),
+        event->modifiers()
+    );
+    tool()->wheelEvent(&toolEvent);
+}
+
+/*!
+ * \brief Handles key press event \a event.
+ *
+ * This results in invoking Tool::keyPressEvent() of the active tool.
+ */
+void AnimationFrameView::keyPressEvent(QKeyEvent *event)
+{
+    if (tool() == nullptr)
+        return event->ignore();
+
+    ToolKeyEvent toolEvent(
+        event,
+        event->key(),
+        event->modifiers()
+    );
+    tool()->keyPressEvent(&toolEvent);
+}
+
+/*!
+ * \brief Handles key release event \a event.
+ *
+ * This results in invoking Tool::keyReleaseEvent() of the active tool.
+ */
+void AnimationFrameView::keyReleaseEvent(QKeyEvent *event)
+{
+    if (tool() == nullptr)
+        return event->ignore();
+
+    ToolKeyEvent toolEvent(
+        event,
+        event->key(),
+        event->modifiers()
+    );
+    tool()->keyReleaseEvent(&toolEvent);
 }
 
 /*!

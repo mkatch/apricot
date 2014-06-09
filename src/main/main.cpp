@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
     application.setProject(project);
 
     DragTool dragTool;
-    application.mainWindow()->actionArea()->setTool(&dragTool);
+    application.mainWindow()->frameView()->setTool(&dragTool);
 
     return application.exec();
 }

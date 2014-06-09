@@ -1,37 +1,35 @@
 #include "tool.hpp"
 
-#include "toolactionarea.hpp"
-
 /*!
  * \class Tool
  * \inmodule view
  *
  * \brief Base for all tools acting upon edited image.
  *
- * When a Tool is bound to a ToolActionArea it begis to receive mouse and keyboard events. One can
- * override the event handling methods to provide custom behaviour and different actions for the
+ * When a Tool is bound to an AnimationFrameView it begis to receive mouse and keyboard events. One
+ * canoverride the event handling methods to provide custom behaviour and different actions for the
  * user to invoke on the edited image.
  */
 
 // Properties
 
 /*!
- * \property Tool::actionArea
- * \brief The bound ToolActionArea.
+ * \property Tool::view
+ * \brief The bound AnimationFrameView.
  *
- * This property can be \c nullptr indicating that the tool is not bound to any ToolActionArea.
+ * This property can be \c nullptr indicating that the tool is not bound to any AnimationFrameView.
  */
 
 /*!
  * \property Tool::active
- * \brief The boolean value indicating wheather the tool is bound to any ToolActionArea.
+ * \brief The boolean value indicating wheather the tool is bound to any AnimationFrameView.
  */
 
 // Signals
 
 /*!
  * \fn Tool::deactivating()
- * \brief Emitted just before the tool is detached from a ToolActionArea.
+ * \brief Emitted just before the tool is detached from an AnimationFrameView.
  */
 
 // Methods
@@ -40,13 +38,14 @@
  * \brief Construct a tool with parent object \a parent.
  */
 Tool::Tool(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    m_view(nullptr)
 {
     // Do nothing
 }
 
 /*!
- * \brief Called just after the tool is attached to a ToolActionArea.
+ * \brief Called just after the tool is attached to an AnimationFrameView.
  *
  * This method can be overriden to perform some initialization if necessary.
  */
@@ -56,7 +55,7 @@ void Tool::onActivated()
 }
 
 /*!
- * \brief Called just before the tool is detached from a ToolActionArea.
+ * \brief Called just before the tool is detached from an AnimationFrameView.
  *
  * This method can be overriden to perform some finalizing steps if necessary.
  *
@@ -137,19 +136,19 @@ void Tool::keyReleaseEvent(ToolKeyEvent *event)
     event->ignore();
 }
 
-void Tool::setActionArea(ToolActionArea *actionArea)
+void Tool::setView(AnimationFrameView *view)
 {
-    if (m_actionArea == actionArea)
+    if (m_view == view)
         return;
 
-    bool wasNull = (m_actionArea == nullptr);
-    m_actionArea = actionArea;
-    emit actionAreaChanged();
+    bool wasNull = (m_view == nullptr);
+    m_view = view;
+    emit viewChanged();
 
     if (wasNull) {
         onActivated();
         emit activeChanged();
-    } else if (actionArea == nullptr) {
+    } else if (view == nullptr) {
         emit deactivating();
         onDeactivating();
         emit activeChanged();
