@@ -23,9 +23,7 @@ public:
 signals:
     void actionAreaChanged();
     void activeChanged();
-    void activated();
     void deactivating();
-    void deactivated();
 
 protected:
     virtual void onActivated();
@@ -34,9 +32,10 @@ protected:
     virtual void mousePressEvent(ToolMouseEvent *event);
     virtual void mouseReleaseEvent(ToolMouseEvent *event);
     virtual void mouseDoubleClickEvent(ToolMouseEvent *event);
-    virtual void mouseHoverEvent(ToolMouseMoveEvent *event);
-    virtual void mouseDragEvent(ToolMouseMoveEvent *event);
-    virtual void mouseWheelEvent(ToolMouseWheelEvent *event);
+    virtual void mouseMoveEvent(ToolMouseMoveEvent *event);
+    virtual void wheelEvent(ToolWheelEvent *event);
+    virtual void keyPressEvent(ToolKeyEvent *event);
+    virtual void keyReleaseEvent(ToolKeyEvent *event);
 
 private:
     ToolActionArea *m_actionArea;

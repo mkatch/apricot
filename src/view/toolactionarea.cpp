@@ -1,7 +1,5 @@
 #include "toolactionarea.hpp"
 
-#include <ApricotUtils>
-
 #include "tool.hpp"
 #include "toolevents.hpp"
 
@@ -26,47 +24,11 @@ void ToolActionArea::setTool(Tool *tool)
     update();
 }
 
-bool ToolActionArea::event(QEvent *event)
+void ToolActionArea::mousePressEvent(QMouseEvent *event)
 {
     if (tool() == nullptr)
-        return AnimationFrameView::event(event);
+        return event->ignore();
 
-    switch (event->type()) {
-    case QEvent::MouseButtonPress:
-        dispatchMousePressEvent(static_cast<QMouseEvent *>(event));
-        break;
-
-    case QEvent::MouseButtonRelease:
-        dispatchMouseReleaseEvent(static_cast<QMouseEvent *>(event));
-        break;
-
-    case QEvent::MouseButtonDblClick:
-        dispatchMouseDoubleClickEvent(static_cast<QMouseEvent *>(event));
-        break;
-
-    case QEvent::MouseMove:
-        dispatchMouseMoveEvent(static_cast<QMouseEvent *>(event));
-        break;
-
-    case QEvent::HoverEnter:
-    case QEvent::HoverLeave:
-    case QEvent::HoverMove:
-        dispatchHoverMoveEvent(static_cast<QHoverEvent *>(event));
-        break;
-
-    case QEvent::Wheel:
-        dispatchWheelEvent(static_cast<QWheelEvent *>(event));
-        break;
-
-    default:
-        return AnimationFrameView::event(event);
-    }
-
-    return true;
-}
-
-void ToolActionArea::dispatchMousePressEvent(QMouseEvent *event)
-{
     ToolMouseEvent toolEvent(
         event,
         mapToFrame(event->localPos()),
@@ -78,12 +40,13 @@ void ToolActionArea::dispatchMousePressEvent(QMouseEvent *event)
     tool()->mousePressEvent(&toolEvent);
     if (event->isAccepted())
         lastMousePos = event->localPos();
-    if(event->button() == Qt::LeftButton)
-        pressed = true;
 }
 
-void ToolActionArea::dispatchMouseReleaseEvent(QMouseEvent *event)
+void ToolActionArea::mouseReleaseEvent(QMouseEvent *event)
 {
+    if (tool() == nullptr)
+        return event->ignore();
+
     ToolMouseEvent toolEvent(
         event,
         mapToFrame(event->localPos()),
@@ -93,11 +56,13 @@ void ToolActionArea::dispatchMouseReleaseEvent(QMouseEvent *event)
         event->modifiers()
     );
     tool()->mouseReleaseEvent(&toolEvent);
-    pressed = false;
 }
 
-void ToolActionArea::dispatchMouseDoubleClickEvent(QMouseEvent *event)
+void ToolActionArea::mouseDoubleClickEvent(QMouseEvent *event)
 {
+    if (tool() == nullptr)
+        return event->ignore();
+
     ToolMouseEvent toolEvent(
         event,
         mapToFrame(event->localPos()),
@@ -109,43 +74,31 @@ void ToolActionArea::dispatchMouseDoubleClickEvent(QMouseEvent *event)
     tool()->mouseDoubleClickEvent(&toolEvent);
 }
 
-void ToolActionArea::dispatchMouseMoveEvent(QMouseEvent *event)
+void ToolActionArea::mouseMoveEvent(QMouseEvent *event)
 {
-    if(pressed)
-    {
-        ToolMouseMoveEvent toolEvent(
-            event,
-            mapToFrame(event->localPos()),
-            mapToFrame(lastMousePos),
-            event->localPos(),
-            lastMousePos,
-            event->button(),
-            event->buttons(),
-            event->modifiers()
-        );
-        tool()->mouseDragEvent(&toolEvent);
-        lastMousePos = event->localPos();
-    }
-}
+    if (tool() == nullptr)
+        return event->ignore();
 
-void ToolActionArea::dispatchHoverMoveEvent(QHoverEvent *event)
-{
     ToolMouseMoveEvent toolEvent(
         event,
-        mapToFrame(event->posF()),
-        mapToFrame(event->oldPosF()),
-        event->posF(),
-        event->oldPosF(),
-        Qt::NoButton,
-        Qt::NoButton,
+        mapToFrame(event->localPos()),
+        mapToFrame(lastMousePos),
+        event->localPos(),
+        lastMousePos,
+        event->button(),
+        event->buttons(),
         event->modifiers()
     );
-    tool()->mouseHoverEvent(&toolEvent);
+    tool()->mouseMoveEvent(&toolEvent);
+    lastMousePos = event->localPos();
 }
 
-void ToolActionArea::dispatchWheelEvent(QWheelEvent *event)
+void ToolActionArea::wheelEvent(QWheelEvent *event)
 {
-    ToolMouseWheelEvent toolEvent(
+    if (tool() == nullptr)
+        return event->ignore();
+
+    ToolWheelEvent toolEvent(
         event,
         mapToFrame(event->posF()),
         event->posF(),
@@ -154,5 +107,31 @@ void ToolActionArea::dispatchWheelEvent(QWheelEvent *event)
         event->buttons(),
         event->modifiers()
     );
-    tool()->mouseWheelEvent(&toolEvent);
+    tool()->wheelEvent(&toolEvent);
+}
+
+void ToolActionArea::keyPressEvent(QKeyEvent *event)
+{
+    if (tool() == nullptr)
+        return event->ignore();
+
+    ToolKeyEvent toolEvent(
+        event,
+        event->key(),
+        event->modifiers()
+    );
+    tool()->keyPressEvent(&toolEvent);
+}
+
+void ToolActionArea::keyReleaseEvent(QKeyEvent *event)
+{
+    if (tool() == nullptr)
+        return event->ignore();
+
+    ToolKeyEvent toolEvent(
+        event,
+        event->key(),
+        event->modifiers()
+    );
+    tool()->keyReleaseEvent(toolEvent);
 }

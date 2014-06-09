@@ -21,23 +21,16 @@ signals:
     void toolChanged();
 
 protected:
-    virtual bool event(QEvent* event) override;
-
-    void dispatchMousePressEvent(QMouseEvent *event);
-
-    void dispatchMouseReleaseEvent(QMouseEvent *event);
-
-    void dispatchMouseDoubleClickEvent(QMouseEvent *event);
-
-    void dispatchMouseMoveEvent(QMouseEvent *event);
-
-    void dispatchHoverMoveEvent(QHoverEvent *event);
-
-    void dispatchWheelEvent(QWheelEvent *event);
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void wheelEvent(QWheelEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
+    void keyReleaseEvent(QKeyEvent *event) override;
 
 private:
     Tool *m_tool;
-    bool pressed;
     QPointF lastMousePos;
 };
 
