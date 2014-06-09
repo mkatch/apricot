@@ -83,12 +83,12 @@ inline QList<AnimationFrame *> Project::frames() const
 
 inline AnimationFrame *Project::frame(int i)
 {
-    return m_frames.at(i);
+    return (0 <= i && i < frameCount()) ? m_frames.at(i) : nullptr;
 }
 
 inline const AnimationFrame *Project::frame(int i) const
 {
-    return m_frames.at(i);
+    return (0 <= i && i < frameCount()) ? m_frames.at(i) : nullptr;
 }
 
 inline int Project::indexOfFrame(const AnimationFrame *frame) const

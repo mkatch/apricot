@@ -57,6 +57,8 @@ void MainWindow::setProject(Project *project)
 
     m_project = project;
     animationView()->setProject(project);
+    actionArea()->setFrame(project->frame(0));
+    layerView()->setFrame(project->frame(0) );
 }
 
 /*!

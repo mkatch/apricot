@@ -1,8 +1,8 @@
 #ifndef MODULE_APRICOTVIEW
 #define MODULE_APRICOTVIEW
 
+#include "view/animationframeview.hpp"
 #include "view/animationview.hpp"
-#include "view/canvasview.hpp"
 #include "view/graphicsanimationframeitem.hpp"
 #include "view/graphicsemptyitem.hpp"
 #include "view/qpainterextensions.hpp"

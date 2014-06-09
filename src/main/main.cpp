@@ -7,20 +7,23 @@ int main(int argc, char *argv[])
 {
     Application application(argc, argv);
 
-    application.project()->setSize(918, 655);
-    Layer *layer = application.project()->newFrame()->newLayer();
-    layer->getPainter().drawImage(":/images/isocastle.png");
-    application.project()->newFrame()->newLayer()->getPainter().drawImage(":/images/isocastle.png");
-    application.project()->newFrame()->newLayer()->getPainter().drawImage(":/images/isocastle.png");
-    application.project()->newFrame()->newLayer()->getPainter().drawImage(":/images/isocastle.png");
-    application.project()->newFrame()->newLayer()->getPainter().drawImage(":/images/isocastle.png");
-    application.project()->newFrame()->newLayer()->getPainter().drawImage(":/images/isocastle.png");
-    application.project()->newFrame()->newLayer()->getPainter().drawImage(":/images/isocastle.png");
-    application.project()->newFrame()->newLayer()->getPainter().drawImage(":/images/isocastle.png");
+    Project *project = new Project;
 
-    AnimationFrame *frame = application.project()->frame(0);
+    project->setSize(918, 655);
+    Layer *layer = project->newFrame()->newLayer();
+    layer->getPainter().drawImage(":/images/isocastle.png");
+    project->newFrame()->newLayer()->getPainter().drawImage(":/images/isocastle.png");
+    project->newFrame()->newLayer()->getPainter().drawImage(":/images/isocastle.png");
+    project->newFrame()->newLayer()->getPainter().drawImage(":/images/isocastle.png");
+    project->newFrame()->newLayer()->getPainter().drawImage(":/images/isocastle.png");
+    project->newFrame()->newLayer()->getPainter().drawImage(":/images/isocastle.png");
+    project->newFrame()->newLayer()->getPainter().drawImage(":/images/isocastle.png");
+    project->newFrame()->newLayer()->getPainter().drawImage(":/images/isocastle.png");
+
+    AnimationFrame *frame = project->frame(0);
     frame->newLayer()->getPainter().drawImage(":/images/isocastle.png");
-    application.mainWindow()->layerView()->setFrame(frame);
+
+    application.setProject(project);
 
     return application.exec();
 }
