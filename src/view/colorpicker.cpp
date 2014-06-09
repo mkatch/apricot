@@ -1,28 +1,45 @@
 #include "colorpicker.hpp"
 
-#include <QPaintEvent>
-#include <QResizeEvent>
-#include <QPainter>
-#include <QImage>
-#include <QPixmap>
-#include <QBitmap>
+#include <QtGui>
 #include <QtMath>
-#include <QVector2D>
+#include <QtWidgets>
 
-ValueSlider::ValueSlider(
-    const QString &title,
-    int minimum, int maximum,
-    QWidget *parent
-) :
+#include <memory>
+using std::unique_ptr;
+
+class GroupedSlider : public QGroupBox
+{
+    Q_OBJECT
+    Q_PROPERTY(int value READ value WRITE setValue NOTIFY valueChanged)
+    Q_PROPERTY(int minimum READ minimum WRITE setMinimum)
+    Q_PROPERTY(int maximum READ maximum WRITE setMaximum)
+
+public:
+    explicit GroupedSlider(const QString &title, QWidget *parent = nullptr);
+
+    int value() const;
+    int minimum() const;
+    int maximum() const;
+
+    void setMinimum(int minimum);
+    void setMaximum(int maximum);
+
+public slots:
+    void setValue(int value);
+
+signals:
+    void valueChanged(int value);
+
+private:
+    QSlider *slider;
+    QSpinBox *spinBox;
+};
+
+GroupedSlider::GroupedSlider(const QString &title, QWidget *parent) :
     QGroupBox(title, parent)
 {
     slider = new QSlider(Qt::Horizontal, this);
-    slider->setMinimum(minimum);
-    slider->setMaximum(maximum);
-
     spinBox = new QSpinBox(this);
-    spinBox->setMinimum(minimum);
-    spinBox->setMaximum(maximum);
 
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->addWidget(slider);
@@ -35,22 +52,127 @@ ValueSlider::ValueSlider(
     connect(slider, SIGNAL(valueChanged(int)), this, SLOT(setValue(int)));
 }
 
-int ValueSlider::value() const
+inline int GroupedSlider::value() const
 {
     return slider->value();
 }
 
-void ValueSlider::setValue(int value)
+inline int GroupedSlider::minimum() const
+{
+    return slider->minimum();
+}
+
+inline int GroupedSlider::maximum() const
+{
+    return slider->maximum();
+}
+
+inline void GroupedSlider::setMinimum(int minimum)
+{
+    slider->setMinimum(minimum);
+    spinBox->setMinimum(minimum);
+}
+
+inline void GroupedSlider::setMaximum(int maximum)
+{
+    slider->setMaximum(maximum);
+    spinBox->setMaximum(maximum);
+}
+
+inline void GroupedSlider::setValue(int value)
 {
     slider->setValue(value);
     emit valueChanged(value);
 }
 
+class ColorWheel : public QWidget
+{
+    Q_OBJECT
+    Q_PROPERTY(QSize sizeHint READ sizeHint)
+    Q_PROPERTY(
+        int hue
+        READ hue WRITE setHue NOTIFY hueChanged
+    )
+    Q_PROPERTY(
+        int saturation
+        READ saturation WRITE setSaturation NOTIFY saturationChanged
+    )
+    Q_PROPERTY(
+        int lightness
+        READ lightness WRITE setLightness NOTIFY lightnessChanged
+    )
+    Q_PROPERTY(
+        QColor activeColor
+        READ activeColor WRITE setActiveColor NOTIFY activeColorChanged
+    )
+    Q_PROPERTY(
+        QColor previousColor
+        READ previousColor WRITE setPreviousColor NOTIFY previousColorChanged
+    )
+
+public:
+    explicit ColorWheel(QWidget *parent = nullptr);
+
+    int hue() const;
+    int saturation() const;
+    int lightness() const;
+
+    QColor activeColor() const;
+    QColor previousColor() const;
+
+    QSize sizeHint() const;
+
+protected:
+    void resizeEvent(QResizeEvent *event);
+    void paintEvent(QPaintEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void wheelEvent(QWheelEvent *event);
+
+public slots:
+    void setHue(int hue);
+    void setSaturation(int saturation);
+    void setLightness(int lightness);
+
+    void setActiveColor(const QColor &color);
+    void setPreviousColor(const QColor &color);
+
+signals:
+    void hueChanged(int value);
+    void saturationChanged(int value);
+    void lightnessChanged(int value);
+
+    void activeColorChanged(const QColor &color);
+    void previousColorChanged(const QColor &color);
+
+private:
+    static const qreal HUE_WHEEL_THICKNESS;
+    static const qreal COLOR_PREVIEW_RADIUS;
+    static const int HUE_BOX_SIZE;
+
+    void renderHueWheelBox();
+    void renderHueWheelMask();
+    void renderHueWheel();
+
+    bool huePointerDragged;
+    QPointF huePointerPosition() const;
+    qreal huePointerRadius() const;
+
+    unique_ptr<QImage> hueBox, hueMask, hueWheel;
+    int m_hue, m_saturation, m_lightness;
+    QColor m_previousColor;
+};
+
 const qreal ColorWheel::HUE_WHEEL_THICKNESS = 0.2;
 const qreal ColorWheel::COLOR_PREVIEW_RADIUS = 0.65;
+const int ColorWheel::HUE_BOX_SIZE = 16;
 
 ColorWheel::ColorWheel(QWidget *parent) :
-    QWidget(parent), hueWheel(new QImage()),
+    QWidget(parent),
+    hueBox(new QImage(HUE_BOX_SIZE, HUE_BOX_SIZE, QImage::Format_ARGB32)),
+    hueMask(new QImage()),
+    hueWheel(new QImage()),
     m_hue(0), m_saturation(0), m_lightness(0),
     m_previousColor(Qt::black)
 {
@@ -60,29 +182,29 @@ ColorWheel::ColorWheel(QWidget *parent) :
     setSizePolicy(policy);
 }
 
-int ColorWheel::hue() const
+inline int ColorWheel::hue() const
 {
     return m_hue;
 }
 
-int ColorWheel::saturation() const
+inline int ColorWheel::saturation() const
 {
     return m_saturation;
 }
 
-int ColorWheel::lightness() const
+inline int ColorWheel::lightness() const
 {
     return m_lightness;
 }
 
-QColor ColorWheel::activeColor() const
+inline QColor ColorWheel::activeColor() const
 {
     QColor color;
     color.setHslF(hue() / 360.0, saturation() / 100.0, lightness() / 100.0);
     return color;
 }
 
-QColor ColorWheel::previousColor() const
+inline QColor ColorWheel::previousColor() const
 {
     return m_previousColor;
 }
@@ -155,11 +277,11 @@ static inline qreal angleNorm(qreal x, qreal y)
     return theta / (2.0 * pi);
 }
 
-void ColorWheel::renderHueWheelMask(QImage &image)
+void ColorWheel::renderHueWheelMask()
 {
-    int width = image.width(), height = image.height();
+    int width = hueMask->width(), height = hueMask->height();
 
-    QPainter painter(&image);
+    QPainter painter(hueMask.get());
     painter.setRenderHint(QPainter::Antialiasing);
     painter.translate(width / 2.0, height / 2.0);
 
@@ -175,19 +297,19 @@ void ColorWheel::renderHueWheelMask(QImage &image)
     painter.drawPath(path);
 }
 
-void ColorWheel::renderHueWheelBox(QImage &image)
+void ColorWheel::renderHueWheelBox()
 {
-    int width = image.width(), height = image.height();
+    int width = hueBox->width(), height = hueBox->height();
 
     for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++) {
             qreal hue = angleNorm(x - width / 2.0, -(y - height / 2.0));
 
             QColor color;
-            color.setHslF(hue, 1.0, 0.5);
+            color.setHslF(hue, saturation() / 100.0, lightness() / 100.0);
 
             QRgb rgb = qRgb(color.red(), color.green(), color.blue());
-            image.setPixel(x, y, rgb);
+            hueBox->setPixel(x, y, rgb);
         }
     }
 }
@@ -197,21 +319,9 @@ void ColorWheel::resizeEvent(QResizeEvent *event)
     int size = qMin(event->size().width(), event->size().height());
 
     hueWheel.reset(new QImage(size, size, QImage::Format_ARGB32));
-    hueWheel->fill(Qt::transparent);
-    QPainter painter(hueWheel.get());
-
-    QImage proxy(size, size, QImage::Format_ARGB32);
-
-    // Generate and draw new hue wheel alpha mask.
-    proxy.fill(Qt::transparent);
-    renderHueWheelMask(proxy);
-    painter.drawImage(0, 0, proxy);
-
-    // Generate and draw new hue box.
-    proxy.fill(Qt::transparent);
-    renderHueWheelBox(proxy);
-    painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
-    painter.drawImage(0, 0, proxy);
+    hueMask.reset(new QImage(size, size, QImage::Format_ARGB32));
+    hueMask->fill(Qt::transparent);
+    renderHueWheelMask();
 }
 
 void ColorWheel::paintEvent(QPaintEvent *event)
@@ -223,7 +333,8 @@ void ColorWheel::paintEvent(QPaintEvent *event)
     painter.translate(width() / 2.0, height() / 2.0);
 
     // Draw color preview.
-    qreal radius = qMin(width(), height()) / 2.0;
+    int size = qMin(width(), height());
+    qreal radius = size / 2.0;
 
     qreal previewRadius = radius * COLOR_PREVIEW_RADIUS;
     QRect arcRect(
@@ -240,13 +351,23 @@ void ColorWheel::paintEvent(QPaintEvent *event)
     painter.drawChord(arcRect, 180 * 16, 180 * 16);
 
     // Draw hue wheel.
+    hueWheel->fill(Qt::transparent);
+    QPainter wheelPainter(hueWheel.get());
+    wheelPainter.drawImage(0, 0, *hueMask);
+    wheelPainter.setCompositionMode(QPainter::CompositionMode_SourceIn);
+    renderHueWheelBox();
+    wheelPainter.drawImage(0, 0, hueBox->scaled(
+        size, size,
+        Qt::IgnoreAspectRatio, Qt::SmoothTransformation
+    ));
+
     painter.drawImage(-radius, -radius, *hueWheel);
 
     // Draw hue pointer.
-    qreal size = huePointerRadius();
+    qreal pradius = huePointerRadius();
     painter.setPen(QColor(0, 0, 0, 255));
     painter.setBrush(QColor(255, 255, 255, 100));
-    painter.drawEllipse(huePointerPosition(), size, size);
+    painter.drawEllipse(huePointerPosition(), pradius, pradius);
 }
 
 void ColorWheel::mousePressEvent(QMouseEvent *event)
@@ -327,11 +448,23 @@ qreal ColorWheel::huePointerRadius() const
 ColorPicker::ColorPicker(QWidget *parent) :
     QWidget(parent),
     wheel(new ColorWheel(this)),
-    hueSlider(new ValueSlider("Hue", 0, 360, this)),
-    saturationSlider(new ValueSlider("Saturation", 0, 100, this)),
-    lightnessSlider(new ValueSlider("Lightness", 0, 100, this)),
+    hueSlider(new GroupedSlider("Hue", this)),
+    saturationSlider(new GroupedSlider("Saturation", this)),
+    lightnessSlider(new GroupedSlider("Lightness", this)),
     hexEdit(new QLineEdit(this))
 {
+    hueSlider->setMinimum(0);
+    hueSlider->setMaximum(360);
+
+    saturationSlider->setMinimum(0);
+    saturationSlider->setMaximum(100);
+
+    lightnessSlider->setMinimum(0);
+    lightnessSlider->setMaximum(100);
+
+    QFont hexFont("Monospace");
+    hexFont.setStyleHint(QFont::TypeWriter);
+    hexEdit->setFont(hexFont);
     hexEdit->setMaximumWidth(75);
     hexEdit->setAlignment(Qt::AlignRight);
 
@@ -343,95 +476,46 @@ ColorPicker::ColorPicker(QWidget *parent) :
     layout->addWidget(hexEdit, 0, Qt::AlignRight);
     setLayout(layout);
 
-    connect(
-        hueSlider, SIGNAL(valueChanged(int)),
-        wheel, SLOT(setHue(int))
-    );
-    connect(
-        saturationSlider, SIGNAL(valueChanged(int)),
-        wheel, SLOT(setSaturation(int))
-    );
-    connect(
-        lightnessSlider, SIGNAL(valueChanged(int)),
-        wheel, SLOT(setLightness(int))
-    );
-    connect(
-        wheel, SIGNAL(hueChanged(int)),
-        hueSlider, SLOT(setValue(int))
-    );
-    connect(
-        wheel, SIGNAL(saturationChanged(int)),
-        saturationSlider, SLOT(setValue(int))
-    );
-    connect(
-        wheel, SIGNAL(lightnessChanged(int)),
-        lightnessSlider, SLOT(setValue(int))
-    );
-    connect(
-        wheel, SIGNAL(activeColorChanged(QColor)),
-        this, SLOT(setActiveColor(QColor))
-    );
-    connect(
-        wheel, SIGNAL(activeColorChanged(QColor)),
-        this, SIGNAL(activeColorChanged(QColor))
-    );
-    connect(
-        wheel, SIGNAL(previousColorChanged(QColor)),
-        this, SLOT(setPreviousColor(QColor))
-    );
-    connect(
-        wheel, SIGNAL(previousColorChanged(QColor)),
-        this, SIGNAL(previousColorChanged(QColor))
-    );
-    connect(
-        hexEdit, SIGNAL(returnPressed()),
-        this, SLOT(setNamedColor())
-    );
+    connect(hueSlider, SIGNAL(valueChanged(int)), wheel, SLOT(setHue(int)));
+    connect(saturationSlider, SIGNAL(valueChanged(int)), wheel, SLOT(setSaturation(int)));
+    connect(lightnessSlider, SIGNAL(valueChanged(int)), wheel, SLOT(setLightness(int)));
+    connect(wheel, SIGNAL(hueChanged(int)), hueSlider, SLOT(setValue(int)));
+    connect(wheel, SIGNAL(saturationChanged(int)), saturationSlider, SLOT(setValue(int)));
+    connect(wheel, SIGNAL(lightnessChanged(int)), lightnessSlider, SLOT(setValue(int)));
+    connect(wheel, SIGNAL(activeColorChanged(QColor)), this, SLOT(setColor(QColor)));
+    connect(wheel, SIGNAL(activeColorChanged(QColor)), this, SIGNAL(colorChanged(QColor)));
+    connect(hexEdit, SIGNAL(returnPressed()), this, SLOT(setNamedColor()));
 }
 
 /*!
- * \property ColorPicker::activeColor
+ * \property ColorPicker::color
  * \brief Currently active color.
  */
-QColor ColorPicker::activeColor() const
+QColor ColorPicker::color() const
 {
     return wheel->activeColor();
 }
 
-/*!
- * \property ColorPicker::previousColor
- * \brief Previously choosen color.
- */
-QColor ColorPicker::previousColor() const
-{
-    return wheel->previousColor();
-}
-
-void ColorPicker::setActiveColor(const QColor &color)
+void ColorPicker::setColor(const QColor &color)
 {
     wheel->setActiveColor(color.toHsl());
     hexEdit->setText(wheel->activeColor().name());
 }
 
-void ColorPicker::setPreviousColor(const QColor &color)
-{
-    wheel->setPreviousColor(color.toHsl());
-}
-
 /*!
- * \brief Sets choosen color to currently active color.
+ * \brief Sets previously choosen color to currently active color.
  */
 void ColorPicker::applyColor()
 {
-    setPreviousColor(activeColor());
+    wheel->setPreviousColor(color());
 }
 
 /*!
- * \brief Sets active color to previously choosen color.
+ * \brief Sets currently active color to previously choosen color.
  */
 void ColorPicker::revertColor()
 {
-    setActiveColor(previousColor());
+    setColor(wheel->previousColor());
 }
 
 /*!
@@ -444,5 +528,8 @@ void ColorPicker::setNamedColor()
     if (!color.isValid())
         return;
 
-    setActiveColor(color);
+    setColor(color);
 }
+
+#include "colorpicker.moc"
+#include "moc_colorpicker.cpp"
