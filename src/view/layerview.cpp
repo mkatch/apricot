@@ -12,6 +12,25 @@
 
 using std::sort;
 
+/*!
+ * \class LayerView
+ * \inmodule view
+ *
+ * \brief A widget to manage layers
+ */
+
+ // Properties
+
+/*!
+ * \property LayerView::frame
+ * \brief The frame the layers of which are displayed.
+ */
+
+// Methods
+
+/*!
+ * \brief Constructs LayerView with parent widget \a parent.
+ */
 LayerView::LayerView(QWidget *parent) :
     QWidget(parent),
     graphicsView(new QGraphicsView(this)),
@@ -37,6 +56,11 @@ void LayerView::setFrame(AnimationFrame *frame)
     emit layersChanged();
 }
 
+/*!
+ * \brief Occurs when the widget is resized.
+ *
+ * Event information are provided in \a event.
+ */
 void LayerView::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
@@ -44,7 +68,13 @@ void LayerView::resizeEvent(QResizeEvent *event)
     updateSceneRect();
 }
 
-// TODO look up event filter
+/*!
+ * \brief Filters events if this view has been installed as an event filter for \a object.
+ *
+ * This is an overiden method. LayerView is installed as an event filter for it's underlying
+ * QGraphicsScene. This is done to handle dragging and does not reject any \a event. This
+ * implementation always returns \c false which means all events are passed further.
+ */
 bool LayerView::eventFilter(QObject *object, QEvent *event)
 {
     if (object == scene) {
@@ -72,7 +102,9 @@ bool LayerView::eventFilter(QObject *object, QEvent *event)
 }
 
 
-// TODO repair this
+/*!
+ * \brief Creates the scene.
+ */
 void LayerView::setupScene()
 {
     // Remove current thumbnails
@@ -96,6 +128,9 @@ void LayerView::setupScene()
     layOutScene(false); // NOTE look up layOutScene
 }
 
+/*!
+ * \brief Sets the scene rect of the QGraphicsView to tigtly fit contents.
+ */
 void LayerView::updateSceneRect()
 {
     graphicsView->setSceneRect(
@@ -105,14 +140,22 @@ void LayerView::updateSceneRect()
     );
 }
 
-
+/*! \brief Lays out the child widgets and graphics scene.
+ *
+ * Called at construction time and after resize.
+ */
 void LayerView::layOut()
 {
     graphicsView->setGeometry(0, 0, width(), height());
     layOutScene(false);
 }
 
-
+/*!
+ * \brief Lays out the scene items.
+ *
+ * Called in response to resizing. If \a animate is \c true, item transitions are
+ * animated. Otherwise the change is immediate.
+ */
 void LayerView::layOutScene(bool animate)
 {
     if (frame() == nullptr)
@@ -126,6 +169,12 @@ void LayerView::layOutScene(bool animate)
     layOutItems(animate);
 }
 
+/*!
+ * \brief Lays out scene items that represent the layers.
+ *
+ * Called in response to rezising and dragging. If \a animete is \c true, item transitions are
+ * animated. Otherwise the change is immediate.
+ */
 void LayerView::layOutItems(bool animate)
 {
     itemsAnimation.clear();
@@ -158,6 +207,12 @@ bool compareItemsByY(QGraphicsItem *i, QGraphicsItem *j)
     return i->y() < j->y();
 }
 
+/*!
+ * \brief Initiates dragging.
+ *
+ * The mouse position at the moment of pressing is passed in \a dragBeginPos. The method returns
+ * \c false if the conditions for dragging are not fulfilled.
+ */
 bool LayerView::tryBeginDrag(QPointF dragBeginPos)
 {
     QGraphicsItem *grabbedItem = scene->itemAt(dragBeginPos, graphicsView->transform());
@@ -187,6 +242,11 @@ bool LayerView::tryBeginDrag(QPointF dragBeginPos)
     return true;
 }
 
+/*!
+ * \brief Performs dragging.
+ *
+ * The \a dPos param holds the mouse position change in scene coordinates.
+ */
 void LayerView::drag(QPointF dPos)
 {
     qreal firstDraggedItemY = dragItem->childItems().first()->scenePos().y();
@@ -198,6 +258,11 @@ void LayerView::drag(QPointF dPos)
     dragItem->moveBy(dPos.x(), dPos.y());
 }
 
+/*!
+ * \brief Finalizes dragging.
+ *
+ * Applies the new frame orter to the model.
+ */
 void LayerView::endDrag()
 {
     draggedItemsAnimation.clear();
@@ -223,21 +288,52 @@ void LayerView::endDrag()
     layOutItems(true); // NOTE look up layOutItmes
 }
 
+/*!
+ * \brief Handles the layersChanged signal of the displayed frame.
+ */
 void LayerView::onLayersChanged()
 {
     setupScene();
     updateSceneRect();
 }
 
+/*!
+ * \class LayerViewItem
+ * \inmodule view
+ *
+ * \brief QGraphicsItem to visualize a frame thumbnail in LayerView.
+ *
+ * This class inherits QGraphicsObject, so it can have properties and can be animated using
+ * Qt Animation Framework.
+ */
 
+// Properties
 
+/*!
+ * \property LayerViewItem::layer
+ * \brief The displayed layer.
+ */
 
+/*!
+ * \property LayerViewItem::size
+ * \brief The dimensions of the item in item coordinates.
+ */
 
+/*!
+ * \property LayerViewItem::width
+ * \brief The width of the item in item coordinates.
+ */
 
+/*!
+ * \property LayerViewItem::height
+ * \brief The height of the item in item coordinates.
+ */
 
+// Methods
 
-
-
+/*!
+ * \brief Construct LayerViewItem displaying \a layer with parent item \a parent.
+ */
 LayerViewItem::LayerViewItem(const Layer *layer, QGraphicsItem *parent) :
     QGraphicsObject(parent),
     m_size(100, 100),
@@ -246,11 +342,20 @@ LayerViewItem::LayerViewItem(const Layer *layer, QGraphicsItem *parent) :
     // Do nothing
 }
 
+/*!
+ * \brief Returns the bounds of the item.
+ */
 QRectF LayerViewItem::boundingRect() const
 {
     return QRectF(0, 0, width(), height());
 }
 
+/*!
+ * \brief Paints the content of the item using \a painter.
+ *
+ * Style options are provided in \a option and \a widget, if provided, is the widget being painted
+ * on.
+ */
 void LayerViewItem::paint(
     QPainter *painter,
     const QStyleOptionGraphicsItem *option,

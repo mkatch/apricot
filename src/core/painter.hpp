@@ -3,7 +3,6 @@
 
 #include <QPainter>
 #include <QString>
-#include <memory>
 
 class Canvas;
 
@@ -12,54 +11,73 @@ class Painter
 public:
     explicit Painter(Canvas &canvas);
 
+    const QBrush &brush() const;
+    const QPen &pen() const;
+
+    void setBrush(const QBrush &brush);
+    void setPen(const QPen &pen);
+
     void drawImage(QString fileName);
+    void drawPoint(const QPoint &p);
     void drawPoint(int x, int y);
-    void drawPoint(const QPoint &position);
+    void drawLine(const QPoint &p1, const QPoint &p2);
+    void drawLine(int x1, int y1, int x2, int y2);
+    void drawRect(const QRect &rect);
+    void drawRect(int x, int y, int width, int height);
+    void drawEllipse(const QRect &rect);
+    void drawEllipse(const QPoint &center, int rx, int ry);
 
     const QRect &boundingBox() const;
-    const QColor &brushColor() const;
-    int brushSize() const;
-
-    void setBrushColor(const QColor &color);
-    void setBrushSize(int size);
 
 private:
-    std::shared_ptr<QPainter> painter;
+    QPainter painter;
 
     QRect m_boundingBox;
-
-    QColor m_brushColor;
-    int m_brushSize;
 };
 
-inline void Painter::drawPoint(const QPoint &position)
+inline const QBrush &Painter::brush() const
 {
-    drawPoint(position.x(), position.y());
+    return painter.brush();
+}
+
+inline const QPen &Painter::pen() const
+{
+    return painter.pen();
+}
+
+inline void Painter::setBrush(const QBrush &brush)
+{
+    painter.setBrush(brush);
+}
+
+inline void Painter::setPen(const QPen &pen)
+{
+    painter.setPen(pen);
+}
+
+inline void Painter::drawPoint(int x, int y)
+{
+    drawPoint(QPoint(x, y));
+}
+
+inline void Painter::drawLine(int x1, int y1, int x2, int y2)
+{
+    drawLine(QPoint(x1, y1), QPoint(x2, y2));
+}
+
+inline void Painter::drawRect(int x, int y, int width, int height)
+{
+    drawRect(QRect(x, y, width, height));
+}
+
+inline void Painter::drawEllipse(const QPoint &center, int rx, int ry)
+{
+    drawEllipse(QRect(center.x() - rx, center.y() - ry, 2 * rx, 2 * ry));
 }
 
 inline const QRect &Painter::boundingBox() const
 {
     return m_boundingBox;
-}
-
-inline const QColor &Painter::brushColor() const
-{
-    return m_brushColor;
-}
-
-inline int Painter::brushSize() const
-{
-    return m_brushSize;
-}
-
-inline void Painter::setBrushColor(const QColor &color)
-{
-    m_brushColor = color;
-}
-
-inline void Painter::setBrushSize(int size)
-{
-    m_brushSize = size;
 }
 
 #endif // CORE_PAINTER_HPP
