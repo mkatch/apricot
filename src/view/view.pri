@@ -19,4 +19,5 @@ SOURCES += \
     src/view/tool.cpp \
     src/view/toolactionarea.cpp \
     src/view/layerview.cpp \
-    src/view/animationframeview.cpp
+    src/view/animationframeview.cpp \
+    src/view/toolevents.cpp

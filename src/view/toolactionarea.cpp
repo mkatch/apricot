@@ -20,7 +20,7 @@
  * \property ToolActionArea::tool
  * \brief The active tool.
  *
- * This property may be `nullptr` meaning that the tool is not set and ToolActionArea is inactive.
+ * This property may be \c nullptr meaning that the tool is not set and ToolActionArea is inactive.
  */
 
 // Methods
@@ -129,7 +129,6 @@ void ToolActionArea::mouseMoveEvent(QMouseEvent *event)
         mapToFrame(lastMousePos),
         event->localPos(),
         lastMousePos,
-        event->button(),
         event->buttons(),
         event->modifiers()
     );

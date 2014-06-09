@@ -2,52 +2,136 @@
 
 #include "toolactionarea.hpp"
 
+/*!
+ * \class Tool
+ * \inmodule view
+ *
+ * \brief Base for all tools acting upon edited image.
+ *
+ * When a Tool is bound to a ToolActionArea it begis to receive mouse and keyboard events. One can
+ * override the event handling methods to provide custom behaviour and different actions for the
+ * user to invoke on the edited image.
+ */
+
+// Properties
+
+/*!
+ * \property Tool::actionArea
+ * \brief The bound ToolActionArea.
+ *
+ * This property can be \c nullptr indicating that the tool is not bound to any ToolActionArea.
+ */
+
+/*!
+ * \property Tool::active
+ * \brief The boolean value indicating wheather the tool is bound to any ToolActionArea.
+ */
+
+// Signals
+
+/*!
+ * \fn Tool::deactivating()
+ * \brief Emitted just before the tool is detached from a ToolActionArea.
+ */
+
+// Methods
+
+/*!
+ * \brief Construct a tool with parent object \a parent.
+ */
 Tool::Tool(QObject *parent) :
     QObject(parent)
 {
     // Do nothing
 }
 
+/*!
+ * \brief Called just after the tool is attached to a ToolActionArea.
+ *
+ * This method can be overriden to perform some initialization if necessary.
+ */
 void Tool::onActivated()
 {
     // Do nothing
 }
 
+/*!
+ * \brief Called just before the tool is detached from a ToolActionArea.
+ *
+ * This method can be overriden to perform some finalizing steps if necessary.
+ *
+ * \sa deactivating()
+ */
 void Tool::onDeactivating()
 {
     // Do nothing
 }
 
+/*!
+ * \brief Handles mouse press event \a event.
+ *
+ * This method can be overriden to perform custom actions on mouse button presses.
+ */
 void Tool::mousePressEvent(ToolMouseEvent *event)
 {
     event->ignore();
 }
 
+/*!
+ * \brief Handles mouse release event \a event.
+ *
+ * This method can be overriden to perform custom actions on mouse button releases.
+ */
 void Tool::mouseReleaseEvent(ToolMouseEvent *event)
 {
     event->ignore();
 }
 
+/*!
+ * \brief Handles double click event \a event.
+ *
+ * This method can be overriden to perform custom actions on double clicks.
+ */
 void Tool::mouseDoubleClickEvent(ToolMouseEvent *event)
 {
     event->ignore();
 }
 
+/*!
+ * \brief Handles mouse move event \a event.
+ *
+ * This method can be overriden to perform custom actions when the mouse moves.
+ */
 void Tool::mouseMoveEvent(ToolMouseMoveEvent *event)
 {
     event->ignore();
 }
 
+/*!
+ * \brief Handles wheel event \a event.
+ *
+ * This method can be overriden to perform custom actions when the mouse wheel changes position.
+ */
 void Tool::wheelEvent(ToolWheelEvent *event)
 {
     event->ignore();
 }
 
+/*!
+ * \brief Handles key press event \a event.
+ *
+ * This method can be overriden to perform custom actions when a key is pressed.
+ */
 void Tool::keyPressEvent(ToolKeyEvent *event)
 {
     event->ignore();
 }
 
+/*!
+ * \brief Handles key release event \a event.
+ *
+ * This method can be overriden to perform custom actions when a key is released.
+ */
 void Tool::keyReleaseEvent(ToolKeyEvent *event)
 {
     event->ignore();

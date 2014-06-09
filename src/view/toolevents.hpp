@@ -67,8 +67,7 @@ public:
         const QPointF &canvasPos,
         const QPointF &prevCanvasPos,
         const QPointF &viewPos,
-        const QPointF &prevAreaPos,
-        Qt::MouseButton button,
+        const QPointF &prevViewPos,
         Qt::MouseButtons buttons,
         Qt::KeyboardModifiers modifiers
     );
@@ -250,14 +249,13 @@ inline ToolMouseMoveEvent::ToolMouseMoveEvent(
     const QPointF &canvasPos,
     const QPointF &prevCanvasPos,
     const QPointF &viewPos,
-    const QPointF &prevAreaPos,
-    Qt::MouseButton button,
+    const QPointF &prevViewPos,
     Qt::MouseButtons buttons,
     Qt::KeyboardModifiers modifiers
 ) :
-    ToolMouseEvent(event, canvasPos, viewPos, button, buttons, modifiers),
+    ToolMouseEvent(event, canvasPos, viewPos, Qt::NoButton, buttons, modifiers),
     m_prevCanvasPos(prevCanvasPos),
-    m_prevViewPos(prevAreaPos)
+    m_prevViewPos(prevViewPos)
 {
     // Do nothing
 }

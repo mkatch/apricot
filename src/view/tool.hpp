@@ -11,14 +11,15 @@ class Tool : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(ToolActionArea *actionArea READ actionArea NOTIFY actionAreaChanged)
-    Q_PROPERTY(bool active READ active NOTIFY activeChanged)
+    Q_PROPERTY(bool active READ isActive NOTIFY activeChanged)
 
 public:
     explicit Tool(QObject *parent = nullptr);
 
-    ToolActionArea *actionArea() const { return m_actionArea; }
+    ToolActionArea *actionArea();
+    const ToolActionArea *actionArea() const;
 
-    bool active() const { return m_actionArea != nullptr; }
+    bool isActive() const;
 
 signals:
     void actionAreaChanged();
@@ -45,5 +46,19 @@ private:
     friend class ToolActionArea;
 };
 
+inline ToolActionArea *Tool::actionArea()
+{
+    return m_actionArea;
+}
+
+inline const ToolActionArea *Tool::actionArea() const
+{
+    return m_actionArea;
+}
+
+inline bool Tool::isActive() const
+{
+    return actionArea() != nullptr;
+}
 
 #endif // VIEW_TOOL_HPP
