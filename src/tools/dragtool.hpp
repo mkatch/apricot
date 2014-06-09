@@ -1,5 +1,5 @@
-#ifndef TOOLS_DRAG_TOOL_HPP
-#define TOOLS_DRAG_TOOL_HPP
+#ifndef TOOLS_DRAGTOOL_HPP
+#define TOOLS_DRAGTOOL_HPP
 
 #include <ApricotView>
 
@@ -11,10 +11,8 @@ public:
     explicit DragTool(QObject *parent = nullptr);
 
 protected:
-    virtual void mousePressEvent(ToolMouseEvent *event) override;
-    virtual void mouseDragEvent(ToolMouseMoveEvent *event) override;
-    virtual void mouseWheelEvent(ToolMouseWheelEvent *event) override;
+    virtual void mouseMoveEvent(ToolMouseMoveEvent *event) override;
+    virtual void wheelEvent(ToolWheelEvent *event) override;
 };
 
-
-#endif // TOOLS_DRAG_TOOL_HPP
+#endif // TOOLS_DRAGTOOL_HPP

@@ -129,7 +129,7 @@ public:
     ToolKeyEvent(
         QEvent *event,
         int key,
-        Qt::KeyboardModifier modifiers
+        Qt::KeyboardModifiers modifiers
     );
 
     int key() const;
@@ -200,7 +200,7 @@ inline qreal ToolMouseEvent::y() const
     return pos().y();
 }
 
-inline const ToolMouseEvent::QPointF &pos() const
+inline const QPointF &ToolMouseEvent::pos() const
 {
     return canvasPos();
 }
@@ -215,7 +215,7 @@ inline qreal ToolMouseEvent::canvasY() const
     return canvasPos().y();
 }
 
-inline const ToolMouseEvent::QPointF &canvasPos() const
+inline const QPointF &ToolMouseEvent::canvasPos() const
 {
     return m_canvasPos;
 }
@@ -267,7 +267,7 @@ inline qreal ToolMouseMoveEvent::prevX() const
 	return prevPos().x();
 }
 
-inline qreal ToolMouseMoveEvent::prevX() const
+inline qreal ToolMouseMoveEvent::prevY() const
 {
 	return prevPos().y();
 }
@@ -277,17 +277,17 @@ inline const QPointF &ToolMouseMoveEvent::prevPos() const
 	return prevCanvasPos();
 }
 
-inline qreal ToolMouseMoveEvent::prevX() const
+inline qreal ToolMouseMoveEvent::dX() const
 {
 	return x() - prevX();
 }
 
-inline qreal ToolMouseMoveEvent::prevX() const
+inline qreal ToolMouseMoveEvent::dY() const
 {
 	return y() - prevY();
 }
 
-inline qreal ToolMouseMoveEvent::prevX() const
+inline QPointF ToolMouseMoveEvent::dPos() const
 {
 	return pos() - prevPos();
 }
@@ -302,19 +302,19 @@ inline qreal ToolMouseMoveEvent::prevCanvasY() const
 	return prevCanvasPos().y();
 }
 
-inline const QPointF &prevCanvasPos() const
+inline const QPointF &ToolMouseMoveEvent::prevCanvasPos() const
 {
 	return m_prevCanvasPos;
 }
 
 inline qreal ToolMouseMoveEvent::dCanvasX() const
 {
-	return dCanvasPos().x();
+    return canvasX() - prevCanvasX();
 }
 
 inline qreal ToolMouseMoveEvent::dCanvasY() const
 {
-	return dCanvasPos().y();
+    return canvasY() - prevCanvasY();
 }
 
 inline QPointF ToolMouseMoveEvent::dCanvasPos() const
@@ -352,7 +352,7 @@ inline QPointF ToolMouseMoveEvent::dViewPos() const
 	return viewPos() - prevViewPos();
 }
 
-ToolWheelEvent::ToolWheelEvent(
+inline ToolWheelEvent::ToolWheelEvent(
     QEvent *event,
     const QPointF& canvasPos,
     const QPointF& viewPos,
@@ -368,20 +368,19 @@ ToolWheelEvent::ToolWheelEvent(
     // Do nothing
 }
 
-const QPoint& ToolWheelEvent::pixelDelta() const
+inline const QPoint& ToolWheelEvent::pixelDelta() const
 {
     return m_pixelDelta;
 }
 
-const QPoint& ToolWheelEvent::angleDelta() const
+inline const QPoint& ToolWheelEvent::angleDelta() const
 {
     return m_angleDelta;
 }
 
-inline ToolKeyEvent::ToolKeyEvent(
-    QEvent *event,
+inline ToolKeyEvent::ToolKeyEvent(QEvent *event,
     int key,
-    Qt::KeyboardModifier modifiers
+    Qt::KeyboardModifiers modifiers
 ) :
     ToolEvent(event, modifiers),
     m_key(key)
@@ -389,9 +388,9 @@ inline ToolKeyEvent::ToolKeyEvent(
     // Do nothing
 }
 
-inline ToolKeyEvent::key() const
+inline int ToolKeyEvent::key() const
 {
     return m_key;
 }
 
-#endif // CORE_TOOL_EVENTS_HPP
+#endif // VIEW_TOOL_EVENTS_HPP

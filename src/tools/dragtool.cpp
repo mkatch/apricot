@@ -1,27 +1,20 @@
 #include "dragtool.hpp"
 
-
 DragTool::DragTool(QObject *parent) :
     Tool(parent)
 {
     // Do nothing
 }
 
-
-void DragTool::mousePressEvent(ToolMouseEvent *event)
+void DragTool::mouseMoveEvent(ToolMouseMoveEvent *event)
 {
-    event->accept(); // This is needed to initiate drag
+    if (event->buttons() & Qt::LeftButton) {
+        actionArea()->translate(event->dViewPos());
+        event->accept();
+    }
 }
 
-
-void DragTool::mouseDragEvent(ToolMouseMoveEvent *event)
-{
-    actionArea()->translate(event->dViewPos());
-    event->accept();
-}
-
-
-void DragTool::mouseWheelEvent(ToolMouseWheelEvent *event)
+void DragTool::wheelEvent(ToolWheelEvent *event)
 {
     qreal factor = 1.0 + event->angleDelta().y() / 1200.0;
     actionArea()->scale(factor);

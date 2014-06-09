@@ -5,8 +5,7 @@
 
 ToolActionArea::ToolActionArea(QWidget *parent) :
     AnimationFrameView(parent),
-    m_tool(nullptr),
-    pressed(false)
+    m_tool(nullptr)
 {
     this->setMouseTracking(true);
 }
@@ -133,5 +132,5 @@ void ToolActionArea::keyReleaseEvent(QKeyEvent *event)
         event->key(),
         event->modifiers()
     );
-    tool()->keyReleaseEvent(toolEvent);
+    tool()->keyReleaseEvent(&toolEvent);
 }
