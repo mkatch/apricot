@@ -304,6 +304,26 @@ qreal ColorWheel::huePointerRadius() const
     return qMin(width(), height()) * 0.5 * HUE_WHEEL_THICKNESS / 2.0 * 0.75;
 }
 
+/*!
+ * \class ColorPicker
+ * \inmodule view
+ *
+ * \brief A widget for choosing colors.
+ */
+
+/*!
+ * \fn ColorPicker::activeColorChanged(const QColor &color)
+ * \brief This signal is emmited whenever currently active color changes.
+ */
+
+/*!
+ * \fn ColorPicker::previousColorChanged(const QColor &color)
+ * \brief This signal is emmited whenever previously choosen color changes.
+ */
+
+/*!
+ * \brief Constructs the picker with given \a parent widget.
+ */
 ColorPicker::ColorPicker(QWidget *parent) :
     QWidget(parent),
     wheel(new ColorWheel(this)),
@@ -369,11 +389,19 @@ ColorPicker::ColorPicker(QWidget *parent) :
     );
 }
 
+/*!
+ * \property ColorPicker::activeColor
+ * \brief Currently active color.
+ */
 QColor ColorPicker::activeColor() const
 {
     return wheel->activeColor();
 }
 
+/*!
+ * \property ColorPicker::previousColor
+ * \brief Previously choosen color.
+ */
 QColor ColorPicker::previousColor() const
 {
     return wheel->previousColor();
@@ -390,16 +418,25 @@ void ColorPicker::setPreviousColor(const QColor &color)
     wheel->setPreviousColor(color.toHsl());
 }
 
+/*!
+ * \brief Sets choosen color to currently active color.
+ */
 void ColorPicker::applyColor()
 {
     setPreviousColor(activeColor());
 }
 
+/*!
+ * \brief Sets active color to previously choosen color.
+ */
 void ColorPicker::revertColor()
 {
     setActiveColor(previousColor());
 }
 
+/*!
+ * \brief Sets active color basing on the hex line edit.
+ */
 void ColorPicker::setNamedColor()
 {
     QColor color;
