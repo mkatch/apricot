@@ -74,12 +74,24 @@ Layer::Layer(const Layer *other, AnimationFrame *frame) :
  * getPainter().
  */
 
-/*!
- * \brief Gets a Painter bound to the undelying Canvas.
- */
-Painter Layer::getPainter()
+void Layer::beginPainting()
 {
-    return Painter(m_canvas);
+    m_painter.reset(new Painter(m_canvas));
+}
+
+void Layer::endPainting()
+{
+    m_painter.reset(nullptr);
+}
+
+/*!
+ * \brief Returns painter bound to the undelying Canvas.
+ *
+ * This requires preceding call to Layer::startPainting.
+ */
+Painter &Layer::painter()
+{
+    return *m_painter;
 }
 
 /*!

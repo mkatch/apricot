@@ -40,9 +40,9 @@
  * \brief Constructs a painter that paints on \a canvas.
  */
 Painter::Painter(Canvas &canvas) :
-    painter(new QPainter(&canvas.m_pixmap))
+    painter(&canvas.m_pixmap)
 {
-    // Do nothing
+    painter.setRenderHint(QPainter::NonCosmeticDefaultPen);
 }
 
 /*!
@@ -54,26 +54,39 @@ void Painter::drawImage(QString fileName)
 {
     QPixmap pixmap(fileName);
 
-    painter->drawPixmap(0, 0, pixmap);
+    painter.drawPixmap(0, 0, pixmap);
     m_boundingBox |= pixmap.rect();
 }
 
-/*!
- * \brief Draws a point centered around \a x and \a y coordinates.
- */
-void Painter::drawPoint(int x, int y)
+void Painter::drawPoint(const QPoint &p)
 {
-    int size = brushSize();
-    QRect drawingRect(x - size / 2, y - size / 2, size, size);
+    int size = painter.pen().width();
+    QRect rect(p.x() - size / 2, p.y() - size / 2, size, size);
 
     // We use this instead of QPainter::drawPoint to avoid weird problems.
-    painter->fillRect(drawingRect, brushColor());
-    m_boundingBox |= drawingRect;
+    painter.fillRect(rect, painter.pen().color());
+    m_boundingBox |= rect;
 }
 
-/*!
- * \fn void Painter::drawPoint(const QPoint &position)
- * \brief Draws a point centered around \a position.
- *
- * This is an overloaded function.
- */
+void Painter::drawLine(const QPoint &p1, const QPoint &p2)
+{
+    QRect rect;
+    rect.setTopLeft(p1);
+    rect.setBottomRight(p2);
+    rect = rect.normalized();
+
+    painter.drawLine(p1, p2);
+    m_boundingBox |= rect;
+}
+
+void Painter::drawRect(const QRect &rect)
+{
+    painter.drawRect(rect);
+    m_boundingBox |= rect;
+}
+
+void Painter::drawEllipse(const QRect &rect)
+{
+    painter.drawEllipse(rect);
+    m_boundingBox |= rect;
+}

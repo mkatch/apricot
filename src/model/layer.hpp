@@ -4,6 +4,9 @@
 #include <QObject>
 #include <QPixmap>
 
+#include <memory>
+using std::unique_ptr;
+
 #include <ApricotCore>
 
 class AnimationFrame;
@@ -28,10 +31,14 @@ public:
     int height() const;
     QSize size() const;
 
-    Painter getPainter();
+    Painter &painter();
+    void beginPainting();
+    void endPainting();
 
 private:
     Canvas m_canvas;
+
+    unique_ptr<Painter> m_painter;
 
 private slots:
     void updateSize();
