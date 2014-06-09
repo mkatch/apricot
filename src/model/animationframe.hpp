@@ -18,9 +18,6 @@ class AnimationFrame : public QObject
     Q_PROPERTY(int layerCount READ layerCount)
 
 public:
-    explicit AnimationFrame(Project *project);
-    AnimationFrame(const AnimationFrame *other, Project *project);
-
     Project *project();
     const Project *project() const;
 
@@ -39,28 +36,32 @@ public:
     Layer *newLayer(int i);
     Layer *newLayer();
 
-    void removeLayer(int i);
+    void deleteLayer(int i);
 
     void moveLayer(int from, int to);
     void moveLayer(const Layer *layer, int to);
-
-
 
 signals:
     void layersChanged();
 
 private:
+    Project *m_project;
     QList<Layer *> m_layers;
+
+    explicit AnimationFrame(Project *project);
+    AnimationFrame(const AnimationFrame *other, Project *project);
+
+    friend class Project;
 };
 
 inline Project *AnimationFrame::project()
 {
-    return reinterpret_cast<Project *>(parent());
+    return m_project;
 }
 
 inline const Project *AnimationFrame::project() const
 {
-    return reinterpret_cast<Project *>(parent());
+    return m_project;
 }
 
 inline int AnimationFrame::width() const

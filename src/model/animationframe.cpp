@@ -17,8 +17,6 @@
 /*!
  * \property AnimationFrame::project
  * \brief The parent Project.
- *
- * It is also the QObject parent of the frame.
  */
 
 /*!
@@ -49,30 +47,6 @@
  */
 
 // Methods
-
-/*!
- * \brief Constructs a frame with parent project \a project.
- *
- * The \a project is also the parent object of the newly created AnimationFrame.
- */
-AnimationFrame::AnimationFrame(Project *project) :
-    QObject(project)
-{
-    // Do nothing
-}
-
-/*!
- * Constructs a copy of \a \other with parent project \a project.
- *
- * Newly created AnimationFrame receives a copy of all layers of \a other. The \a project is also
- * the parent object of the frame.
-*/
-AnimationFrame::AnimationFrame(const AnimationFrame *other, Project *project) :
-    QObject(project)
-{
-    foreach (const Layer *layer, other->m_layers)
-        this->m_layers.append(new Layer(layer, this));
-}
 
 const QSize &AnimationFrame::size() const
 {
@@ -131,10 +105,39 @@ void AnimationFrame::moveLayer(int from, int to)
 }
 
 /*!
- * Removes layer at index \a i.
+ * \brief Deletes layer at index \a i.
+ *
+ * The destructor of the layer is called and it's memory is freed.
  */
-void AnimationFrame::removeLayer(int i)
+void AnimationFrame::deleteLayer(int i)
 {
     delete m_layers.takeAt(i);
     emit layersChanged();
+}
+
+/*!
+ * \brief Constructs a frame with parent project \a project.
+ *
+ * The \a project also becomes the parent object of the newly created AnimationFrame.
+ */
+AnimationFrame::AnimationFrame(Project *project) :
+    QObject(project),
+    m_project(project)
+{
+    // Do nothing
+}
+
+/*!
+ * Constructs a frame with all layers copied from \a other and with parent project \a project.
+ *
+ * The parent project also becomes the parent object of the frame. This constructor can only be
+ * called by Project and is guaranteed to be provided \a project with the same dimensions as
+ * \a other.
+*/
+AnimationFrame::AnimationFrame(const AnimationFrame *other, Project *project) :
+    QObject(project),
+    m_project(project)
+{
+    foreach (const Layer *layer, other->m_layers)
+        this->m_layers.append(new Layer(layer, this));
 }

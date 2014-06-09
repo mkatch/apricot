@@ -36,7 +36,7 @@ public:
     AnimationFrame *newFrame(int i);
     AnimationFrame *newFrame();
 
-    void removeFrame(int i);
+    void deleteFrame(int i);
 
     void moveFrame(int from, int to);
     void moveFrame(const AnimationFrame *frame, int to);

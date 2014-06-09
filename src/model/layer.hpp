@@ -20,33 +20,39 @@ class Layer : public QObject
     Q_PROPERTY(QSize size READ size)
 
 public:
-    explicit Layer(AnimationFrame *frame);
-    Layer(const Layer *other, AnimationFrame *frame);
-
     AnimationFrame *frame();
-
-    const Canvas *canvas() const;
+    const AnimationFrame *frame() const;
 
     int width() const;
     int height() const;
     QSize size() const;
 
-    Painter &painter();
-    void beginPainting();
-    void endPainting();
+    const Canvas *canvas() const;
+
+    Painter *newPainter();
 
 private:
+    AnimationFrame *m_frame;
     Canvas m_canvas;
-
-    unique_ptr<Painter> m_painter;
 
 private slots:
     void updateSize();
+
+private:
+    explicit Layer(AnimationFrame *frame);
+    Layer(const Layer* other, AnimationFrame *frame);
+
+    friend class AnimationFrame;
 };
 
 inline AnimationFrame *Layer::frame()
 {
-    return reinterpret_cast<AnimationFrame *>(parent());
+    return m_frame;
+}
+
+inline const AnimationFrame *Layer::frame() const
+{
+    return m_frame;
 }
 
 inline const Canvas *Layer::canvas() const
@@ -67,6 +73,11 @@ inline int Layer::height() const
 inline QSize Layer::size() const
 {
     return m_canvas.size();
+}
+
+inline Painter *Layer::newPainter()
+{
+    return new Painter(m_canvas);
 }
 
 #endif // CORE_LAYER_HPP
