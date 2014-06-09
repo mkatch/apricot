@@ -433,13 +433,8 @@ qreal ColorWheel::huePointerRadius() const
  */
 
 /*!
- * \fn ColorPicker::activeColorChanged(const QColor &color)
+ * \fn ColorPicker::colorChanged(const QColor &color)
  * \brief This signal is emmited whenever currently active color changes.
- */
-
-/*!
- * \fn ColorPicker::previousColorChanged(const QColor &color)
- * \brief This signal is emmited whenever previously choosen color changes.
  */
 
 /*!

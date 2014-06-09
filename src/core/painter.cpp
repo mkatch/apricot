@@ -12,28 +12,28 @@
  */
 
 /*!
+ * \fn const QBrush &Painter::brush() const
+ * \brief Returns the painter's current brush.
+ */
+
+/*!
+ * \fn const QPen &Painter::pen() const
+ * \brief Returns the painter's current pen.
+ */
+
+/*!
+ * \fn void Painter::setBrush(const QBrush &brush)
+ * \brief Sets the painter's brush to the given \a brush.
+ */
+
+/*!
+ * \fn void Painter::setPen(const QPen &pen)
+ * \brief Sets the painter's pen to the given \a pen.
+ */
+
+/*!
  * \fn const QRect &Painter::boundingBox() const
  * \brief Returns bounding box of area changed by the drawing events.
- */
-
-/*!
- * \fn const QColor &Painter::brushColor() const
- * \brief Returns current brush color.
- */
-
-/*!
- * \fn int Painter::brushSize() const
- * \brief Returns current brush size.
- */
-
-/*!
- * \fn void Painter::setBrushColor(const QColor &color)
- * \brief Changes current brush color to \a color.
- */
-
-/*!
- * \fn void Painter::setBrushSize(int size)
- * \brief Changes current brush size to \a size.
  */
 
 /*!
@@ -58,6 +58,9 @@ void Painter::drawImage(QString fileName)
     m_boundingBox |= pixmap.rect();
 }
 
+/*!
+ * \brief Draws a point at \a p using the current pen's color and width.
+ */
 void Painter::drawPoint(const QPoint &p)
 {
     int size = painter.pen().width();
@@ -68,6 +71,16 @@ void Painter::drawPoint(const QPoint &p)
     m_boundingBox |= rect;
 }
 
+/*!
+ * \fn void Painter::drawPoint(int x, int y)
+ * \brief Draw a point at (\a x, \a y) using the current pen's color and width.
+ *
+ * \overload
+ */
+
+/*!
+ * \brief Draws a line from \a p1 to \a p2.
+ */
 void Painter::drawLine(const QPoint &p1, const QPoint &p2)
 {
     QRect rect;
@@ -79,14 +92,41 @@ void Painter::drawLine(const QPoint &p1, const QPoint &p2)
     m_boundingBox |= rect;
 }
 
+/*!
+ * \fn void Painter::drawLine(int x1, int y1, int x2, int y2)
+ * \brief Draws a line from (\a x1, \a y1) to (\a x2, \a y2).
+ *
+ * \overload
+ */
+
+/*!
+ * \brief Draws a rectangle defined by \a rect with the current pen and brush.
+ */
 void Painter::drawRect(const QRect &rect)
 {
     painter.drawRect(rect);
     m_boundingBox |= rect;
 }
 
+/*!
+ * \fn void Painter::drawRect(int x, int y, int width, int height)
+ * \brief Draws a rectangle beginning at (\a x, \a y) of given \a width and \a height.
+ *
+ * \overload
+ */
+
+/*!
+ * \brief Draws the ellipse defined by \a rect with the current pen and brush.
+ */
 void Painter::drawEllipse(const QRect &rect)
 {
     painter.drawEllipse(rect);
     m_boundingBox |= rect;
 }
+
+/*!
+ * \fn void Painter::drawEllipse(const QPoint &center, int rx, int ry)
+ * \brief Draws the ellipse positioned at \a center with radii \a rx and \a ry.
+ *
+ * \overload
+ */

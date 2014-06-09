@@ -74,11 +74,17 @@ Layer::Layer(const Layer *other, AnimationFrame *frame) :
  * getPainter().
  */
 
+/*!
+ * \brief Initializes painting procedure.
+ */
 void Layer::beginPainting()
 {
     m_painter.reset(new Painter(m_canvas));
 }
 
+/*!
+ * \brief Finalizes painting procedure.
+ */
 void Layer::endPainting()
 {
     m_painter.reset(nullptr);
