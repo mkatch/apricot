@@ -212,7 +212,7 @@ bool compareItemsByX(QGraphicsItem *i, QGraphicsItem *j)
 bool AnimationView::tryBeginDrag(QPointF dragBeginPos)
 {
     QGraphicsItem *grabbedItem = scene->itemAt(dragBeginPos, graphicsView->transform());
-    if (!grabbedItem->isSelected())
+    if (grabbedItem == NULL || !grabbedItem->isSelected())
         return false;
     // Only frame items are selectable so if we reached this, it means the user grabbed a frame
 

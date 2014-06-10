@@ -39,6 +39,7 @@ LayerView::LayerView(QWidget *parent) :
     dropIndex(-1)
 {
     setMinimumWidth(170);
+    //setMaximumWidth(170);
     graphicsView->setRenderHint(QPainter::Antialiasing);
     graphicsView->setScene(scene);
     scene->installEventFilter(this);
@@ -135,8 +136,8 @@ void LayerView::updateSceneRect()
 {
     graphicsView->setSceneRect(
         0, 0,
-        (items.count() + 1) * SPACING_UNIT + items.count() * ITEM_WIDTH,
-        height()
+        width(),
+        (items.count() + 1) * SPACING_UNIT + items.count() * ITEM_HEIGHT
     );
 }
 
@@ -162,7 +163,7 @@ void LayerView::layOutScene(bool animate)
         return;
 
     foreach (LayerViewItem *item, items){
-        item->setSize(ITEM_WIDTH, ITEM_HEIGHT);//max(height() - 2 * SPACING_UNIT, 0));
+        item->setSize(max(width() - 2 * SPACING_UNIT, 0), ITEM_HEIGHT);
 
     }
 
@@ -216,7 +217,7 @@ bool compareItemsByY(QGraphicsItem *i, QGraphicsItem *j)
 bool LayerView::tryBeginDrag(QPointF dragBeginPos)
 {
     QGraphicsItem *grabbedItem = scene->itemAt(dragBeginPos, graphicsView->transform());
-    if (!grabbedItem->isSelected())
+    if (grabbedItem == NULL || !grabbedItem->isSelected())
         return false;
     // Only layer items are selectable so if we reached this, it means the user grabbed a layer
 

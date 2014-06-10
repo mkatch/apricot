@@ -23,6 +23,9 @@ int main(int argc, char *argv[])
     Layer *layer = frame->newLayer();
     Painter *painter = layer->newPainter();
     painter->drawImage(":/images/isocastle.png");
+    layer = frame->newLayer();
+    painter = layer->newPainter();
+    painter->drawImage(":/images/isocastle.png");
     delete painter;
 
     application.setProject(project);
