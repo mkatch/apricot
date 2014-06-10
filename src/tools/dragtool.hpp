@@ -11,8 +11,13 @@ public:
     explicit DragTool(QObject *parent = nullptr);
 
 protected:
-    virtual void mouseMoveEvent(ToolMouseMoveEvent *event) override;
-    virtual void wheelEvent(ToolWheelEvent *event) override;
+    void mouseMoveEvent(ToolMouseMoveEvent *event) override;
+    void wheelEvent(ToolWheelEvent *event) override;
+    void mousePressEvent(ToolMouseEvent *event) override;
+    void paint(Painter *painter, bool preview) override;
+
+private:
+    QPoint lastPoint;
 };
 
 #endif // TOOLS_DRAGTOOL_HPP

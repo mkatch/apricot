@@ -136,6 +136,32 @@ void Tool::keyReleaseEvent(ToolKeyEvent *event)
     event->ignore();
 }
 
+void Tool::preview()
+{
+    if (!isActive()) {
+        qWarning("Tool::preview() was invoked by an inactive tool");
+        return;
+    }
+
+    view()->toolPreview();
+}
+
+void Tool::commit()
+{
+    if (!isActive()) {
+        qWarning("Tool::commit() was invoked by an inactive tool");
+        return;
+    }
+
+    view()->toolCommit();
+}
+
+void Tool::paint(Painter *painter, bool preview)
+{
+    Q_UNUSED(painter)
+    Q_UNUSED(preview)
+}
+
 void Tool::setView(AnimationFrameView *view)
 {
     if (m_view == view)

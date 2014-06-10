@@ -5,9 +5,24 @@ using std::max;
 
 #include <ApricotUtils>
 
-#include "graphicsanimationframeitem.hpp"
 #include "tool.hpp"
 #include "toolevents.hpp"
+#include "qpainterextensions.hpp"
+
+class GraphicsAnimationFrameViewItem : public QGraphicsItem
+{
+public:
+    GraphicsAnimationFrameViewItem(const AnimationFrameView *view);
+
+    QRectF boundingRect() const;
+
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+
+private:
+    static const int PLACEHOLDER_SIZE = 128;
+
+    const AnimationFrameView *view;
+};
 
 /*!
  * \class AnimationFrameView
@@ -61,14 +76,15 @@ AnimationFrameView::AnimationFrameView(QWidget *parent) :
     QWidget(parent),
     graphicsView(new QGraphicsView(this)),
     scene(new QGraphicsScene(this)),
-    placeholderPixmap(256, 256),
-    m_frame(nullptr)
+    frameItem(new GraphicsAnimationFrameViewItem(this)),
+    m_frame(nullptr),
+    m_activeLayer(nullptr)
 {
+    scene->addItem(frameItem);
     graphicsView->setScene(scene);
     graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     graphicsView->setAttribute(Qt::WA_TransparentForMouseEvents, true);
-    frameItem = scene->addPixmap(placeholderPixmap);
     layOut();
 }
 
@@ -83,20 +99,28 @@ void AnimationFrameView::setFrame(AnimationFrame *frame)
         return;
 
     m_frame = frame;
-
-    QPointF pos = frameItem->pos();
-    qreal scale = frameItem->scale();
-    scene->removeItem(frameItem);
-    delete frameItem;
-
-    frameItem = (m_frame != nullptr)
-        ? static_cast<QGraphicsItem *>(new GraphicsAnimationFrameItem(frame))
-        : static_cast<QGraphicsItem *>(new QGraphicsPixmapItem(placeholderPixmap));
-    frameItem->setPos(pos);
-    frameItem->setScale(scale);
-    scene->addItem(frameItem);
-
+    if (frame != nullptr)
+        setActiveLayer(frame->layer(0));
     emit frameChanged();
+}
+
+void AnimationFrameView::setActiveLayer(Layer *layer)
+{
+    if (m_activeLayer == layer)
+        return;
+
+    if (layer != nullptr && layer->frame() != frame()) {
+        qWarning(
+            "AnimationFrameView::setActiveLayer(): "
+            "Passed layer is not part of currently displayed frame"
+        );
+        return setActiveLayer(nullptr);
+    }
+
+    m_activeLayer = layer;
+    backBuffer = (layer != nullptr) ? layer->canvas() : Canvas();
+    lastBackBufferChange = QRect();
+    emit activeLayerChanged();
 }
 
 void AnimationFrameView::setScale(qreal scale)
@@ -338,4 +362,74 @@ void AnimationFrameView::layOut()
 {
     graphicsView->resize(size());
     graphicsView->setSceneRect(2, 2, width() - 2, height() - 2);
+}
+
+void AnimationFrameView::revertBackBuffer()
+{
+    qDebug() << lastBackBufferChange;
+    Painter painter(backBuffer);
+    painter.drawCanvas(
+        lastBackBufferChange.topLeft(),
+        activeLayer()->canvas(),
+        lastBackBufferChange
+    );
+    lastBackBufferChange = QRect();
+}
+
+void AnimationFrameView::toolPreview()
+{
+    revertBackBuffer();
+    Painter painter(backBuffer);
+    m_tool->paint(&painter, true);
+    lastBackBufferChange = painter.boundingBox();
+    update();
+}
+
+void AnimationFrameView::toolCommit()
+{
+    revertBackBuffer();
+    Painter backPainter(backBuffer);
+    m_tool->paint(&backPainter, false);
+
+    Painter *frontPainter = m_activeLayer->newPainter();
+    frontPainter->drawCanvas(lastBackBufferChange.topLeft(), backBuffer, backPainter.boundingBox());
+    delete frontPainter;
+
+    update();
+}
+
+GraphicsAnimationFrameViewItem::GraphicsAnimationFrameViewItem(
+    const AnimationFrameView *view
+) :
+    view(view)
+{
+    // Do nothing
+}
+
+QRectF GraphicsAnimationFrameViewItem::boundingRect() const
+{
+    return (view->frame() != nullptr)
+        ? QRectF(QPoint(0, 0), view->frame()->size())
+        : QRectF(0, 0, PLACEHOLDER_SIZE, PLACEHOLDER_SIZE);
+}
+
+void GraphicsAnimationFrameViewItem::paint(
+    QPainter *painter,
+    const QStyleOptionGraphicsItem *option,
+    QWidget *widget
+)
+{
+    Q_UNUSED(option)
+    Q_UNUSED(widget)
+
+    if (view->frame() != nullptr) {
+        foreach (Layer *layer, view->frame()->layers()) {
+            const Canvas& canvas = (layer != view->activeLayer())
+                ? layer->canvas().pixmap()
+                : view->backBuffer;
+            painter->drawPixmap(0, 0, canvas.pixmap());
+        }
+    } else {
+        painter->fillRect(0, 0, PLACEHOLDER_SIZE, PLACEHOLDER_SIZE, Qt::black);
+    }
 }

@@ -21,19 +21,17 @@ QPainterExtensions::QPainterExtensions(QPainter *painter) :
 
 /*!
  * \brief Draws a given \a frame into given \a targetRect.
- *
- * This is an overloaded method.
+ * \overload
  */
 void QPainterExtensions::drawAnimationFrame(const QRect &targetRect, const AnimationFrame *frame)
 {
-    foreach (Layer* layer, frame->layers())
-        painter->drawPixmap(targetRect, layer->canvas()->pixmap());
+    foreach (const Layer* layer, frame->layers())
+        painter->drawPixmap(targetRect, layer->canvas().pixmap());
 }
 
 /*!
  * \brief Draws a given \a frame at coordinates (\a x, \a y).
- *
- * This is an overloaded method.
+ * \overload
  */
 void QPainterExtensions::drawAnimationFrame(int x, int y, const AnimationFrame *frame)
 {
@@ -42,8 +40,7 @@ void QPainterExtensions::drawAnimationFrame(int x, int y, const AnimationFrame *
 
 /*!
  * \brief Draws a given \a frame into rect defined by \a x, \a y, \a width, \a height.
- *
- * Thisis an overloaded method.
+ * \overload
  */
 void QPainterExtensions::drawAnimationFrame(
     int x, int y, int width, int height,
@@ -55,18 +52,16 @@ void QPainterExtensions::drawAnimationFrame(
 
 /*!
  * \brief Draws a given \a layer into given \a targetRect.
- *
- * This is an overloaded method.
+ * \overload
  */
 void QPainterExtensions::drawLayer(const QRect &targetRect, const Layer *layer)
 {
-    painter->drawPixmap(targetRect, layer->canvas()->pixmap());
+    painter->drawPixmap(targetRect, layer->canvas().pixmap());
 }
 
 /*!
  * \brief Draws a given \a layer at coordinates (\a x, \a y).
- *
- * This is an overloaded method.
+ * \overload
  */
 void QPainterExtensions::drawLayer(int x, int y, const Layer *layer)
 {
@@ -75,8 +70,7 @@ void QPainterExtensions::drawLayer(int x, int y, const Layer *layer)
 
 /*!
  * \brief Draws a given \a layer into rect defined by \a x, \a y, \a width, \a height.
- *
- * This is an overloaded method.
+ * \overload
  */
 void QPainterExtensions::drawLayer(
     int x, int y, int width, int height,

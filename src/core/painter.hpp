@@ -26,6 +26,7 @@ public:
     void drawRect(int x, int y, int width, int height);
     void drawEllipse(const QRect &rect);
     void drawEllipse(const QPoint &center, int rx, int ry);
+    void drawCanvas(const QPoint &p, const Canvas &canvas, const QRect &sourceRect);
 
     const QRect &boundingBox() const;
 

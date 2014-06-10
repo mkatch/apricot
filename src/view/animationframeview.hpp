@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QGraphicsView>
 #include <QGraphicsScene>
-#include <QGraphicsPixmapItem>
+#include <QGraphicsItem>
 #include <QPixmap>
 
 #include <ApricotModel>
@@ -15,6 +15,7 @@ class AnimationFrameView : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY(AnimationFrame *frame READ frame WRITE setFrame NOTIFY frameChanged)
+    Q_PROPERTY(Layer *activeLayer READ activeLayer WRITE setActiveLayer NOTIFY activeLayerChanged)
     Q_PROPERTY(qreal scale READ scale WRITE setScale NOTIFY scaleChanged)
     Q_PROPERTY(QPointF translation READ translation WRITE setTranslation NOTIFY translationChanged)
     Q_PROPERTY(QTransform transform READ transform NOTIFY transformChanged)
@@ -26,6 +27,9 @@ public:
 
     AnimationFrame *frame() const;
     void setFrame(AnimationFrame *frame);
+
+    Layer *activeLayer() const;
+    void setActiveLayer(Layer *layer);
 
     qreal scale() const;
     void setScale(qreal scale);
@@ -48,6 +52,7 @@ public:
 
 signals:
     void frameChanged();
+    void activeLayerChanged();
     void scaleChanged();
     void translationChanged();
     void transformChanged();
@@ -67,18 +72,32 @@ private:
     QGraphicsView *graphicsView;
     QGraphicsScene *scene;
     QGraphicsItem *frameItem;
-    QPixmap placeholderPixmap;
     QPointF lastMousePos;
+    Canvas backBuffer;
+    QRect lastBackBufferChange;
 
     AnimationFrame *m_frame;
+    Layer *m_activeLayer;
     Tool *m_tool;
 
     void layOut();
+
+    void revertBackBuffer();
+    void toolPreview();
+    void toolCommit();
+
+    friend class Tool;
+    friend class GraphicsAnimationFrameViewItem;
 };
 
 inline AnimationFrame *AnimationFrameView::frame() const
 {
     return m_frame;
+}
+
+inline Layer *AnimationFrameView::activeLayer() const
+{
+    return m_activeLayer;
 }
 
 inline qreal AnimationFrameView::scale() const

@@ -56,9 +56,16 @@ const QSize &AnimationFrame::size() const
 }
 
 /*!
- * \fn AnimationFrame::layers() const
- * \brief Returns a list of layers that make up the animation frame.
+ * \brief Returns a list of immutable layers that make up the animation frame.
  */
+QList<const Layer *> AnimationFrame::layers() const
+{
+    QList<const Layer *> result;
+    result.reserve(m_layers.count());
+    foreach (Layer *layer, m_layers)
+        result.append(layer);
+    return result;
+}
 
 /*!
  * \fn AnimationFrame::layer(int i)

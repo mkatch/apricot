@@ -130,3 +130,9 @@ void Painter::drawEllipse(const QRect &rect)
  *
  * \overload
  */
+
+void Painter::drawCanvas(const QPoint &p, const Canvas &canvas, const QRect &sourceRect)
+{
+    painter.drawPixmap(p, canvas.pixmap(), sourceRect);
+    m_boundingBox |= QRect(p, sourceRect.size());
+}

@@ -26,7 +26,8 @@ public:
     int height() const;
 
     int layerCount() const;
-    QList<Layer *> layers() const;
+    QList<Layer *> layers();
+    QList<const Layer *> layers() const;
 
     Layer *layer(int i);
     const Layer *layer(int i) const;
@@ -79,7 +80,7 @@ inline int AnimationFrame::layerCount() const
     return m_layers.count();
 }
 
-inline QList<Layer *> AnimationFrame::layers() const
+inline QList<Layer *> AnimationFrame::layers()
 {
     return m_layers;
 }

@@ -3,9 +3,8 @@
 
 #include <QObject>
 
+#include "animationframeview.hpp"
 #include "toolevents.hpp"
-
-class AnimationFrameView;
 
 class Tool : public QObject
 {
@@ -37,6 +36,10 @@ protected:
     virtual void wheelEvent(ToolWheelEvent *event);
     virtual void keyPressEvent(ToolKeyEvent *event);
     virtual void keyReleaseEvent(ToolKeyEvent *event);
+
+    void preview();
+    void commit();
+    virtual void paint(Painter *painter, bool preview);
 
 private:
     AnimationFrameView *m_view;

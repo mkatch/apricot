@@ -27,7 +27,7 @@ public:
     int height() const;
     QSize size() const;
 
-    const Canvas *canvas() const;
+    const Canvas &canvas() const;
 
     Painter *newPainter();
 
@@ -55,9 +55,9 @@ inline const AnimationFrame *Layer::frame() const
     return m_frame;
 }
 
-inline const Canvas *Layer::canvas() const
+inline const Canvas &Layer::canvas() const
 {
-    return &m_canvas;
+    return m_canvas;
 }
 
 inline int Layer::width() const
