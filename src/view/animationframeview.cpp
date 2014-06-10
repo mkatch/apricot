@@ -78,8 +78,10 @@ AnimationFrameView::AnimationFrameView(QWidget *parent) :
     scene(new QGraphicsScene(this)),
     frameItem(new GraphicsAnimationFrameViewItem(this)),
     m_frame(nullptr),
-    m_activeLayer(nullptr)
+    m_activeLayer(nullptr),
+    m_tool(nullptr)
 {
+    this->setMouseTracking(true);
     scene->addItem(frameItem);
     graphicsView->setScene(scene);
     graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -366,13 +368,14 @@ void AnimationFrameView::layOut()
 
 void AnimationFrameView::revertBackBuffer()
 {
-    qDebug() << lastBackBufferChange;
     Painter painter(backBuffer);
+    painter.setCompositionMode(QPainter::CompositionMode_Source);
     painter.drawCanvas(
         lastBackBufferChange.topLeft(),
         activeLayer()->canvas(),
         lastBackBufferChange
     );
+    frameItem->update(lastBackBufferChange);
     lastBackBufferChange = QRect();
 }
 
@@ -382,7 +385,7 @@ void AnimationFrameView::toolPreview()
     Painter painter(backBuffer);
     m_tool->paint(&painter, true);
     lastBackBufferChange = painter.boundingBox();
-    update();
+    frameItem->update(lastBackBufferChange);
 }
 
 void AnimationFrameView::toolCommit()
@@ -392,10 +395,15 @@ void AnimationFrameView::toolCommit()
     m_tool->paint(&backPainter, false);
 
     Painter *frontPainter = m_activeLayer->newPainter();
-    frontPainter->drawCanvas(lastBackBufferChange.topLeft(), backBuffer, backPainter.boundingBox());
+    frontPainter->drawCanvas(
+        backPainter.boundingBox().topLeft(),
+        backBuffer,
+        backPainter.boundingBox()
+    );
     delete frontPainter;
 
-    update();
+    lastBackBufferChange = QRect();
+    frameItem->update(backPainter.boundingBox());
 }
 
 GraphicsAnimationFrameViewItem::GraphicsAnimationFrameViewItem(
@@ -423,7 +431,8 @@ void GraphicsAnimationFrameViewItem::paint(
     Q_UNUSED(widget)
 
     if (view->frame() != nullptr) {
-        foreach (Layer *layer, view->frame()->layers()) {
+        for (int i = view->frame()->layerCount() - 1; i >= 0; --i) {
+            const Layer *layer = view->frame()->layer(i);
             const Canvas& canvas = (layer != view->activeLayer())
                 ? layer->canvas().pixmap()
                 : view->backBuffer;

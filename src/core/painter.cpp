@@ -105,7 +105,8 @@ void Painter::drawLine(const QPoint &p1, const QPoint &p2)
 void Painter::drawRect(const QRect &rect)
 {
     painter.drawRect(rect);
-    m_boundingBox |= rect;
+    int d = -pen().width() / 2;
+    m_boundingBox |= rect.adjusted(d, d, pen().width() + d, pen().width() + d);
 }
 
 /*!

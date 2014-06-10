@@ -2,6 +2,8 @@
 
 #include <QDebug>
 
+#include <cstdlib>
+
 DragTool::DragTool(QObject *parent) :
     Tool(parent)
 {
@@ -10,9 +12,15 @@ DragTool::DragTool(QObject *parent) :
 
 void DragTool::mouseMoveEvent(ToolMouseMoveEvent *event)
 {
-    if (event->buttons() & Qt::LeftButton) {
+    if (event->buttons() == Qt::LeftButton) {
         view()->translate(event->dViewPos());
         event->accept();
+    } else {
+        lastPoint = event->pos().toPoint();
+        if (event->buttons() == Qt::RightButton)
+            commit();
+        else
+            preview();
     }
 }
 
@@ -25,13 +33,18 @@ void DragTool::wheelEvent(ToolWheelEvent *event)
 
 void DragTool::mousePressEvent(ToolMouseEvent *event)
 {
-    lastPoint = event->pos().toPoint();
-    preview();
-    event->accept();
+    if (event->button() == Qt::RightButton) {
+        lastPoint = event->pos().toPoint();
+        commit();
+        event->accept();
+    }
 }
 
 void DragTool::paint(Painter *painter, bool preview)
 {
-    Q_UNUSED(preview)
-    painter->drawRect(lastPoint.x(), lastPoint.y(), 10, 10);
+    if (preview)
+        painter->setPen(QPen(Qt::black, 3));
+    else
+        painter->setPen(QPen(QColor(rand() % 256, rand() % 256, rand() % 256), 3));
+    painter->drawRect(lastPoint.x(), lastPoint.y(), 30, 30);
 }
