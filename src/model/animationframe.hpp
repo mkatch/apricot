@@ -32,7 +32,7 @@ public:
     Layer *layer(int i);
     const Layer *layer(int i) const;
 
-    int indexOfLayer(const Layer *layer);
+    int indexOfLayer(const Layer *layer) const;
 
     Layer *newLayer(int i);
     Layer *newLayer();
@@ -95,7 +95,7 @@ inline const Layer *AnimationFrame::layer(int i) const
     return m_layers.at(i);
 }
 
-inline int AnimationFrame::indexOfLayer(const Layer *layer)
+inline int AnimationFrame::indexOfLayer(const Layer *layer) const
 {
     return m_layers.indexOf(const_cast<Layer *>(layer));
 }

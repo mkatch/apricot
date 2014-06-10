@@ -50,7 +50,7 @@
  * \fn Layer::newPainter()
  * \brief Creates new Painter bound to the underlying Canvas.
  *
- * \bold Warning: It is the caller's responsibility to free the created painter. Not doing this will result in
+ * \b Warning: It is the caller's responsibility to free the created painter. Not doing this will result in
  * memory leak.
  */
 

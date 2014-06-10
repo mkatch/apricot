@@ -136,6 +136,12 @@ void Tool::keyReleaseEvent(ToolKeyEvent *event)
     event->ignore();
 }
 
+/*!
+ * \brief Schedules a preview paint.
+ *
+ * The derived class can call this method to signal that the preview needs to be repainted. In
+ * effect, paint() will be called with \e preview set to \c true.
+ */
 void Tool::preview()
 {
     if (!isActive()) {
@@ -146,6 +152,12 @@ void Tool::preview()
     view()->toolPreview();
 }
 
+/*!
+ * \brief Schedules a commiting paint.
+ *
+ * The derived class can call this method to signal that changes have to be applied to the edited
+ * canvas. In effect, paint() will be called with \e preview set to \c false.
+ */
 void Tool::commit()
 {
     if (!isActive()) {
@@ -156,6 +168,18 @@ void Tool::commit()
     view()->toolCommit();
 }
 
+/*!
+ * \brief Paints on the edited canvas using \a painter.
+ *
+ * This method can be overriden to implement tools which modify the active canvas. The \a preview
+ * parameter determines wheather this is a \e {preview paint} or a \e {commiting paint}.
+ *
+ * Changes made during preview paint are not persistent. They vanish with the next call to paint().
+ * This allows for displaying the effect of draw operations provided by the tool, without really
+ * affecting the image.
+ *
+ * If the call is commiting, all changes are applied permanently to the edited canvas.
+ */
 void Tool::paint(Painter *painter, bool preview)
 {
     Q_UNUSED(painter)

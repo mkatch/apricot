@@ -56,6 +56,11 @@ const QSize &AnimationFrame::size() const
 }
 
 /*!
+ * \fn AnimationFrame::layers()
+ * \brief Returnst the list of layers that make up the animation frame.
+ */
+
+/*!
  * \brief Returns a list of immutable layers that make up the animation frame.
  */
 QList<const Layer *> AnimationFrame::layers() const
@@ -82,6 +87,13 @@ QList<const Layer *> AnimationFrame::layers() const
  */
 
 /*!
+ * \fn AnimationFrame::indexOfLayer(const Layer *layer) const
+ * \brief Returns the index of \a layer.
+ *
+ * The topmost layer has index 0. If \a layer is not member of this AnimationFrame, -1 is returned.
+ */
+
+/*!
  * \brief Creates a new layer at index \a i and returns it.
  */
 Layer *AnimationFrame::newLayer(int i)
@@ -102,6 +114,8 @@ Layer *AnimationFrame::newLayer(int i)
  *
  * This affects the indices of layers between \a from and \a to inclusive, as the other layers are
  * moved accordingly.
+ *
+ * \overload
  */
 void AnimationFrame::moveLayer(int from, int to)
 {
@@ -110,6 +124,16 @@ void AnimationFrame::moveLayer(int from, int to)
         emit layersChanged();
     }
 }
+
+/*!
+ * \fn AnimationFrame::moveLayer(const Layer *layer, int to)
+ * \brief Moves \a layer to position \a to.
+ *
+ * For this method to work, \a layer must be a member of this AnimationFrame. This is equivalent to
+ * moveLayer(indexOfLayer(layer), to).
+ *
+ * \overload
+ */
 
 /*!
  * \brief Deletes layer at index \a i.

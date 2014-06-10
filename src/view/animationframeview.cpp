@@ -44,6 +44,11 @@ private:
  */
 
 /*!
+ * \property AnimationFrameView::activeLayer
+ * \brief The layer to which tool drawing actions are applied.
+ */
+
+/*!
  * \property AnimationFrameView::scale
  * \brief The zoom factor.
  */

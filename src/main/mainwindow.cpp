@@ -62,11 +62,16 @@ void MainWindow::setProject(Project *project)
 }
 
 /*!
- * \fn MainWindow::actionArea()
- * \brief Returns the ToolActionArea child.
+ * \fn MainWindow::frameView()
+ * \brief Returns the AnimationFrameView child.
  */
 
 /*!
  * \fn MainWindow::animationView()
  * \brief Returns the AnimationView child.
+ */
+
+/*!
+ * \fn MainWindow::layerView()
+ * \brief Returns the LayerView child.
  */
