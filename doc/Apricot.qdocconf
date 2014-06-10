@@ -30,4 +30,3 @@ HTML.stylesheets = theme.css
 HTML.headerstyles = "  <link rel=\"stylesheet\" type=\"text/css\" href=\"style/theme.css\" />\n"
 HTML.endheader = "</head>\n"
 HTML.footer = "<div class=\"footer\">Copyright (C) 2014 Uniwersytet Wrocławski</div>\n"
-

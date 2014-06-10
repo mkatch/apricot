@@ -19,8 +19,6 @@
 /*!
  * \property Layer::frame
  * \brief The parent frame.
- *
- *  It is also the QObject parent of the layer.
  */
 
 /*!
@@ -41,64 +39,20 @@
 // Methods
 
 /*!
- * \brief Constructor.
- *
- * The \a frame is set as QObject parent of the layer.
- */
-Layer::Layer(AnimationFrame *frame) :
-    QObject(frame),
-    m_canvas(frame->size())
-{
-    m_canvas.fill(Qt::white);
-    connect(frame->project(), SIGNAL(sizeChanged()), this, SLOT(updateSize()));
-}
-
-/*!
- * \brief Contructor used for duplicating layers.
- *
- * The newly created layer gets a copy of the underlying Canvas of \a other. The \a frame is set as
- * the QObject parent of the layer.
- */
-Layer::Layer(const Layer *other, AnimationFrame *frame) :
-    QObject(frame),
-    m_canvas(other->m_canvas)
-{
-    updateSize();
-}
-
-/*!
  * \fn Layer::canvas() const
  * \brief Returns the underlying canvas.
  *
  * The returned canvas is immutable. To be able to draw on the canvas, request a Painter through
- * getPainter().
+ * createPainter().
  */
 
 /*!
- * \brief Initializes painting procedure.
- */
-void Layer::beginPainting()
-{
-    m_painter.reset(new Painter(m_canvas));
-}
-
-/*!
- * \brief Finalizes painting procedure.
- */
-void Layer::endPainting()
-{
-    m_painter.reset(nullptr);
-}
-
-/*!
- * \brief Returns painter bound to the undelying Canvas.
+ * \fn Layer::newPainter()
+ * \brief Creates new Painter bound to the underlying Canvas.
  *
- * This requires preceding call to Layer::startPainting.
+ * \b Warning: It is the caller's responsibility to free the created painter. Not doing this will result in
+ * memory leak.
  */
-Painter &Layer::painter()
-{
-    return *m_painter;
-}
 
 /*!
  * \brief Called when the dimensions of the project change.
@@ -108,4 +62,34 @@ Painter &Layer::painter()
 void Layer::updateSize()
 {
     m_canvas.setSize(frame()->project()->size());
+}
+
+/*!
+ * \brief Constructs a new layer with parent frame \a frame.
+ *
+ * The parent frame also becomes the parent object of the layer.
+ */
+Layer::Layer(AnimationFrame *frame) :
+    QObject(frame),
+    m_frame(frame),
+    m_canvas(frame->size())
+{
+    m_canvas.fill(Qt::transparent);
+    connect(frame->project(), SIGNAL(sizeChanged()), this, SLOT(updateSize()));
+}
+
+/*!
+ * \brief Consttructs a layer with the underlying canvas copied from \a other and parent frame
+ * \a frame.
+ *
+ * The parent frame also becomes the parent object of the layer. This constructor can only be called
+ * by AnimationFrame and is guaranteed to be provided \a frame with the same dimensions as
+ * \a other.
+ */
+Layer::Layer(const Layer *other, AnimationFrame *frame) :
+    QObject(frame),
+    m_frame(frame),
+    m_canvas(other->m_canvas)
+{
+    connect(frame->project(), SIGNAL(sizeChanged()), this, SLOT(updateSize()));
 }

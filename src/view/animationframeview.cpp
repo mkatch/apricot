@@ -5,7 +5,24 @@ using std::max;
 
 #include <ApricotUtils>
 
-#include "graphicsanimationframeitem.hpp"
+#include "tool.hpp"
+#include "toolevents.hpp"
+#include "qpainterextensions.hpp"
+
+class GraphicsAnimationFrameViewItem : public QGraphicsItem
+{
+public:
+    GraphicsAnimationFrameViewItem(const AnimationFrameView *view);
+
+    QRectF boundingRect() const;
+
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+
+private:
+    static const int PLACEHOLDER_SIZE = 128;
+
+    const AnimationFrameView *view;
+};
 
 /*!
  * \class AnimationFrameView
@@ -13,7 +30,10 @@ using std::max;
  *
  * \brief A widget for displaying a single animation frame.
  *
- * The displayed frame may be dragged around and zoomed in and out programmatically.
+ * The displayed frame may be dragged around and zoomed in and out programmatically. User can
+ * perform actions on this view and the underlying frame using tools. A tool is any specialization
+ * of Tool class. Once a tool is attached to AnimationFrameView, it receives mouse and keyboard
+ * events.
  */
 
 // Properties
@@ -21,6 +41,11 @@ using std::max;
 /*!
  * \property AnimationFrameView::frame
  * \brief The displayed AnimationFrame.
+ */
+
+/*!
+ * \property AnimationFrameView::activeLayer
+ * \brief The layer to which tool drawing actions are applied.
  */
 
 /*!
@@ -40,6 +65,13 @@ using std::max;
  * \brief Tha transformation for transition frame coordinate system to the view coordinates.
  */
 
+/*!
+ * \property AnimationFrameView::tool
+ * \brief The active tool.
+ *
+ * This property may be \c nullptr meaning that the tool is not set.
+ */
+
 // Methods
 
 /*!
@@ -49,37 +81,53 @@ AnimationFrameView::AnimationFrameView(QWidget *parent) :
     QWidget(parent),
     graphicsView(new QGraphicsView(this)),
     scene(new QGraphicsScene(this)),
-    placeholderPixmap(256, 256),
-    m_frame(nullptr)
+    frameItem(new GraphicsAnimationFrameViewItem(this)),
+    m_frame(nullptr),
+    m_activeLayer(nullptr),
+    m_tool(nullptr)
 {
+    this->setMouseTracking(true);
+    scene->addItem(frameItem);
     graphicsView->setScene(scene);
     graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     graphicsView->setAttribute(Qt::WA_TransparentForMouseEvents, true);
-    frameItem = scene->addPixmap(placeholderPixmap);
     layOut();
 }
 
-void AnimationFrameView::setFrame(const AnimationFrame *frame)
+/*!
+ * \fn AnimationFrameView::~AnimationFrameView()
+ * \brief Destroys the view.
+ */
+
+void AnimationFrameView::setFrame(AnimationFrame *frame)
 {
     if (m_frame == frame)
         return;
 
     m_frame = frame;
-
-    QPointF pos = frameItem->pos();
-    qreal scale = frameItem->scale();
-    scene->removeItem(frameItem);
-    delete frameItem;
-
-    frameItem = (m_frame != nullptr)
-        ? static_cast<QGraphicsItem *>(new GraphicsAnimationFrameItem(frame))
-        : static_cast<QGraphicsItem *>(new QGraphicsPixmapItem(placeholderPixmap));
-    frameItem->setPos(pos);
-    frameItem->setScale(scale);
-    scene->addItem(frameItem);
-
+    if (frame != nullptr)
+        setActiveLayer(frame->layer(0));
     emit frameChanged();
+}
+
+void AnimationFrameView::setActiveLayer(Layer *layer)
+{
+    if (m_activeLayer == layer)
+        return;
+
+    if (layer != nullptr && layer->frame() != frame()) {
+        qWarning(
+            "AnimationFrameView::setActiveLayer(): "
+            "Passed layer is not part of currently displayed frame"
+        );
+        return setActiveLayer(nullptr);
+    }
+
+    m_activeLayer = layer;
+    backBuffer = (layer != nullptr) ? layer->canvas() : Canvas();
+    lastBackBufferChange = QRect();
+    emit activeLayerChanged();
 }
 
 void AnimationFrameView::setScale(qreal scale)
@@ -122,6 +170,20 @@ QTransform AnimationFrameView::transform() const
     return QTransform().scale(scale(), scale()).translate(translation().x(), translation().y());
 }
 
+void AnimationFrameView::setTool(Tool *tool)
+{
+    if (m_tool == tool)
+        return;
+
+    if (m_tool != nullptr)
+        m_tool->setView(nullptr);
+    m_tool = tool;
+    if (m_tool != nullptr)
+        m_tool->setView(this);
+    emit toolChanged();
+    update();
+}
+
 /*!
  * \brief Maps \a point from view coordinates to frame coordinates.
  *
@@ -154,6 +216,151 @@ void AnimationFrameView::resizeEvent(QResizeEvent *event)
 }
 
 /*!
+ * \brief Handles mouse press event \a event.
+ *
+ * This results in invoking Tool::mousePressEvent() of the active tool.
+ */
+void AnimationFrameView::mousePressEvent(QMouseEvent *event)
+{
+    if (tool() == nullptr)
+        return event->ignore();
+
+    ToolMouseEvent toolEvent(
+        event,
+        mapToFrame(event->localPos()),
+        event->localPos(),
+        event->button(),
+        event->buttons(),
+        event->modifiers()
+    );
+    tool()->mousePressEvent(&toolEvent);
+    lastMousePos = event->localPos();
+}
+
+/*!
+ * \brief Handles mouse release event \a event.
+ *
+ * This results in invoking Tool::mouseReleaseEvent() of the active tool.
+ */
+void AnimationFrameView::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (tool() == nullptr)
+        return event->ignore();
+
+    ToolMouseEvent toolEvent(
+        event,
+        mapToFrame(event->localPos()),
+        event->localPos(),
+        event->button(),
+        event->buttons(),
+        event->modifiers()
+    );
+    tool()->mouseReleaseEvent(&toolEvent);
+}
+
+/*!
+ * \brief Handles double click event \a event.
+ *
+ * This results in invoking Tool::mouseDoubleClickEvent() of the active tool.
+ */
+void AnimationFrameView::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    if (tool() == nullptr)
+        return event->ignore();
+
+    ToolMouseEvent toolEvent(
+        event,
+        mapToFrame(event->localPos()),
+        event->localPos(),
+        event->button(),
+        event->buttons(),
+        event->modifiers()
+    );
+    tool()->mouseDoubleClickEvent(&toolEvent);
+}
+
+/*!
+ * \brief Handles mouse move event \a event.
+ *
+ * This results in invoking Tool::mouseMoveEvent() of the active tool.
+ */
+void AnimationFrameView::mouseMoveEvent(QMouseEvent *event)
+{
+    if (tool() == nullptr)
+        return event->ignore();
+
+    ToolMouseMoveEvent toolEvent(
+        event,
+        mapToFrame(event->localPos()),
+        mapToFrame(lastMousePos),
+        event->localPos(),
+        lastMousePos,
+        event->buttons(),
+        event->modifiers()
+    );
+    tool()->mouseMoveEvent(&toolEvent);
+    lastMousePos = event->localPos();
+}
+
+/*!
+ * \brief Handles mouse wheel event \a event.
+ *
+ * This results in invoking Tool::wheelEvent() of the active tool.
+ */
+void AnimationFrameView::wheelEvent(QWheelEvent *event)
+{
+    if (tool() == nullptr)
+        return event->ignore();
+
+    ToolWheelEvent toolEvent(
+        event,
+        mapToFrame(event->posF()),
+        event->posF(),
+        event->pixelDelta(),
+        event->angleDelta(),
+        event->buttons(),
+        event->modifiers()
+    );
+    tool()->wheelEvent(&toolEvent);
+}
+
+/*!
+ * \brief Handles key press event \a event.
+ *
+ * This results in invoking Tool::keyPressEvent() of the active tool.
+ */
+void AnimationFrameView::keyPressEvent(QKeyEvent *event)
+{
+    if (tool() == nullptr)
+        return event->ignore();
+
+    ToolKeyEvent toolEvent(
+        event,
+        event->key(),
+        event->modifiers()
+    );
+    tool()->keyPressEvent(&toolEvent);
+}
+
+/*!
+ * \brief Handles key release event \a event.
+ *
+ * This results in invoking Tool::keyReleaseEvent() of the active tool.
+ */
+void AnimationFrameView::keyReleaseEvent(QKeyEvent *event)
+{
+    if (tool() == nullptr)
+        return event->ignore();
+
+    ToolKeyEvent toolEvent(
+        event,
+        event->key(),
+        event->modifiers()
+    );
+    tool()->keyReleaseEvent(&toolEvent);
+}
+
+/*!
  * \brief Lays out child widgets.
  *
  * Called after resize and at creation.
@@ -162,4 +369,81 @@ void AnimationFrameView::layOut()
 {
     graphicsView->resize(size());
     graphicsView->setSceneRect(2, 2, width() - 2, height() - 2);
+}
+
+void AnimationFrameView::revertBackBuffer()
+{
+    Painter painter(backBuffer);
+    painter.setCompositionMode(QPainter::CompositionMode_Source);
+    painter.drawCanvas(
+        lastBackBufferChange.topLeft(),
+        activeLayer()->canvas(),
+        lastBackBufferChange
+    );
+    frameItem->update(lastBackBufferChange);
+    lastBackBufferChange = QRect();
+}
+
+void AnimationFrameView::toolPreview()
+{
+    revertBackBuffer();
+    Painter painter(backBuffer);
+    m_tool->paint(&painter, true);
+    lastBackBufferChange = painter.boundingBox();
+    frameItem->update(lastBackBufferChange);
+}
+
+void AnimationFrameView::toolCommit()
+{
+    revertBackBuffer();
+    Painter backPainter(backBuffer);
+    m_tool->paint(&backPainter, false);
+
+    Painter *frontPainter = m_activeLayer->newPainter();
+    frontPainter->drawCanvas(
+        backPainter.boundingBox().topLeft(),
+        backBuffer,
+        backPainter.boundingBox()
+    );
+    delete frontPainter;
+
+    lastBackBufferChange = QRect();
+    frameItem->update(backPainter.boundingBox());
+}
+
+GraphicsAnimationFrameViewItem::GraphicsAnimationFrameViewItem(
+    const AnimationFrameView *view
+) :
+    view(view)
+{
+    // Do nothing
+}
+
+QRectF GraphicsAnimationFrameViewItem::boundingRect() const
+{
+    return (view->frame() != nullptr)
+        ? QRectF(QPoint(0, 0), view->frame()->size())
+        : QRectF(0, 0, PLACEHOLDER_SIZE, PLACEHOLDER_SIZE);
+}
+
+void GraphicsAnimationFrameViewItem::paint(
+    QPainter *painter,
+    const QStyleOptionGraphicsItem *option,
+    QWidget *widget
+)
+{
+    Q_UNUSED(option)
+    Q_UNUSED(widget)
+
+    if (view->frame() != nullptr) {
+        for (int i = view->frame()->layerCount() - 1; i >= 0; --i) {
+            const Layer *layer = view->frame()->layer(i);
+            const Canvas& canvas = (layer != view->activeLayer())
+                ? layer->canvas().pixmap()
+                : view->backBuffer;
+            painter->drawPixmap(0, 0, canvas.pixmap());
+        }
+    } else {
+        painter->fillRect(0, 0, PLACEHOLDER_SIZE, PLACEHOLDER_SIZE, Qt::black);
+    }
 }

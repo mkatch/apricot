@@ -1,6 +1,8 @@
 #include <QDebug>
 #include <QDockWidget>
 
+#include <ApricotTools>
+
 #include "application.hpp"
 
 int main(int argc, char *argv[])
@@ -12,18 +14,21 @@ int main(int argc, char *argv[])
     project->setSize(918, 655);
     for (int i = 0; i < 8; i++) {
         Layer *layer = project->newFrame()->newLayer();
-        layer->beginPainting();
-        layer->painter().drawImage(":/images/isocastle.png");
-        layer->endPainting();
+        Painter *painter = layer->newPainter();
+        painter->drawImage(":/images/isocastle.png");
+        delete painter;
     }
 
     AnimationFrame *frame = project->frame(0);
     Layer *layer = frame->newLayer();
-    layer->beginPainting();
-    layer->painter().drawImage(":/images/isocastle.png");
-    layer->endPainting();
+    Painter *painter = layer->newPainter();
+    painter->drawImage(":/images/isocastle.png");
+    delete painter;
 
     application.setProject(project);
+
+    DragTool dragTool;
+    application.mainWindow()->frameView()->setTool(&dragTool);
 
     return application.exec();
 }

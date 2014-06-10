@@ -13,9 +13,11 @@ public:
 
     const QBrush &brush() const;
     const QPen &pen() const;
+    QPainter::CompositionMode compositionMode() const;
 
     void setBrush(const QBrush &brush);
     void setPen(const QPen &pen);
+    void setCompositionMode(QPainter::CompositionMode mode);
 
     void drawImage(QString fileName);
     void drawPoint(const QPoint &p);
@@ -26,6 +28,7 @@ public:
     void drawRect(int x, int y, int width, int height);
     void drawEllipse(const QRect &rect);
     void drawEllipse(const QPoint &center, int rx, int ry);
+    void drawCanvas(const QPoint &p, const Canvas &canvas, const QRect &sourceRect);
 
     const QRect &boundingBox() const;
 
@@ -45,6 +48,11 @@ inline const QPen &Painter::pen() const
     return painter.pen();
 }
 
+inline QPainter::CompositionMode Painter::compositionMode() const
+{
+    return painter.compositionMode();
+}
+
 inline void Painter::setBrush(const QBrush &brush)
 {
     painter.setBrush(brush);
@@ -53,6 +61,11 @@ inline void Painter::setBrush(const QBrush &brush)
 inline void Painter::setPen(const QPen &pen)
 {
     painter.setPen(pen);
+}
+
+inline void Painter::setCompositionMode(QPainter::CompositionMode mode)
+{
+    painter.setCompositionMode(mode);
 }
 
 inline void Painter::drawPoint(int x, int y)

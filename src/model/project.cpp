@@ -115,7 +115,7 @@ AnimationFrame *Project::newFrame(int i)
 /*!
  * Removes AnimationFrame at index \a i.
  */
-void Project::removeFrame(int i)
+void Project::deleteFrame(int i)
 {
     AnimationFrame *f = m_frames.takeAt(i);
     bool anyLayers = f->layerCount() > 0;

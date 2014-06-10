@@ -22,6 +22,11 @@
  */
 
 /*!
+ * \fn QPainter::CompositionMode Painter::compositionMode() const
+ * \brief Returns the painter's composition mode.
+ */
+
+/*!
  * \fn void Painter::setBrush(const QBrush &brush)
  * \brief Sets the painter's brush to the given \a brush.
  */
@@ -29,6 +34,11 @@
 /*!
  * \fn void Painter::setPen(const QPen &pen)
  * \brief Sets the painter's pen to the given \a pen.
+ */
+
+/*!
+ * \fn void Painter::setCompositionMode(QPainter::CompositionMode mode)
+ * \brief Sets the painter's composition mode to \a mode.
  */
 
 /*!
@@ -105,7 +115,8 @@ void Painter::drawLine(const QPoint &p1, const QPoint &p2)
 void Painter::drawRect(const QRect &rect)
 {
     painter.drawRect(rect);
-    m_boundingBox |= rect;
+    int d = -pen().width() / 2;
+    m_boundingBox |= rect.adjusted(d, d, pen().width() + d, pen().width() + d);
 }
 
 /*!
@@ -130,3 +141,14 @@ void Painter::drawEllipse(const QRect &rect)
  *
  * \overload
  */
+
+/*!
+ * \brief Draws a fragment of \a canvas at point \a p.
+ *
+ * The drawn fragment is determined by \a sourceRect.
+ */
+void Painter::drawCanvas(const QPoint &p, const Canvas &canvas, const QRect &sourceRect)
+{
+    painter.drawPixmap(p, canvas.pixmap(), sourceRect);
+    m_boundingBox |= QRect(p, sourceRect.size());
+}

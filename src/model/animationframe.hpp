@@ -18,9 +18,6 @@ class AnimationFrame : public QObject
     Q_PROPERTY(int layerCount READ layerCount)
 
 public:
-    explicit AnimationFrame(Project *project);
-    AnimationFrame(const AnimationFrame *other, Project *project);
-
     Project *project();
     const Project *project() const;
 
@@ -29,38 +26,43 @@ public:
     int height() const;
 
     int layerCount() const;
-    QList<Layer *> layers() const;
+    QList<Layer *> layers();
+    QList<const Layer *> layers() const;
 
     Layer *layer(int i);
     const Layer *layer(int i) const;
 
-    int indexOfLayer(const Layer *layer);
+    int indexOfLayer(const Layer *layer) const;
 
     Layer *newLayer(int i);
     Layer *newLayer();
 
-    void removeLayer(int i);
+    void deleteLayer(int i);
 
     void moveLayer(int from, int to);
     void moveLayer(const Layer *layer, int to);
-
-
 
 signals:
     void layersChanged();
 
 private:
+    Project *m_project;
     QList<Layer *> m_layers;
+
+    explicit AnimationFrame(Project *project);
+    AnimationFrame(const AnimationFrame *other, Project *project);
+
+    friend class Project;
 };
 
 inline Project *AnimationFrame::project()
 {
-    return reinterpret_cast<Project *>(parent());
+    return m_project;
 }
 
 inline const Project *AnimationFrame::project() const
 {
-    return reinterpret_cast<Project *>(parent());
+    return m_project;
 }
 
 inline int AnimationFrame::width() const
@@ -78,7 +80,7 @@ inline int AnimationFrame::layerCount() const
     return m_layers.count();
 }
 
-inline QList<Layer *> AnimationFrame::layers() const
+inline QList<Layer *> AnimationFrame::layers()
 {
     return m_layers;
 }
@@ -93,7 +95,7 @@ inline const Layer *AnimationFrame::layer(int i) const
     return m_layers.at(i);
 }
 
-inline int AnimationFrame::indexOfLayer(const Layer *layer)
+inline int AnimationFrame::indexOfLayer(const Layer *layer) const
 {
     return m_layers.indexOf(const_cast<Layer *>(layer));
 }
