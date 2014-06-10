@@ -35,10 +35,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QDockWidget *dockableAnimationView = new QDockWidget;
     dockableAnimationView->setWidget(animationView());
+    dockableAnimationView->setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea);
     this->addDockWidget(Qt::BottomDockWidgetArea, dockableAnimationView);
 
     QDockWidget *dockableLayerView = new QDockWidget;
     dockableLayerView->setWidget(layerView());
+    dockableLayerView->setAllowedAreas(Qt::RightDockWidgetArea | Qt::LeftDockWidgetArea);
     this->addDockWidget(Qt::RightDockWidgetArea, dockableLayerView);
 }
 

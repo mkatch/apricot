@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
     layer = frame->newLayer();
     painter = layer->newPainter();
     painter->drawImage(":/images/isocastle.png");
+
     delete painter;
 
     application.setProject(project);
