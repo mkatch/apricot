@@ -119,7 +119,7 @@ void Painter::drawRect(const QRect &rect)
     painter.drawRect(rect);
 
     int delta = pen().width() / 2;
-    int c = pen().width % 2;
+    int c = pen().width() % 2;
     m_boundingBox |= rect.adjusted(-delta, -delta, +delta + c, +delta + c);
 }
 
@@ -138,7 +138,7 @@ void Painter::drawEllipse(const QRect &rect)
     painter.drawEllipse(rect);
 
     int delta = pen().width() / 2;
-    int c = pen().width % 2;
+    int c = pen().width() % 2;
     m_boundingBox |= rect.adjusted(-delta, -delta, +delta + c, +delta + c);
 }
 
