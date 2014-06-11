@@ -93,6 +93,11 @@ bool AnimationView::eventFilter(QObject *object, QEvent *event)
                 endDrag();
             break;
         }
+        case QEvent::GraphicsSceneMousePress: {
+
+
+            break;
+            }
         default: break;
         }
     }
@@ -372,6 +377,13 @@ void AnimationViewItem::paint(
     qreal thumbnailScale = min(thumbnailScaleX, thumbnailScaleY);
     int thumbnailWidth = m_frame->width() * thumbnailScale;
     int thumbnailHeight = m_frame->height() * thumbnailScale;
+
+    QPainterExtensions(painter).drawBackground(
+        0.5 * (width() - thumbnailWidth),
+        0.5 * (height() - thumbnailHeight),
+        thumbnailWidth,
+        thumbnailHeight
+                );
     QPainterExtensions(painter).drawAnimationFrame(
         0.5 * (width() - thumbnailWidth), 0.5 * (height() - thumbnailHeight),
         thumbnailWidth, thumbnailHeight,
