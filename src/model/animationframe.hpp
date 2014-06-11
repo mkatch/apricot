@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QList>
 #include <QSize>
+#include <QRect>
 
 class Project;
 class Layer;
@@ -44,6 +45,7 @@ public:
 
 signals:
     void layersChanged();
+    void contentsChanged(const QRect &rect = QRect());
 
 private:
     Project *m_project;

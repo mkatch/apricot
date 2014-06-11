@@ -409,13 +409,13 @@ void AnimationFrameView::toolCommit()
     Painter backPainter(backBuffer);
     m_tool->paint(&backPainter, false);
 
-    Painter *frontPainter = m_activeLayer->newPainter();
+    Painter *frontPainter = m_activeLayer->beginPainting();
     frontPainter->drawCanvas(
         backPainter.boundingBox().topLeft(),
         backBuffer,
         backPainter.boundingBox()
     );
-    delete frontPainter;
+    m_activeLayer->endPainting();
 
     lastBackBufferChange = QRect();
     frameItem->update(backPainter.boundingBox());

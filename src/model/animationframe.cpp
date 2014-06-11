@@ -46,6 +46,23 @@
  * \brief Emitted when layers are added, removed or change order.
  */
 
+/*!
+ * \fn AnimationFrame::contentsChanged(const QRect& rect)
+ * \brief Emmited after the frame was painted on.
+ *
+ * A bounding rectangle containig all pixels that changed is given by \a rect with a null QRect
+ * meaning the whole frame.
+ *
+ * This signal may sometimes be emitted even if the frame does not actually change and also the
+ * bounding rectangle may not be optimal. But it is guaranteed to be emitted with a rectangle enclosing all changes
+ * when they occur.
+ *
+ * Please note that this signal is emitted with null rectangle when layers are added, removed or
+ * change order, i.e. every time and right after layersChanged() is emitted.
+ *
+ * \sa Layer::contentsChanged()
+ */
+
 // Methods
 
 const QSize &AnimationFrame::size() const
@@ -99,6 +116,7 @@ QList<const Layer *> AnimationFrame::layers() const
 Layer *AnimationFrame::newLayer(int i)
 {
     Layer *l = new Layer(this);
+    connect(l, SIGNAL(contentsChanged(QRect)), this, SIGNAL(contentsChanged(QRect)));
     m_layers.insert(i, l);
     emit layersChanged();
     return l;
@@ -155,7 +173,7 @@ AnimationFrame::AnimationFrame(Project *project) :
     QObject(project),
     m_project(project)
 {
-    // Do nothing
+    connect(this, SIGNAL(layersChanged()), this, SIGNAL(contentsChanged()));
 }
 
 /*!
@@ -171,4 +189,6 @@ AnimationFrame::AnimationFrame(const AnimationFrame *other, Project *project) :
 {
     foreach (const Layer *layer, other->m_layers)
         this->m_layers.append(new Layer(layer, this));
+
+    connect(this, SIGNAL(layersChanged()), this, SIGNAL(contentsChanged()));
 }

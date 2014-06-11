@@ -29,11 +29,17 @@ public:
 
     const Canvas &canvas() const;
 
-    Painter *newPainter();
+    Painter *beginPainting();
+    void endPainting();
+
+signals:
+    void contentsChanged(const QRect& rect = QRect());
 
 private:
     AnimationFrame *m_frame;
     Canvas m_canvas;
+
+    Painter *painter;
 
 private slots:
     void updateSize();
@@ -73,11 +79,6 @@ inline int Layer::height() const
 inline QSize Layer::size() const
 {
     return m_canvas.size();
-}
-
-inline Painter *Layer::newPainter()
-{
-    return new Painter(m_canvas);
 }
 
 #endif // CORE_LAYER_HPP
