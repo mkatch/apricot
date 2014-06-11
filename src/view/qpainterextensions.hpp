@@ -19,6 +19,11 @@ public:
     void drawLayer(int x, int y, const Layer *layer);
     void drawLayer(int x, int y, int width, int height, const Layer *layer);
 
+    void drawBackground(const Layer *layer);
+    void drawBackground(const QRect &targetRect);
+    void drawBackground(int x, int y, const Layer *layer);
+    void drawBackground(int x, int y, int width, int height);
+
 private:
     QPainter *painter;
 };
