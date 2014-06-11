@@ -3,5 +3,6 @@
 
 #include "tools/dragtool.hpp"
 #include "tools/rectangletool.hpp"
+#include "tools/ellipsetool.hpp"
 
 #endif // MODULE_APRICOTTOOLS

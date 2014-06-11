@@ -18,13 +18,9 @@ protected:
     void mousePressEvent(ToolMouseEvent *event) override;
     void mouseReleaseEvent(ToolMouseEvent *event) override;
     void keyPressEvent(ToolKeyEvent *event) override;
+    void keyEvent(ToolKeyEvent *event);
     void keyReleaseEvent(ToolKeyEvent *event) override;
     void paint(Painter *painter, bool preview) override;
-
-    QRect selectedRectangle();
-
-private:
-    void keyEvent(ToolKeyEvent *event);
 
     enum DragModifier {
         Normal = 0x0,
@@ -35,8 +31,10 @@ private:
 
     bool dragged;
     DragModifiers dragModifiers;
+
     QPoint mousePosition;
     QPoint startPosition;
+    QRect selectedRectangle();
 };
 
 #endif // TOOLS_RECTANGLETOOL_HPP

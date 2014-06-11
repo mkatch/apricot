@@ -3,7 +3,7 @@
 #include <ApricotUtils>
 
 RectangleTool::RectangleTool(QObject *parent) :
-    Tool(parent), dragModifiers()
+    Tool(parent), dragged(false), dragModifiers()
 {
     // Do nothing.
 }
