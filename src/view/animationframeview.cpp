@@ -92,6 +92,7 @@ AnimationFrameView::AnimationFrameView(QWidget *parent) :
     graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     graphicsView->setAttribute(Qt::WA_TransparentForMouseEvents, true);
+    graphicsView->setStyleSheet("background: transparent");
     layOut();
 }
 
@@ -135,6 +136,7 @@ void AnimationFrameView::setScale(qreal scale)
     if (frameItem->scale() == scale)
         return;
 
+    qWarning("Scale changed");
     frameItem->setScale(scale);
     emit scaleChanged();
     emit transformChanged();
