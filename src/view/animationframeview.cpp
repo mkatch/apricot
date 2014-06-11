@@ -88,11 +88,17 @@ AnimationFrameView::AnimationFrameView(QWidget *parent) :
 {
     this->setMouseTracking(true);
     scene->addItem(frameItem);
+
     graphicsView->setScene(scene);
     graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     graphicsView->setAttribute(Qt::WA_TransparentForMouseEvents, true);
     graphicsView->setStyleSheet("background: transparent");
+
+    background = scene->addRect(frameItem->sceneBoundingRect());//(0,0,0,0);
+    background->setBrush(QPainterExtensions(new QPainter()).getBrushForBackground());
+    background->setZValue(-1);
+
     layOut();
 }
 
@@ -109,6 +115,7 @@ void AnimationFrameView::setFrame(AnimationFrame *frame)
     m_frame = frame;
     if (frame != nullptr)
         setActiveLayer(frame->layer(0));
+    background->setRect(frameItem->sceneBoundingRect());
     emit frameChanged();
 }
 
@@ -136,8 +143,8 @@ void AnimationFrameView::setScale(qreal scale)
     if (frameItem->scale() == scale)
         return;
 
-    qWarning("Scale changed");
     frameItem->setScale(scale);
+    background->setRect(frameItem->sceneBoundingRect());
     emit scaleChanged();
     emit transformChanged();
 }
@@ -153,6 +160,7 @@ void AnimationFrameView::setTranslation(const QPointF &translation)
         return;
 
     frameItem->setPos(translation);
+    background->setRect(frameItem->sceneBoundingRect());
     emit translationChanged();
     emit transformChanged();
 }

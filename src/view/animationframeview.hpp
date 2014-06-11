@@ -75,6 +75,7 @@ private:
     QPointF lastMousePos;
     Canvas backBuffer;
     QRect lastBackBufferChange;
+    QGraphicsRectItem *background;
 
     AnimationFrame *m_frame;
     Layer *m_activeLayer;
