@@ -95,6 +95,11 @@ bool LayerView::eventFilter(QObject *object, QEvent *event)
                 endDrag();
             break;
         }
+        case QEvent::GraphicsSceneMousePress: {
+            qWarning("click");
+
+            break;
+        }
         default: break;
         }
     }
@@ -286,7 +291,7 @@ void LayerView::endDrag()
         frame()->moveLayer(items[i]->layer(), i);
     connect(frame(), SIGNAL(layersChanged()), this, SLOT(onLayersChanged()));
 
-    layOutItems(true); // NOTE look up layOutItmes
+    layOutItems(true);
 }
 
 /*!
@@ -378,6 +383,12 @@ void LayerViewItem::paint(
     int thumbnailWidth = m_layer->width() * thumbnailScale;
     int thumbnailHeight = m_layer->height() * thumbnailScale;
 
+    QPainterExtensions(painter).drawBackground(
+        0.5 * (width() - thumbnailWidth),
+        0.5 * (height() - thumbnailHeight),
+        thumbnailWidth,
+        thumbnailHeight
+                );
     QPainterExtensions(painter).drawLayer(
         0.5 * (width() - thumbnailWidth),
         0.5 * (height() - thumbnailHeight),

@@ -43,7 +43,7 @@ private:
     QGraphicsView *graphicsView;
     QGraphicsScene *scene;
     QList<LayerViewItem *> items;
-    GraphicsEmptyItem *dragItem; // To-Do
+    GraphicsEmptyItem *dragItem;
     int dropIndex;
     QParallelAnimationGroup draggedItemsAnimation;
     QParallelAnimationGroup itemsAnimation;
