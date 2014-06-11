@@ -24,6 +24,11 @@ public:
     void drawBackground(int x, int y, const Layer *layer);
     void drawBackground(int x, int y, int width, int height);
 
+    QBrush getBrushForBackground();
+    QBrush getBrushForBackground(int first, int second);
+    QBrush getBrushForBackground(QColor first, QColor second);
+
+
 private:
     QPainter *painter;
 };

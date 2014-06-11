@@ -80,6 +80,10 @@ void QPainterExtensions::drawLayer(
     drawLayer(QRect(x, y, width, height), layer);
 }
 
+/*!
+ * \brief Draws checkered background behind a given \a layer.
+ * \overload
+ */
 void QPainterExtensions::drawBackground(const Layer *layer)
 {
     int off_white = 4294966265;
@@ -105,7 +109,7 @@ void QPainterExtensions::drawBackground(const Layer *layer)
 }
 
 /*!
- * \brief Draws a given \a layer into given \a targetRect.
+ * \brief Draws checkered background into given \a targetRect.
  * \overload
  */
 void QPainterExtensions::drawBackground(const QRect &targetRect)
@@ -126,14 +130,11 @@ void QPainterExtensions::drawBackground(const QRect &targetRect)
 
     p->end();
     delete p;
-    QBrush *brush = new QBrush(bg_pix);
-    brush->setStyle(Qt::TexturePattern);
-
     painter->drawTiledPixmap(targetRect, bg_pix);
 }
 
 /*!
- * \brief Draws a given \a layer at coordinates (\a x, \a y).
+ * \brief Draws checkered background behind a given \a layer at coordinates (\a x, \a y).
  * \overload
  */
 void QPainterExtensions::drawBackground(int x, int y, const Layer *layer)
@@ -142,7 +143,7 @@ void QPainterExtensions::drawBackground(int x, int y, const Layer *layer)
 }
 
 /*!
- * \brief Draws a given \a layer into rect defined by \a x, \a y, \a width, \a height.
+ * \brief Draws checkered background behind a given \a layer into rect defined by \a x, \a y, \a width, \a height.
  * \overload
  */
 void QPainterExtensions::drawBackground(
@@ -151,3 +152,46 @@ void QPainterExtensions::drawBackground(
 {
     drawBackground(QRect(x, y, width, height));
 }
+
+/*!
+ * \brief Return checkered \c QBrush made of given colors \a first and \a second.
+ * \overload
+ */
+QBrush QPainterExtensions::getBrushForBackground(QColor first, QColor second)
+{
+    QPixmap bg_pix(16, 16);
+    bg_pix.fill(first);
+
+    QPainter *p = new QPainter(&bg_pix);
+    QBrush pnt_brush(second);
+
+    p->setBrush(pnt_brush);
+    p->setPen(Qt::NoPen);
+
+    p->drawRect(0, 0, 8, 8);
+    p->drawRect(8, 8, 8,8);
+
+    p->end();
+    delete p;
+    return QBrush(bg_pix);
+}
+
+/*!
+ * \brief Return checkered \c QBrush made of given colors \a first and \a second.
+ * \overload
+ */
+QBrush QPainterExtensions::getBrushForBackground(int first, int second)
+{
+    return getBrushForBackground(QColor(first), QColor(second));
+}
+
+/*!
+ * \brief Return checkered \c QBrush made of white and light gray.
+ * \overload
+ */
+QBrush QPainterExtensions::getBrushForBackground()
+{
+    return getBrushForBackground(4294966265, 4291611852);
+}
+
+
