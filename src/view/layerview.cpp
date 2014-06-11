@@ -131,7 +131,7 @@ void LayerView::setupScene()
         items.append(item);
     }
 
-    layOutScene(false); // NOTE look up layOutScene
+    layOutScene(false);
 }
 
 /*!
