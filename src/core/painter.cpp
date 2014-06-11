@@ -99,7 +99,9 @@ void Painter::drawLine(const QPoint &p1, const QPoint &p2)
     rect = rect.normalized();
 
     painter.drawLine(p1, p2);
-    m_boundingBox |= rect;
+
+    int delta = painter.pen().width() % 2;
+    m_boundingBox |= rect.adjusted(-delta - 1, -delta - 1, +delta, +delta);
 }
 
 /*!
@@ -115,8 +117,10 @@ void Painter::drawLine(const QPoint &p1, const QPoint &p2)
 void Painter::drawRect(const QRect &rect)
 {
     painter.drawRect(rect);
-    int d = -pen().width() / 2;
-    m_boundingBox |= rect.adjusted(d, d, pen().width() + d, pen().width() + d);
+
+    int delta = pen().width() / 2;
+    int c = pen().width % 2;
+    m_boundingBox |= rect.adjusted(-delta, -delta, +delta + c, +delta + c);
 }
 
 /*!
@@ -132,7 +136,10 @@ void Painter::drawRect(const QRect &rect)
 void Painter::drawEllipse(const QRect &rect)
 {
     painter.drawEllipse(rect);
-    m_boundingBox |= rect;
+
+    int delta = pen().width() / 2;
+    int c = pen().width % 2;
+    m_boundingBox |= rect.adjusted(-delta, -delta, +delta + c, +delta + c);
 }
 
 /*!
