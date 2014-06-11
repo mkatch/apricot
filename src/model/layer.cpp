@@ -36,6 +36,20 @@
  * \brief The dimenstions of the canvas
  */
 
+// Signals
+
+/*!
+ * \fn Layer::contentsChanged(const QRect& rect)
+ * \brief Emmited after the underlying Canvas was painted on.
+ *
+ * A bounding rectangle containig all pixels that changed is given by \a rect. This signal may
+ * sometimes be emitted even if the canvas does not actually change and also the bounding rectangle
+ * may not be optimal. But it is guaranteed to be emitted with a rectangle enclosing all change
+ * when they occur.
+ *
+ * \sa beginPainting(), endPainting()
+ */
+
 // Methods
 
 /*!
@@ -47,12 +61,48 @@
  */
 
 /*!
- * \fn Layer::newPainter()
- * \brief Creates new Painter bound to the underlying Canvas.
+ * \brief Initiates painting.
  *
- * \b Warning: It is the caller's responsibility to free the created painter. Not doing this will result in
- * memory leak.
+ * Returns a new Painter bound to the underlying Canvas. Every call to beginPaint() must be matched
+ * by a following call to endPainting(). The returned Painter is owned by Layer and is freed in
+ * endPainting(), therefore not valid after the ending call.
  */
+Painter *Layer::beginPainting()
+{
+    if (painter != nullptr) {
+        qWarning(
+            "Layer::beginPainting(): Previous call to beginPainting() was not matched by "
+            "a following call to endPainting()"
+        );
+        endPainting();
+    }
+
+    painter = new Painter(m_canvas);
+    return painter;
+}
+
+/*!
+ * \brief Finalizes painting.
+ *
+ * Frees the Painter created in tha matching preceding call to beginPainting(). The painter is
+ * therefore no more valid and referencing it may lead to memory corruption. Before the method
+ * returns contentsChanged() signal is emitted to notify about the contents changed during
+ * painting.
+ */
+void Layer::endPainting()
+{
+    if (painter == nullptr) {
+        qWarning(
+            "Layer::endPainting(): Calling endPainting() without prior "
+            "call to beginPainting()"
+        );
+        return;
+    }
+
+    emit contentsChanged(painter->boundingBox());
+    delete painter;
+    painter = nullptr;
+}
 
 /*!
  * \brief Called when the dimensions of the project change.
@@ -72,7 +122,8 @@ void Layer::updateSize()
 Layer::Layer(AnimationFrame *frame) :
     QObject(frame),
     m_frame(frame),
-    m_canvas(frame->size())
+    m_canvas(frame->size()),
+    painter(nullptr)
 {
     m_canvas.fill(Qt::transparent);
     connect(frame->project(), SIGNAL(sizeChanged()), this, SLOT(updateSize()));
@@ -89,7 +140,8 @@ Layer::Layer(AnimationFrame *frame) :
 Layer::Layer(const Layer *other, AnimationFrame *frame) :
     QObject(frame),
     m_frame(frame),
-    m_canvas(other->m_canvas)
+    m_canvas(other->m_canvas),
+    painter(nullptr)
 {
     connect(frame->project(), SIGNAL(sizeChanged()), this, SLOT(updateSize()));
 }

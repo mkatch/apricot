@@ -14,20 +14,16 @@ int main(int argc, char *argv[])
     project->setSize(918, 655);
     for (int i = 0; i < 8; i++) {
         Layer *layer = project->newFrame()->newLayer();
-        Painter *painter = layer->newPainter();
-        painter->drawImage(":/images/isocastle.png");
-        delete painter;
+        layer->beginPainting()->drawImage(":/images/isocastle.png");
+        layer->endPainting();
     }
 
     AnimationFrame *frame = project->frame(0);
-    Layer *layer = frame->newLayer();
-    Painter *painter = layer->newPainter();
-    painter->drawImage(":/images/isocastle.png");
-    layer = frame->newLayer();
-    painter = layer->newPainter();
-    painter->drawImage(":/images/isocastle.png");
-
-    delete painter;
+    for (int i = 0; i < 3; ++i) {
+        Layer *layer = frame->newLayer();
+        layer->beginPainting()->drawImage(":/images/isocastle.png");
+        layer->endPainting();
+    }
 
     application.setProject(project);
 
