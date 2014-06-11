@@ -31,8 +31,9 @@ int main(int argc, char *argv[])
 
     application.setProject(project);
 
-    DragTool dragTool;
-    application.mainWindow()->frameView()->setTool(&dragTool);
+    DragTool tool;
+//    RectangleTool tool;
+    application.mainWindow()->frameView()->setTool(&tool);
 
     return application.exec();
 }

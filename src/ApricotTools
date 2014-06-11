@@ -2,5 +2,6 @@
 #define MODULE_APRICOTTOOLS
 
 #include "tools/dragtool.hpp"
+#include "tools/rectangletool.hpp"
 
 #endif // MODULE_APRICOTTOOLS
