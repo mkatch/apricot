@@ -126,9 +126,6 @@ void QPainterExtensions::drawBackground(const QRect &targetRect)
 
     p->end();
     delete p;
-    QBrush *brush = new QBrush(bg_pix);
-    brush->setStyle(Qt::TexturePattern);
-
     painter->drawTiledPixmap(targetRect, bg_pix);
 }
 
@@ -151,3 +148,34 @@ void QPainterExtensions::drawBackground(
 {
     drawBackground(QRect(x, y, width, height));
 }
+
+QBrush QPainterExtensions::getBrushForBackground(QColor first, QColor second)
+{
+    QPixmap bg_pix(16, 16);
+    bg_pix.fill(first);
+
+    QPainter *p = new QPainter(&bg_pix);
+    QBrush pnt_brush(second);
+
+    p->setBrush(pnt_brush);
+    p->setPen(Qt::NoPen);
+
+    p->drawRect(0, 0, 8, 8);
+    p->drawRect(8, 8, 8,8);
+
+    p->end();
+    delete p;
+    return QBrush(bg_pix);
+}
+
+QBrush QPainterExtensions::getBrushForBackground(int first, int second)
+{
+    return getBrushForBackground(QColor(first), QColor(second));
+}
+
+QBrush QPainterExtensions::getBrushForBackground()
+{
+    return getBrushForBackground(4294966265, 4291611852);
+}
+
+
