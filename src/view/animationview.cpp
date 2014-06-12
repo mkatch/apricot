@@ -47,6 +47,7 @@ AnimationView::AnimationView(QWidget *parent) :
     setMinimumHeight(150);
     graphicsView->setRenderHint(QPainter::Antialiasing);
     graphicsView->setScene(scene);
+    graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     scene->installEventFilter(this);
     layOut();
 }
