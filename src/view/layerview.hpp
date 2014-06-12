@@ -7,6 +7,9 @@
 #include <QList>
 #include <QSize>
 #include <QGraphicsObject>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 
 #include <ApricotModel>
 
@@ -45,6 +48,8 @@ private:
     static const int ITEM_HEIGHT = 150;
     static const int TRANSITION_DURATION = 150;
 
+
+
     QGraphicsView *graphicsView;
     QGraphicsScene *scene;
     QList<LayerViewItem *> items;
@@ -52,6 +57,8 @@ private:
     int dropIndex;
     QParallelAnimationGroup draggedItemsAnimation;
     QParallelAnimationGroup itemsAnimation;
+    QPushButton *add;
+    QPushButton *remove;
 
     AnimationFrame *m_frame;
     Layer *m_activeLayer;
@@ -69,6 +76,8 @@ private:
 
 private slots:
     void onLayersChanged();
+    void addLayer();
+    void removeLayer();
 };
 
 class LayerViewItem : public QGraphicsObject

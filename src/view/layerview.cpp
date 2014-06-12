@@ -37,15 +37,29 @@ LayerView::LayerView(QWidget *parent) :
     scene(new QGraphicsScene(this)),
     dragItem(nullptr),
     dropIndex(-1),
+    add(new QPushButton("Add", this)),
+    remove(new QPushButton("Remove", this)),
     m_frame(nullptr),
     m_activeLayer(nullptr)
+
 {
     setMinimumWidth(150);
     graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     graphicsView->setRenderHint(QPainter::Antialiasing);
     graphicsView->setScene(scene);
     scene->installEventFilter(this);
+
+    QVBoxLayout *vbox = new QVBoxLayout();
+    vbox->addWidget(graphicsView);
+    QHBoxLayout *hbox = new QHBoxLayout();
+    hbox->addWidget(add);
+    hbox->addWidget(remove);
+    vbox->addLayout(hbox);
+    setLayout(vbox);
     layOut();
+    connect(add, SIGNAL(clicked()), this, SLOT(addLayer()));
+    connect(remove, SIGNAL(clicked()), this, SLOT(removeLayer()));
+
 }
 
 void LayerView::setFrame(AnimationFrame *frame)
@@ -174,9 +188,9 @@ void LayerView::updateSceneRect()
  *
  * Called at construction time and after resize.
  */
-void LayerView::layOut()
+void LayerView::layOut() //TODO
 {
-    graphicsView->setGeometry(0, 0, width(), height());
+//    graphicsView->setGeometry(0, 0, width(), height());
     layOutScene(false);
 }
 
@@ -325,6 +339,39 @@ void LayerView::onLayersChanged()
 {
     setupScene();
     updateSceneRect();
+}
+
+void LayerView::addLayer()
+{
+    if(activeLayer() == nullptr){
+        frame()->newLayer(0);
+    } else {
+        int indexOfLayer = frame()->indexOfLayer(activeLayer());
+        frame()->newLayer(indexOfLayer+1);
+    }
+    setupScene();
+    updateSceneRect();
+}
+
+void LayerView::removeLayer() // TODO
+{
+    Layer *layer;
+    if(activeLayer() != nullptr){
+        int indexOfLayer = frame()->indexOfLayer(activeLayer());
+        frame()->deleteLayer(indexOfLayer);
+
+        if(frame()->layerCount() == 0){
+            layer = frame()->newLayer();
+            setActiveLayer(layer);
+        } else {
+            layer = frame()->layer(0);
+            setActiveLayer(layer);
+        }
+    }
+    emit activeLayerChanged(layer);
+    setupScene();
+    updateSceneRect();
+
 }
 
 /*!

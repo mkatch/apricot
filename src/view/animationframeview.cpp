@@ -193,6 +193,7 @@ void AnimationFrameView::setActiveLayer(Layer *layer)
     backBuffer = (layer != nullptr) ? layer->canvas() : Canvas();
     lastBackBufferChange = QRect();
     emit activeLayerChanged();
+    update();
 }
 
 void AnimationFrameView::setTool(Tool *tool)
