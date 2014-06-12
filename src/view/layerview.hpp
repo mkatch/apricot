@@ -20,17 +20,20 @@ class LayerView : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY(AnimationFrame *frame READ frame WRITE setFrame NOTIFY layersChanged)
-
+    Q_PROPERTY(Layer* activeLayer READ activeLayer WRITE setActiveLayer NOTIFY activeLayerChanged)
 public:
     explicit LayerView(QWidget *parent = 0);
 
     AnimationFrame *frame() const;
+    Layer *activeLayer() const;
 
 public slots:
     void setFrame(AnimationFrame *frame);
+    void setActiveLayer(const Layer *layer);
 
 signals:
     void layersChanged();
+    void activeLayerChanged(Layer *newLayer);
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
@@ -51,6 +54,7 @@ private:
     QParallelAnimationGroup itemsAnimation;
 
     AnimationFrame *m_frame;
+    Layer *m_activeLayer;
 
     void setupScene();
     void updateSceneRect();
@@ -102,6 +106,11 @@ private:
 inline AnimationFrame *LayerView::frame() const
 {
     return m_frame;
+}
+
+inline Layer *LayerView::activeLayer() const
+{
+    return m_activeLayer;
 }
 
 inline const Layer *LayerViewItem::layer() const

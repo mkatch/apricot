@@ -52,6 +52,11 @@ MainWindow::MainWindow(QWidget *parent) :
         m_animationView, SIGNAL(activeFrameChanged(AnimationFrame*)),
         m_layerView, SLOT(setFrame(AnimationFrame*))
     );
+    connect(
+        m_layerView, SIGNAL(activeLayerChanged(Layer*)),
+        m_frameView, SLOT(setActiveLayer(Layer*))
+    );
+
 }
 
 /*!
