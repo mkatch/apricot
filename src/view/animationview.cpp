@@ -40,6 +40,7 @@ AnimationView::AnimationView(QWidget *parent) :
     setMinimumHeight(150);
     graphicsView->setRenderHint(QPainter::Antialiasing);
     graphicsView->setScene(scene);
+    graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     scene->installEventFilter(this);
     layOut();
 }
@@ -94,8 +95,7 @@ bool AnimationView::eventFilter(QObject *object, QEvent *event)
             break;
         }
         case QEvent::GraphicsSceneMousePress: {
-
-
+            qWarning("click2");
             break;
             }
         default: break;

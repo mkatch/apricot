@@ -93,9 +93,9 @@ AnimationFrameView::AnimationFrameView(QWidget *parent) :
     graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     graphicsView->setAttribute(Qt::WA_TransparentForMouseEvents, true);
-    graphicsView->setStyleSheet("background: transparent");
+    graphicsView->setStyleSheet("background: darkgray");
 
-    background = scene->addRect(frameItem->sceneBoundingRect());//(0,0,0,0);
+    background = scene->addRect(frameItem->sceneBoundingRect());
     background->setBrush(QPainterExtensions(new QPainter()).getBrushForBackground());
     background->setZValue(-1);
 

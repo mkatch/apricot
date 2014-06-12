@@ -42,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     dockableLayerView->setWidget(layerView());
     dockableLayerView->setAllowedAreas(Qt::RightDockWidgetArea | Qt::LeftDockWidgetArea);
     this->addDockWidget(Qt::RightDockWidgetArea, dockableLayerView);
+
 }
 
 /*!

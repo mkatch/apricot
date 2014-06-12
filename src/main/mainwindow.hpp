@@ -36,6 +36,7 @@ private:
     AnimationFrameView *m_frameView;
     AnimationView *m_animationView;
     LayerView *m_layerView;
+
 };
 
 inline Project *MainWindow::project()

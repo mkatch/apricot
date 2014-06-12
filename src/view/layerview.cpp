@@ -38,8 +38,8 @@ LayerView::LayerView(QWidget *parent) :
     dragItem(nullptr),
     dropIndex(-1)
 {
-    setMinimumWidth(170);
-    //setMaximumWidth(170);
+    setMinimumWidth(150);
+    graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     graphicsView->setRenderHint(QPainter::Antialiasing);
     graphicsView->setScene(scene);
     scene->installEventFilter(this);
@@ -384,13 +384,13 @@ void LayerViewItem::paint(
     int thumbnailHeight = m_layer->height() * thumbnailScale;
 
     QPainterExtensions(painter).drawBackground(
-        0.5 * (width() - thumbnailWidth),
+        0.5 * (width() - thumbnailWidth) - 5,
         0.5 * (height() - thumbnailHeight),
         thumbnailWidth,
         thumbnailHeight
                 );
     QPainterExtensions(painter).drawLayer(
-        0.5 * (width() - thumbnailWidth),
+        0.5 * (width() - thumbnailWidth) - 5,
         0.5 * (height() - thumbnailHeight),
         thumbnailWidth,
         thumbnailHeight,
