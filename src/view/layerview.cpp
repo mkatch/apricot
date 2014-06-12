@@ -36,7 +36,9 @@ LayerView::LayerView(QWidget *parent) :
     graphicsView(new QGraphicsView(this)),
     scene(new QGraphicsScene(this)),
     dragItem(nullptr),
-    dropIndex(-1)
+    dropIndex(-1),
+    m_frame(nullptr),
+    m_activeLayer(nullptr)
 {
     setMinimumWidth(150);
     graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -54,7 +56,26 @@ void LayerView::setFrame(AnimationFrame *frame)
     m_frame = frame;
     connect(frame, SIGNAL(layersChanged()), this, SLOT(onLayersChanged()));
     setupScene();
-    emit layersChanged();
+    setActiveLayer(frame->layer(0));
+//    emit layersChanged();
+}
+
+void LayerView::setActiveLayer(const Layer *layer)
+{
+    if (m_activeLayer == layer)
+        return;
+
+    if(layer->frame() != frame()) {
+        qWarning(
+            "LayerView::setActiveLayer(): A layer that is not a member of displayed "
+            "frame was tried to be set as active frame."
+        );
+        return;
+    }
+
+
+    m_activeLayer = const_cast<Layer *>(layer);
+    emit activeLayerChanged(m_activeLayer);
 }
 
 /*!
@@ -95,13 +116,15 @@ bool LayerView::eventFilter(QObject *object, QEvent *event)
                 endDrag();
             break;
         }
-        case QEvent::GraphicsSceneMousePress: {
-            qWarning("click");
-
-            break;
-        }
         default: break;
         }
+    } else {
+       LayerViewItem *item = static_cast<LayerViewItem *>(object);
+       if (event->type() == QEvent::GraphicsSceneMousePress) {
+           QGraphicsSceneMouseEvent *mouse = static_cast<QGraphicsSceneMouseEvent *>(event);
+           if (mouse->button() == Qt::LeftButton)
+               setActiveLayer(item->layer());
+       }
     }
 
     return false;
@@ -126,8 +149,9 @@ void LayerView::setupScene()
     // Add new thumbnails
     for (int i = 0; i < frame()->layerCount(); ++i) {
         LayerViewItem *item = new LayerViewItem(frame()->layer(i));
-        scene->addItem(item);
         item->setFlag(QGraphicsItem::ItemIsSelectable);
+        item->installEventFilter(this);
+        scene->addItem(item);
         items.append(item);
     }
 

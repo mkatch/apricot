@@ -143,7 +143,7 @@ void QPainterExtensions::drawBackground(int x, int y, const Layer *layer)
 }
 
 /*!
- * \brief Draws checkered background behind a given \a layer into rect defined by \a x, \a y, \a width, \a height.
+ * \brief Draws checkered background into rect defined by \a x, \a y, \a width, \a height.
  * \overload
  */
 void QPainterExtensions::drawBackground(
