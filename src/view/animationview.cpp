@@ -25,6 +25,11 @@ using std::sort;
  * \brief The project the animation frames of which are displayed.
  */
 
+/*!
+ * \property AnimationView::activeFrame
+ * \brief The active frame.
+ */
+
 // Methods
 
 /*!
@@ -35,7 +40,9 @@ AnimationView::AnimationView(QWidget *parent) :
     graphicsView(new QGraphicsView(this)),
     scene(new QGraphicsScene(this)),
     dragItem(nullptr),
-    dropIndex(-1)
+    dropIndex(-1),
+    m_project(nullptr),
+    m_activeFrame(nullptr)
 {
     setMinimumHeight(150);
     graphicsView->setRenderHint(QPainter::Antialiasing);
@@ -52,7 +59,25 @@ void AnimationView::setProject(Project *project)
     m_project = project;
     connect(project, SIGNAL(framesChanged()), this, SLOT(onFramesChanged()));
     setupScene();
-    emit projectChanged();
+    setActiveFrame(project->frame(0));
+}
+
+void AnimationView::setActiveFrame(const AnimationFrame *frame)
+{
+    if (m_activeFrame == frame)
+        return;
+
+    if (frame->project() != project()) {
+        qWarning(
+            "AnimationView::setActiveFrame(): A frame that is not a member of displayed "
+            "project was tried to be set as active frame."
+        );
+        return;
+    }
+
+     // This is safe cause the view has acces to all frames anyway.
+    m_activeFrame = const_cast<AnimationFrame *>(frame);
+    emit activeFrameChanged(m_activeFrame);
 }
 
 /*!
@@ -93,12 +118,14 @@ bool AnimationView::eventFilter(QObject *object, QEvent *event)
                 endDrag();
             break;
         }
-        case QEvent::GraphicsSceneMousePress: {
-
-
-            break;
-            }
         default: break;
+        }
+    } else { // object must be one of items
+        AnimationViewItem *item = static_cast<AnimationViewItem *>(object);
+        if (event->type() == QEvent::GraphicsSceneMousePress) {
+            QGraphicsSceneMouseEvent *mouse = static_cast<QGraphicsSceneMouseEvent *>(event);
+            if (mouse->button() == Qt::LeftButton)
+                setActiveFrame(item->frame());
         }
     }
 
@@ -123,8 +150,9 @@ void AnimationView::setupScene()
     // Add new thumbnails
     for (int i = 0; i < project()->frameCount(); ++i) {
         AnimationViewItem *item = new AnimationViewItem(project()->frame(i));
-        scene->addItem(item);
         item->setFlag(QGraphicsItem::ItemIsSelectable);
+        item->installEventFilter(this);
+        scene->addItem(item);
         items.append(item);
     }
 

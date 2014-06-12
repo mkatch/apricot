@@ -42,6 +42,16 @@ MainWindow::MainWindow(QWidget *parent) :
     dockableLayerView->setWidget(layerView());
     dockableLayerView->setAllowedAreas(Qt::RightDockWidgetArea | Qt::LeftDockWidgetArea);
     this->addDockWidget(Qt::RightDockWidgetArea, dockableLayerView);
+
+    // The order of connections is important!
+    connect(
+        m_animationView, SIGNAL(activeFrameChanged(AnimationFrame*)),
+        m_frameView, SLOT(setFrame(AnimationFrame*))
+    );
+    connect(
+        m_animationView, SIGNAL(activeFrameChanged(AnimationFrame*)),
+        m_layerView, SLOT(setFrame(AnimationFrame*))
+    );
 }
 
 /*!

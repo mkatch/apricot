@@ -25,6 +25,8 @@ public:
     explicit LayerView(QWidget *parent = 0);
 
     AnimationFrame *frame() const;
+
+public slots:
     void setFrame(AnimationFrame *frame);
 
 signals:

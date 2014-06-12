@@ -16,20 +16,19 @@ class AnimationFrameView : public QWidget
     Q_OBJECT
     Q_PROPERTY(AnimationFrame *frame READ frame WRITE setFrame NOTIFY frameChanged)
     Q_PROPERTY(Layer *activeLayer READ activeLayer WRITE setActiveLayer NOTIFY activeLayerChanged)
+    Q_PROPERTY(Tool *tool READ tool WRITE setTool NOTIFY toolChanged)
     Q_PROPERTY(qreal scale READ scale WRITE setScale NOTIFY scaleChanged)
     Q_PROPERTY(QPointF translation READ translation WRITE setTranslation NOTIFY translationChanged)
     Q_PROPERTY(QTransform transform READ transform NOTIFY transformChanged)
-    Q_PROPERTY(Tool *tool READ tool WRITE setTool NOTIFY toolChanged)
 
 public:
     explicit AnimationFrameView(QWidget *parent = nullptr);
     virtual ~AnimationFrameView() = default;
 
     AnimationFrame *frame() const;
-    void setFrame(AnimationFrame *frame);
-
     Layer *activeLayer() const;
-    void setActiveLayer(Layer *layer);
+    Tool *tool();
+    const Tool *tool() const;
 
     qreal scale() const;
     void setScale(qreal scale);
@@ -43,12 +42,13 @@ public:
 
     QTransform transform() const;
 
-    Tool *tool();
-    const Tool *tool() const;
-    void setTool(Tool *tool);
-
     QPointF mapToFrame(const QPointF &point) const;
     QPointF mapFromFrame(const QPointF &point) const;
+
+public slots:
+    void setFrame(AnimationFrame *frame);
+    void setActiveLayer(Layer *layer);
+    void setTool(Tool *tool);
 
 signals:
     void frameChanged();
@@ -101,6 +101,16 @@ inline Layer *AnimationFrameView::activeLayer() const
     return m_activeLayer;
 }
 
+inline Tool *AnimationFrameView::tool()
+{
+    return m_tool;
+}
+
+inline const Tool *AnimationFrameView::tool() const
+{
+    return m_tool;
+}
+
 inline qreal AnimationFrameView::scale() const
 {
     return frameItem->scale();
@@ -131,14 +141,14 @@ inline void AnimationFrameView::translate(qreal x, qreal y)
     translate(QPointF(x, y));
 }
 
-inline Tool *AnimationFrameView::tool()
+inline QPointF AnimationFrameView::mapToFrame(const QPointF &point) const
 {
-    return m_tool;
+    return (point - translation()) / scale();
 }
 
-inline const Tool *AnimationFrameView::tool() const
+inline QPointF AnimationFrameView::mapFromFrame(const QPointF &point) const
 {
-    return m_tool;
+    return point * scale() + translation();
 }
 
 #endif // VIEW_ANIMATIONFRAMEVIEW_HPP

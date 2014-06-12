@@ -29,8 +29,8 @@ int main(int argc, char *argv[])
 
     DragTool tool;
 //    RectangleTool tool;
-//    EllipseTool tool;
-//    LineTool tool;
+    //EllipseTool tool;
+    //LineTool tool;
     application.mainWindow()->frameView()->setTool(&tool);
 
     return application.exec();

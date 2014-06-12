@@ -107,37 +107,6 @@ AnimationFrameView::AnimationFrameView(QWidget *parent) :
  * \brief Destroys the view.
  */
 
-void AnimationFrameView::setFrame(AnimationFrame *frame)
-{
-    if (m_frame == frame)
-        return;
-
-    m_frame = frame;
-    if (frame != nullptr)
-        setActiveLayer(frame->layer(0));
-    background->setRect(frameItem->sceneBoundingRect());
-    emit frameChanged();
-}
-
-void AnimationFrameView::setActiveLayer(Layer *layer)
-{
-    if (m_activeLayer == layer)
-        return;
-
-    if (layer != nullptr && layer->frame() != frame()) {
-        qWarning(
-            "AnimationFrameView::setActiveLayer(): "
-            "Passed layer is not part of currently displayed frame"
-        );
-        return setActiveLayer(nullptr);
-    }
-
-    m_activeLayer = layer;
-    backBuffer = (layer != nullptr) ? layer->canvas() : Canvas();
-    lastBackBufferChange = QRect();
-    emit activeLayerChanged();
-}
-
 void AnimationFrameView::setScale(qreal scale)
 {
     if (frameItem->scale() == scale)
@@ -180,6 +149,52 @@ QTransform AnimationFrameView::transform() const
     return QTransform().scale(scale(), scale()).translate(translation().x(), translation().y());
 }
 
+/*!
+ * \fn AnimationFrameView::mapToFrame(const QPointF &point) const
+ * \brief Maps \a point from view coordinates to frame coordinates.
+ *
+ * \sa mapFromFrame()
+ */
+
+/*!
+ * \fn AnimationFrameView::mapFromFrame(const QPointF &point) const
+ * \brief Maps \a point from frame coordinates to view coordinates.
+ *
+ * \sa mapToFrame()
+ */
+
+void AnimationFrameView::setFrame(AnimationFrame *frame)
+{
+    if (m_frame == frame)
+        return;
+
+    m_frame = frame;
+    if (frame != nullptr)
+        setActiveLayer(frame->layer(0));
+    background->setRect(frameItem->sceneBoundingRect());
+    frameItem->update();
+    emit frameChanged();
+}
+
+void AnimationFrameView::setActiveLayer(Layer *layer)
+{
+    if (m_activeLayer == layer)
+        return;
+
+    if (layer != nullptr && layer->frame() != frame()) {
+        qWarning(
+            "AnimationFrameView::setActiveLayer(): "
+            "Passed layer is not part of currently displayed frame"
+        );
+        return setActiveLayer(nullptr);
+    }
+
+    m_activeLayer = layer;
+    backBuffer = (layer != nullptr) ? layer->canvas() : Canvas();
+    lastBackBufferChange = QRect();
+    emit activeLayerChanged();
+}
+
 void AnimationFrameView::setTool(Tool *tool)
 {
     if (m_tool == tool)
@@ -192,26 +207,6 @@ void AnimationFrameView::setTool(Tool *tool)
         m_tool->setView(this);
     emit toolChanged();
     update();
-}
-
-/*!
- * \brief Maps \a point from view coordinates to frame coordinates.
- *
- * \sa mapFromFrame()
- */
-QPointF AnimationFrameView::mapToFrame(const QPointF &point) const
-{
-    return (point - translation()) / scale();
-}
-
-/*!
- * \brief Maps \a point from frame coordinates to view coordinates.
- *
- * \sa mapToFrame()
- */
-QPointF AnimationFrameView::mapFromFrame(const QPointF &point) const
-{
-    return point * scale() + translation();
 }
 
 /*!

@@ -17,16 +17,26 @@ class AnimationViewItem;
 class AnimationView : public QWidget
 {
     Q_OBJECT
-    Q_PROPERTY(Project *project READ project WRITE setProject NOTIFY projectChanged)
+    Q_PROPERTY(Project *project READ project WRITE setProject)
+    Q_PROPERTY(
+        AnimationFrame *activeFrame
+        READ activeFrame
+        WRITE setActiveFrame
+        NOTIFY activeFrameChanged
+    )
 
 public:
     explicit AnimationView(QWidget *parent = 0);
 
     Project *project() const;
+    AnimationFrame *activeFrame() const;
+
+public slots:
     void setProject(Project *project);
+    void setActiveFrame(const AnimationFrame *frame);
 
 signals:
-    void projectChanged();
+    void activeFrameChanged(AnimationFrame *newFrame);
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
@@ -46,6 +56,7 @@ private:
     QParallelAnimationGroup itemsAnimation;
 
     Project *m_project;
+    AnimationFrame *m_activeFrame;
 
     void setupScene();
     void updateSceneRect();
@@ -96,6 +107,11 @@ private:
 inline Project *AnimationView::project() const
 {
     return m_project;
+}
+
+inline AnimationFrame *AnimationView::activeFrame() const
+{
+    return m_activeFrame;
 }
 
 inline const AnimationFrame *AnimationViewItem::frame() const
