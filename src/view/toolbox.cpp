@@ -12,7 +12,7 @@ const int PenPreview::MINIMUM_PEN_SIZE = 1;
 const int PenPreview::MAXIMUM_PEN_SIZE = 10;
 
 PenPreview::PenPreview(QWidget *parent) :
-    QWidget(parent)
+    QWidget(parent), m_penSize(MINIMUM_PEN_SIZE)
 {
     // Do nothing.
 }
@@ -27,7 +27,7 @@ void PenPreview::paintEvent(QPaintEvent *event)
     painter.setBrush(penColor());
 
     int size = qMin(width(), height());
-    qreal r = penSize() * 0.1 * size / 2.0;
+    qreal r = (penSize() * size / 2.0) / MAXIMUM_PEN_SIZE;
     painter.drawEllipse(QPointF(width() / 2.0, height() / 2.0), r, r);
 }
 
@@ -47,6 +47,7 @@ PenPicker::PenPicker(QWidget *parent) :
 {
     spinBox->setMinimum(PenPreview::MINIMUM_PEN_SIZE);
     spinBox->setMaximum(PenPreview::MAXIMUM_PEN_SIZE);
+    spinBox->setValue(PenPreview::MINIMUM_PEN_SIZE);
 
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->addWidget(preview);
@@ -211,7 +212,6 @@ Toolbox::Toolbox(QWidget *parent) :
     toolButtons->addButton(lineButton);
     toolButtons->addButton(rectButton);
     toolButtons->addButton(ellipseButton);
-    dragButton->setChecked(true);
 
     QGridLayout *toolLayout = new QGridLayout(toolBox);
     toolLayout->addWidget(dragButton, 0, 0);
@@ -223,12 +223,11 @@ Toolbox::Toolbox(QWidget *parent) :
     penPicker = new PenPicker(content);
     colorPreview = new ColorPreview(content);
 
-    QSpacerItem *spacer = new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
     QVBoxLayout *layout = new QVBoxLayout(content);
     layout->addWidget(toolBox);
     layout->addWidget(penPicker);
     layout->addWidget(colorPreview);
-    layout->addItem(spacer);
+    layout->addStretch();
     content->setLayout(layout);
 
     connect(penPicker, SIGNAL(penColorChanged(QColor)), colorPreview, SLOT(setForegroundColor(QColor)));
@@ -244,6 +243,21 @@ Toolbox::Toolbox(QWidget *parent) :
     connect(colorPreview, SIGNAL(backgroundRectClicked()), this, SIGNAL(backgroundRectClicked()));
     connect(colorPreview, SIGNAL(backgroundRectPressed()), this, SIGNAL(backgroundRectPressed()));
     connect(colorPreview, SIGNAL(backgroundRectReleased()), this, SIGNAL(backgroundRectReleased()));
+
+    connect(toolButtons, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(onToolToggled(QAbstractButton*)));
+    dragButton->toggle();
+    m_activeTool = dragTool;
+}
+
+void Toolbox::onToolToggled(QAbstractButton *button)
+{
+    ToolboxButton *toolButton = static_cast<ToolboxButton *>(button);
+
+    if (toolButton->tool() == m_activeTool)
+        return;
+
+    m_activeTool = toolButton->tool();
+    emit activeToolChanged(toolButton->tool());
 }
 
 #include "toolbox.moc"

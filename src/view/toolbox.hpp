@@ -6,6 +6,7 @@
 #include <QDockWidget>
 #include <QGroupBox>
 #include <QSpinBox>
+#include <QAbstractButton>
 
 class PenPreview : public QWidget
 {
@@ -228,6 +229,8 @@ inline QRect ColorPreview::backgroundPreviewRect() const
     return QRect(width() - rw, height() - rh, rw, rh);
 }
 
+class Tool;
+
 class Toolbox : public QDockWidget
 {
     Q_OBJECT
@@ -243,6 +246,10 @@ class Toolbox : public QDockWidget
         QColor backgroundColor
         READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged
     )
+    Q_PROPERTY(
+        Tool *activeTool
+        READ activeTool NOTIFY activeToolChanged
+    )
 
 public:
     explicit Toolbox(QWidget *parent = nullptr);
@@ -250,6 +257,7 @@ public:
     int penSize() const;
     const QColor &foregroundColor() const;
     const QColor &backgroundColor() const;
+    Tool *activeTool();
 
 public slots:
     void setPenSize(int size);
@@ -257,9 +265,10 @@ public slots:
     void setBackgroundColor(const QColor &color);
 
 signals:
-    int penSizeChanged(int size);
+    void penSizeChanged(int size);
     void foregroundColorChanged(const QColor &color);
     void backgroundColorChanged(const QColor &color);
+    void activeToolChanged(Tool *tool);
 
     void foregroundRectClicked();
     void foregroundRectPressed();
@@ -272,6 +281,11 @@ signals:
 private:
     PenPicker *penPicker;
     ColorPreview *colorPreview;
+
+    Tool *m_activeTool;
+
+private slots:
+    void onToolToggled(QAbstractButton *button);
 };
 
 inline int Toolbox::penSize() const
@@ -287,6 +301,11 @@ inline const QColor &Toolbox::foregroundColor() const
 inline const QColor &Toolbox::backgroundColor() const
 {
     return colorPreview->backgroundColor();
+}
+
+inline Tool *Toolbox::activeTool()
+{
+    return m_activeTool;
 }
 
 inline void Toolbox::setPenSize(int size)
