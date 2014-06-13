@@ -25,6 +25,7 @@ public:
     AnimationFrameView *frameView();
     AnimationView *animationView();
     LayerView *layerView();
+    Toolbox *toolbox();
 
 signals:
     void projectChanged();
@@ -36,7 +37,7 @@ private:
     AnimationFrameView *m_frameView;
     AnimationView *m_animationView;
     LayerView *m_layerView;
-
+    Toolbox *m_toolbox;
 };
 
 inline Project *MainWindow::project()
@@ -57,6 +58,11 @@ inline AnimationView *MainWindow::animationView()
 inline LayerView *MainWindow::layerView()
 {
     return m_layerView;
+}
+
+inline Toolbox *MainWindow::toolbox()
+{
+    return m_toolbox;
 }
 
 #endif // MAINWINDOW_HPP

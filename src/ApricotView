@@ -7,6 +7,7 @@
 #include "view/graphicsemptyitem.hpp"
 #include "view/qpainterextensions.hpp"
 #include "view/tool.hpp"
+#include "view/toolbox.hpp"
 #include "view/toolevents.hpp"
 #include "view/layerview.hpp"
 

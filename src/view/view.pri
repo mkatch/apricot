@@ -7,7 +7,8 @@ HEADERS += \
     src/view/tool.hpp \
     src/view/toolevents.hpp \
     src/view/layerview.hpp \
-    src/view/animationframeview.hpp
+    src/view/animationframeview.hpp \
+    src/view/toolbox.hpp
 
 SOURCES += \
     src/view/animationview.cpp \
@@ -18,4 +19,5 @@ SOURCES += \
     src/view/tool.cpp \
     src/view/layerview.cpp \
     src/view/animationframeview.cpp \
-    src/view/toolevents.cpp
+    src/view/toolevents.cpp \
+    src/view/toolbox.cpp

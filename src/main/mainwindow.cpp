@@ -27,7 +27,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     m_frameView(new AnimationFrameView),
     m_animationView(new AnimationView),
-    m_layerView(new LayerView)
+    m_layerView(new LayerView),
+    m_toolbox(new Toolbox(this))
 {
     ui->setupUi(this);
 
@@ -42,6 +43,14 @@ MainWindow::MainWindow(QWidget *parent) :
     dockableLayerView->setWidget(layerView());
     dockableLayerView->setAllowedAreas(Qt::RightDockWidgetArea | Qt::LeftDockWidgetArea);
     this->addDockWidget(Qt::RightDockWidgetArea, dockableLayerView);
+
+    toolbox()->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
+    addDockWidget(Qt::LeftDockWidgetArea, toolbox());
+
+    connect(
+        toolbox(), SIGNAL(activeToolChanged(Tool*)),
+        frameView(), SLOT(setTool(Tool*))
+    );
 
     // The order of connections is important!
     connect(
