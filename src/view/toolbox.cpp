@@ -195,6 +195,7 @@ Toolbox::Toolbox(QWidget *parent) :
     Tool *lineTool = new LineTool(this);
     Tool *rectTool = new RectangleTool(this);
     Tool *ellipseTool = new EllipseTool(this);
+    Tool *pencilTool = new PencilTool(this);
 
     QGroupBox *toolBox = new QGroupBox("Tools", content);
     QMargins toolMargins = toolBox->contentsMargins();
@@ -203,21 +204,24 @@ Toolbox::Toolbox(QWidget *parent) :
     toolBox->setContentsMargins(toolMargins);
 
     ToolboxButton *dragButton = new ToolboxButton(dragTool, "Drag view", toolBox);
-    ToolboxButton *lineButton = new ToolboxButton(lineTool, "Draw line", toolBox);
-    ToolboxButton *rectButton = new ToolboxButton(rectTool, "Draw rectangle", toolBox);
-    ToolboxButton *ellipseButton = new ToolboxButton(ellipseTool, "Draw ellipse", toolBox);
+    ToolboxButton *lineButton = new ToolboxButton(lineTool, "Line tool", toolBox);
+    ToolboxButton *rectButton = new ToolboxButton(rectTool, "Rectangle tool", toolBox);
+    ToolboxButton *ellipseButton = new ToolboxButton(ellipseTool, "Ellipse tool", toolBox);
+    ToolboxButton *pencilButton = new ToolboxButton(pencilTool, "Pencil tool", toolBox);
 
     QButtonGroup *toolButtons = new QButtonGroup(content);
     toolButtons->addButton(dragButton);
     toolButtons->addButton(lineButton);
     toolButtons->addButton(rectButton);
     toolButtons->addButton(ellipseButton);
+    toolButtons->addButton(pencilButton);
 
     QGridLayout *toolLayout = new QGridLayout(toolBox);
     toolLayout->addWidget(dragButton, 0, 0);
     toolLayout->addWidget(lineButton, 0, 1);
     toolLayout->addWidget(rectButton, 1, 0);
     toolLayout->addWidget(ellipseButton, 1, 1);
+    toolLayout->addWidget(pencilButton, 2, 0);
     toolBox->setLayout(toolLayout);
 
     penPicker = new PenPicker(content);
