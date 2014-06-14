@@ -37,14 +37,14 @@ using std::sort;
  */
 AnimationView::AnimationView(QWidget *parent) :
     QWidget(parent),
+    onionSkinPrevious(1),
+    onionSkinNext(1),
     graphicsView(new QGraphicsView(this)),
     scene(new QGraphicsScene(this)),
     dragItem(nullptr),
     dropIndex(-1),
     m_project(nullptr),
-    m_activeFrame(nullptr),
-    onionSkinPrevious(1),
-    onionSkinNext(1)
+    m_activeFrame(nullptr)
 {
     setMinimumHeight(150);
     graphicsView->setRenderHint(QPainter::Antialiasing);

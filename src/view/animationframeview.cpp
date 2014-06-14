@@ -211,7 +211,7 @@ void AnimationFrameView::setTool(Tool *tool)
     update();
 }
 
-void AnimationFrameView::setOnionSkinFrames(QList<AnimationFrame *> frames) //TODO
+void AnimationFrameView::setOnionSkinFrames(QList<AnimationFrame *> frames)
 {
     if(frames.size() > 0) {
         onionSkin = new QPixmap(frameItem->scene()->width(), frameItem->scene()->height());

@@ -336,7 +336,9 @@ void LayerView::onLayersChanged()
     setupScene();
     updateSceneRect();
 }
-
+/*!
+ * \brief Adds new layer under active layer
+ */
 void LayerView::addLayer()
 {
     if(activeLayer() == nullptr)
@@ -349,6 +351,9 @@ void LayerView::addLayer()
     updateSceneRect();
 }
 
+/*!
+ * \brief removes active layer
+ */
 void LayerView::removeLayer()
 {
     Layer *layer;
