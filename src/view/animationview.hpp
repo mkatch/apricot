@@ -37,6 +37,7 @@ public slots:
 
 signals:
     void activeFrameChanged(AnimationFrame *newFrame);
+    void onionSkinFramesChanged(QList<AnimationFrame *> frames);
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
@@ -57,6 +58,9 @@ private:
 
     Project *m_project;
     AnimationFrame *m_activeFrame;
+
+    int onionSkinPrevious;
+    int onionSkinNext;
 
     void setupScene();
     void updateSceneRect();

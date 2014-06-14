@@ -49,6 +49,7 @@ public slots:
     void setFrame(AnimationFrame *frame);
     void setActiveLayer(Layer *layer);
     void setTool(Tool *tool);
+    void setOnionSkinFrames(QList<AnimationFrame *>frames);
 
 signals:
     void frameChanged();
@@ -80,6 +81,8 @@ private:
     AnimationFrame *m_frame;
     Layer *m_activeLayer;
     Tool *m_tool;
+
+    QPixmap *onionSkin;
 
     void layOut();
 

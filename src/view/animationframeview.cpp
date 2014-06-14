@@ -174,6 +174,7 @@ void AnimationFrameView::setFrame(AnimationFrame *frame)
     background->setRect(frameItem->sceneBoundingRect());
     frameItem->update();
     emit frameChanged();
+    repaint();
 }
 
 void AnimationFrameView::setActiveLayer(Layer *layer)
@@ -193,7 +194,7 @@ void AnimationFrameView::setActiveLayer(Layer *layer)
     backBuffer = (layer != nullptr) ? layer->canvas() : Canvas();
     lastBackBufferChange = QRect();
     emit activeLayerChanged();
-    update();
+    repaint();
 }
 
 void AnimationFrameView::setTool(Tool *tool)
@@ -208,6 +209,28 @@ void AnimationFrameView::setTool(Tool *tool)
         m_tool->setView(this);
     emit toolChanged();
     update();
+}
+
+void AnimationFrameView::setOnionSkinFrames(QList<AnimationFrame *> frames) //TODO
+{
+    if(frames.size() > 0){
+
+        onionSkin = new QPixmap(frameItem->scene()->width(), frameItem->scene()->height());
+        onionSkin->fill(Qt::transparent);
+        QPainter *p = new QPainter(onionSkin);
+
+        p->setOpacity(0.5);
+        for (int i = 0; i < frames.size(); ++i) {
+            AnimationFrame *f = frames.at(i);
+            for (int j = f->layerCount() - 1; j >= 0; --j) {
+                const Layer *layer = f->layer(j);
+                const Canvas& canvas = (layer->canvas().pixmap());
+                p->drawPixmap(0, 0, canvas.pixmap());
+            }
+        }
+    repaint();
+    }
+
 }
 
 /*!
@@ -441,7 +464,10 @@ void GraphicsAnimationFrameViewItem::paint(
     Q_UNUSED(option)
     Q_UNUSED(widget)
 
+    if (view->onionSkin != nullptr)
+        painter->drawPixmap(0,0,*(view->onionSkin));
     if (view->frame() != nullptr) {
+
         for (int i = view->frame()->layerCount() - 1; i >= 0; --i) {
             const Layer *layer = view->frame()->layer(i);
             const Canvas& canvas = (layer != view->activeLayer())

@@ -188,7 +188,7 @@ void LayerView::updateSceneRect()
  *
  * Called at construction time and after resize.
  */
-void LayerView::layOut() //TODO
+void LayerView::layOut()
 {
 //    graphicsView->setGeometry(0, 0, width(), height());
     layOutScene(false);
@@ -353,7 +353,7 @@ void LayerView::addLayer()
     updateSceneRect();
 }
 
-void LayerView::removeLayer() // TODO
+void LayerView::removeLayer()
 {
     Layer *layer;
     if(activeLayer() != nullptr){

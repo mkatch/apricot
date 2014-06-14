@@ -62,6 +62,10 @@ MainWindow::MainWindow(QWidget *parent) :
         m_layerView, SLOT(setFrame(AnimationFrame*))
     );
     connect(
+        m_animationView, SIGNAL(onionSkinFramesChanged(QList<AnimationFrame*>)),
+        m_frameView, SLOT(setOnionSkinFrames(QList<AnimationFrame*>))
+    );
+    connect(
         m_layerView, SIGNAL(activeLayerChanged(Layer*)),
         m_frameView, SLOT(setActiveLayer(Layer*))
     );

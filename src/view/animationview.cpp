@@ -42,7 +42,9 @@ AnimationView::AnimationView(QWidget *parent) :
     dragItem(nullptr),
     dropIndex(-1),
     m_project(nullptr),
-    m_activeFrame(nullptr)
+    m_activeFrame(nullptr),
+    onionSkinPrevious(1),
+    onionSkinNext(1)
 {
     setMinimumHeight(150);
     graphicsView->setRenderHint(QPainter::Antialiasing);
@@ -79,6 +81,19 @@ void AnimationView::setActiveFrame(const AnimationFrame *frame)
      // This is safe cause the view has acces to all frames anyway.
     m_activeFrame = const_cast<AnimationFrame *>(frame);
     emit activeFrameChanged(m_activeFrame);
+    if (onionSkinPrevious > 0 || onionSkinNext > 0) {
+        QList<AnimationFrame *> onionSkinFrames;
+        int index = project()->frames().indexOf(m_activeFrame);
+        int beginOfOnionSkin = max(0, index-onionSkinPrevious);
+        int endOfOnionSkin = min(project()->frameCount(), index+onionSkinNext);
+        for(int i=beginOfOnionSkin;i<index;i++) {
+            onionSkinFrames.push_back(project()->frame(i));
+        }
+        for(int i=index+1;i<=endOfOnionSkin;i++) {
+            onionSkinFrames.push_back(project()->frame(i));
+        }
+        emit onionSkinFramesChanged(onionSkinFrames);
+    }
 }
 
 /*!
@@ -115,8 +130,10 @@ bool AnimationView::eventFilter(QObject *object, QEvent *event)
         }
         case QEvent::GraphicsSceneMouseRelease: {
             QGraphicsSceneMouseEvent *mouse = static_cast<QGraphicsSceneMouseEvent *>(event);
-            if (mouse->button() == Qt::LeftButton && dragItem != nullptr)
+            if (mouse->button() == Qt::LeftButton && dragItem != nullptr){
                 endDrag();
+
+            }
             break;
         }
         default: break;
@@ -301,6 +318,7 @@ void AnimationView::endDrag()
     foreach (QGraphicsItem *item, dragItem->childItems())
         item->moveBy(dragItem->x(), dragItem->y());
 
+
     // Dismantle the drag item
     dragItem->clearChildItems();
     scene->removeItem(dragItem);
@@ -316,6 +334,21 @@ void AnimationView::endDrag()
     connect(project(), SIGNAL(framesChanged()), this, SLOT(onFramesChanged()));
 
     layOutItems(true);
+
+    if (onionSkinPrevious > 0 || onionSkinNext > 0) {
+        QList<AnimationFrame *> onionSkinFrames;
+        int index = project()->frames().indexOf(m_activeFrame);
+        int beginOfOnionSkin = max(0, index-onionSkinPrevious);
+        int endOfOnionSkin = min(project()->frameCount(), index+onionSkinNext);
+        for(int i=beginOfOnionSkin;i<index;i++) {
+            onionSkinFrames.push_back(project()->frame(i));
+        }
+        for(int i=index+1;i<=endOfOnionSkin;i++) {
+            onionSkinFrames.push_back(project()->frame(i));
+        }
+        emit onionSkinFramesChanged(onionSkinFrames);
+    }
+
 }
 
 /*!
