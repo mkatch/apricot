@@ -67,14 +67,14 @@ void LineTool::paint(Painter *painter, bool preview)
         return;
 
     if (dragModifiers & Modifier_Snap)
-        painter->drawLine(previousPosition, snapedPosition());
+        painter->drawLine(previousPosition, snappedPosition());
     else
         painter->drawLine(previousPosition, mousePosition);
 }
 
 const int LineTool::SNAPPING_LINES = 4;
 
-QPoint LineTool::snapedPosition()
+QPoint LineTool::snappedPosition()
 {
     int dx = mousePosition.x() - previousPosition.x();
     int dy = mousePosition.y() - previousPosition.y();

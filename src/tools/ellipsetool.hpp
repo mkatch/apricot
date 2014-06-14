@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include <ApricotView>
+#include "view/tool.hpp"
 #include "rectangletool.hpp"
 
 class EllipseTool : public RectangleTool

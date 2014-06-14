@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QFlag>
 
-#include <ApricotView>
+#include "view/tool.hpp"
 
 class RectangleTool : public Tool
 {

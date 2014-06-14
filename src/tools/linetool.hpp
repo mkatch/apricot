@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QFlag>
 
-#include <ApricotView>
+#include "view/tool.hpp"
 
 class LineTool : public Tool
 {
@@ -35,7 +35,7 @@ private:
 
     QPoint mousePosition;
     QPoint previousPosition;
-    QPoint snapedPosition();
+    QPoint snappedPosition();
 };
 
 #endif // TOOL_LINETOOL_HPP

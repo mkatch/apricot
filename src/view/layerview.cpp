@@ -87,7 +87,6 @@ void LayerView::setActiveLayer(const Layer *layer)
         return;
     }
 
-
     m_activeLayer = const_cast<Layer *>(layer);
     emit activeLayerChanged(m_activeLayer);
 }
@@ -205,10 +204,8 @@ void LayerView::layOutScene(bool animate)
     if (frame() == nullptr)
         return;
 
-    foreach (LayerViewItem *item, items){
+    foreach (LayerViewItem *item, items)
         item->setSize(max(width() - 2 * SPACING_UNIT, 0), ITEM_HEIGHT);
-
-    }
 
     layOutItems(animate);
 }
@@ -236,9 +233,8 @@ void LayerView::layOutItems(bool animate)
                 animation->setEndValue(QPointF(SPACING_UNIT, itemY));
                 animation->setEasingCurve(QEasingCurve::InOutQuad);
                 itemsAnimation.addAnimation(animation);
-            } else {
+            } else
                 item->setY(itemY);
-            }
             ++laidOutItemCount;
         }
 
@@ -343,9 +339,9 @@ void LayerView::onLayersChanged()
 
 void LayerView::addLayer()
 {
-    if(activeLayer() == nullptr){
+    if(activeLayer() == nullptr)
         frame()->newLayer(0);
-    } else {
+    else {
         int indexOfLayer = frame()->indexOfLayer(activeLayer());
         frame()->newLayer(indexOfLayer+1);
     }
@@ -367,11 +363,11 @@ void LayerView::removeLayer()
             layer = frame()->layer(0);
             setActiveLayer(layer);
         }
-    }
-    emit activeLayerChanged(layer);
-    setupScene();
-    updateSceneRect();
 
+        emit activeLayerChanged(layer);
+        setupScene();
+        updateSceneRect();
+    }
 }
 
 /*!
@@ -459,7 +455,7 @@ void LayerViewItem::paint(
         0.5 * (height() - thumbnailHeight),
         thumbnailWidth,
         thumbnailHeight
-                );
+    );
     QPainterExtensions(painter).drawLayer(
         0.5 * (width() - thumbnailWidth) - 5,
         0.5 * (height() - thumbnailHeight),
