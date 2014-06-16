@@ -75,7 +75,9 @@ const qreal ColorPreview::PREVIEW_RECT_RATIO = 2.0 / 3.0;
 
 ColorPreview::ColorPreview(QWidget *parent) :
     QWidget(parent),
-    foregroundClickInitiated(false), backgroundClickInitiated(false)
+    selectedRect(Selected::Primary),
+    m_primaryColor(Qt::black),
+    m_secondaryColor(Qt::white)
 {
     QSizePolicy sizePolicy;
     sizePolicy.setHorizontalPolicy(QSizePolicy::Preferred);
@@ -85,46 +87,30 @@ ColorPreview::ColorPreview(QWidget *parent) :
 
 void ColorPreview::mousePressEvent(QMouseEvent *event)
 {
-    if (foregroundPreviewRect().contains(event->pos())) {
-        emit foregroundRectPressed();
-        foregroundClickInitiated = true;
-        event->accept();
+    switch (selectedRect) {
+    case Selected::Primary:
+        if (primaryPreviewRect().contains(event->pos()))
+            event->accept();
+        else if (secondaryPreviewRect().contains(event->pos())) {
+            event->accept();
+            selectedRect = Selected::Secondary;
+            update();
+            emit activeColorChanged(secondaryColor());
+        }
         return;
-    }
-
-    if (backgroundPreviewRect().contains(event->pos())) {
-        emit backgroundRectPressed();
-        backgroundClickInitiated = true;
-        event->accept();
+    case Selected::Secondary:
+        if (secondaryPreviewRect().contains(event->pos()))
+            event->accept();
+        else if (primaryPreviewRect().contains(event->pos())) {
+            event->accept();
+            selectedRect = Selected::Primary;
+            update();
+            emit activeColorChanged(primaryColor());
+        }
         return;
     }
 
     QWidget::mousePressEvent(event);
-}
-
-void ColorPreview::mouseReleaseEvent(QMouseEvent *event)
-{
-    if (foregroundPreviewRect().contains(event->pos())) {
-        emit foregroundRectReleased();
-        if (foregroundClickInitiated) {
-            foregroundClickInitiated = false;
-            emit foregroundRectClicked();
-        }
-        event->accept();
-        return;
-    }
-
-    if (backgroundPreviewRect().contains(event->pos())) {
-        emit backgroundRectReleased();
-        if (backgroundClickInitiated) {
-            backgroundClickInitiated = false;
-            emit backgroundRectClicked();
-        }
-        event->accept();
-        return;
-    }
-
-    QWidget::mouseReleaseEvent(event);
 }
 
 void ColorPreview::paintEvent(QPaintEvent *event)
@@ -132,15 +118,34 @@ void ColorPreview::paintEvent(QPaintEvent *event)
     Q_UNUSED(event)
 
     QPainter painter(this);
-    painter.setPen(Qt::gray);
+
+    QColor foregroundColor, backgroundColor;
+    QRect foregroundRect, backgroundRect;
+
+    switch (selectedRect) {
+    case Selected::Primary:
+        foregroundColor = primaryColor();
+        foregroundRect = primaryPreviewRect();
+        backgroundColor = secondaryColor();
+        backgroundRect = secondaryPreviewRect();
+        break;
+    case Selected::Secondary:
+        foregroundColor = secondaryColor();
+        foregroundRect = secondaryPreviewRect();
+        backgroundColor = primaryColor();
+        backgroundRect = primaryPreviewRect();
+        break;
+    }
 
     // Draw background rectangle.
-    painter.setBrush(backgroundColor());
-    painter.drawRect(backgroundPreviewRect());
+    painter.setPen(Qt::gray);
+    painter.setBrush(backgroundColor);
+    painter.drawRect(backgroundRect);
 
     // Draw foreground rectangle.
-    painter.setBrush(foregroundColor());
-    painter.drawRect(foregroundPreviewRect());
+    painter.setPen(Qt::yellow);
+    painter.setBrush(foregroundColor);
+    painter.drawRect(foregroundRect);
 }
 
 class ToolboxButton : public QPushButton
@@ -234,21 +239,28 @@ Toolbox::Toolbox(QWidget *parent) :
     layout->addStretch();
     content->setLayout(layout);
 
-    connect(penPicker, SIGNAL(penColorChanged(QColor)), colorPreview, SLOT(setForegroundColor(QColor)));
-    connect(colorPreview, SIGNAL(foregroundColorChanged(QColor)), penPicker, SLOT(setPenColor(QColor)));
+    connect(
+        penPicker, SIGNAL(penColorChanged(QColor)),
+        colorPreview, SLOT(setActiveColor(QColor))
+    );
+    connect(
+        colorPreview, SIGNAL(activeColorChanged(QColor)),
+        penPicker, SLOT(setPenColor(QColor))
+    );
 
-    connect(penPicker, SIGNAL(penSizeChanged(int)), this, SIGNAL(penSizeChanged(int)));
-    connect(colorPreview, SIGNAL(foregroundColorChanged(QColor)), this, SIGNAL(foregroundColorChanged(QColor)));
-    connect(colorPreview, SIGNAL(backgroundColorChanged(QColor)), this, SIGNAL(backgroundColorChanged(QColor)));
+    connect(
+        penPicker, SIGNAL(penSizeChanged(int)),
+        this, SIGNAL(penSizeChanged(int))
+    );
+    connect(
+        colorPreview, SIGNAL(activeColorChanged(QColor)),
+        this, SIGNAL(activeColorChanged(QColor))
+    );
 
-    connect(colorPreview, SIGNAL(foregroundRectClicked()), this, SIGNAL(foregroundRectClicked()));
-    connect(colorPreview, SIGNAL(foregroundRectPressed()), this, SIGNAL(foregroundRectPressed()));
-    connect(colorPreview, SIGNAL(foregroundRectReleased()), this, SIGNAL(foregroundRectReleased()));
-    connect(colorPreview, SIGNAL(backgroundRectClicked()), this, SIGNAL(backgroundRectClicked()));
-    connect(colorPreview, SIGNAL(backgroundRectPressed()), this, SIGNAL(backgroundRectPressed()));
-    connect(colorPreview, SIGNAL(backgroundRectReleased()), this, SIGNAL(backgroundRectReleased()));
-
-    connect(toolButtons, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(onToolToggled(QAbstractButton*)));
+    connect(
+        toolButtons, SIGNAL(buttonClicked(QAbstractButton*)),
+        this, SLOT(onToolToggled(QAbstractButton*))
+    );
     dragButton->toggle();
     m_activeTool = dragTool;
 }

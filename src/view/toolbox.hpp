@@ -131,83 +131,82 @@ class ColorPreview : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY(
-        QColor foregroundColor
-        READ foregroundColor WRITE setForegroundColor NOTIFY foregroundColorChanged
-    )
-    Q_PROPERTY(
-        QColor backgroundColor
-        READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged
+        QColor activeColor
+        READ activeColor WRITE setActiveColor NOTIFY activeColorChanged
     )
 
 public:
     explicit ColorPreview(QWidget *parent = nullptr);
 
-    const QColor &foregroundColor() const;
-    const QColor &backgroundColor() const;
+    const QColor &activeColor() const;
+    const QColor &primaryColor() const;
+    const QColor &secondaryColor() const;
 
     QSize sizeHint() const;
 
 public slots:
-    void setForegroundColor(const QColor &color);
-    void setBackgroundColor(const QColor &color);
+    void setActiveColor(const QColor &color);
 
 signals:
-    void foregroundColorChanged(const QColor &color);
-    void backgroundColorChanged(const QColor &color);
-
-    void foregroundRectClicked();
-    void foregroundRectPressed();
-    void foregroundRectReleased();
-
-    void backgroundRectClicked();
-    void backgroundRectPressed();
-    void backgroundRectReleased();
+    void activeColorChanged(const QColor &color);
 
 protected:
     void mousePressEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
     void paintEvent(QPaintEvent *event);
 
 private:
     static const qreal PREVIEW_RECT_RATIO;
-    QRect foregroundPreviewRect() const;
-    QRect backgroundPreviewRect() const;
+    QRect primaryPreviewRect() const;
+    QRect secondaryPreviewRect() const;
 
-    bool foregroundClickInitiated;
-    bool backgroundClickInitiated;
+    enum class Selected {
+        Primary,
+        Secondary
+    } selectedRect;
+    QColor &selectedColor();
 
-    QColor m_foregroundColor;
-    QColor m_backgroundColor;
+    QColor m_primaryColor;
+    QColor m_secondaryColor;
 };
 
-inline const QColor &ColorPreview::foregroundColor() const
+inline const QColor &ColorPreview::activeColor() const
 {
-    return m_foregroundColor;
+    switch (selectedRect) {
+    case Selected::Primary:
+        return m_primaryColor;
+    case Selected::Secondary:
+        return m_secondaryColor;
+    }
 }
 
-inline const QColor &ColorPreview::backgroundColor() const
+inline const QColor &ColorPreview::primaryColor() const
 {
-    return m_backgroundColor;
+    return m_primaryColor;
 }
 
-inline void ColorPreview::setForegroundColor(const QColor &color)
+inline const QColor &ColorPreview::secondaryColor() const
 {
-    if (m_foregroundColor == color)
+    return m_secondaryColor;
+}
+
+inline QColor &ColorPreview::selectedColor()
+{
+    switch (selectedRect) {
+    case Selected::Primary:
+        return m_primaryColor;
+    case Selected::Secondary:
+        return m_secondaryColor;
+    }
+}
+
+inline void ColorPreview::setActiveColor(const QColor &color)
+{
+    if (selectedColor() == color)
         return;
 
-    m_foregroundColor = color;
+    selectedColor() = color;
     update();
-    emit foregroundColorChanged(color);
-}
-
-inline void ColorPreview::setBackgroundColor(const QColor &color)
-{
-    if (m_backgroundColor == color)
-        return;
-
-    m_backgroundColor = color;
-    update();
-    emit backgroundColorChanged(color);
+    emit activeColorChanged(color);
 }
 
 inline QSize ColorPreview::sizeHint() const
@@ -215,14 +214,14 @@ inline QSize ColorPreview::sizeHint() const
     return QSize(75, 75);
 }
 
-inline QRect ColorPreview::foregroundPreviewRect() const
+inline QRect ColorPreview::primaryPreviewRect() const
 {
     int rw = qRound(width() * PREVIEW_RECT_RATIO);
     int rh = qRound(height() * PREVIEW_RECT_RATIO);
     return QRect(0, 0, rw, rh);
 }
 
-inline QRect ColorPreview::backgroundPreviewRect() const
+inline QRect ColorPreview::secondaryPreviewRect() const
 {
     int rw = qRound(width() * PREVIEW_RECT_RATIO);
     int rh = qRound(height() * PREVIEW_RECT_RATIO);
@@ -239,44 +238,31 @@ class Toolbox : public QDockWidget
         READ penSize WRITE setPenSize NOTIFY penSizeChanged
     )
     Q_PROPERTY(
-        QColor foregroundColor
-        READ foregroundColor WRITE setForegroundColor NOTIFY foregroundColorChanged
+        QColor activeColor
+        READ activeColor WRITE setActiveColor NOTIFY activeColorChanged
     )
-    Q_PROPERTY(
-        QColor backgroundColor
-        READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged
-    )
-    Q_PROPERTY(
-        Tool *activeTool
-        READ activeTool NOTIFY activeToolChanged
-    )
+    Q_PROPERTY(QColor primaryColor READ primaryColor)
+    Q_PROPERTY(QColor secondaryColor READ secondaryColor)
 
 public:
     explicit Toolbox(QWidget *parent = nullptr);
 
     int penSize() const;
-    const QColor &foregroundColor() const;
-    const QColor &backgroundColor() const;
+    const QColor &activeColor() const;
+    const QColor &primaryColor() const;
+    const QColor &secondaryColor() const;
     Tool *activeTool();
 
 public slots:
     void setPenSize(int size);
-    void setForegroundColor(const QColor &color);
-    void setBackgroundColor(const QColor &color);
+    void setActiveColor(const QColor &color);
 
 signals:
     void penSizeChanged(int size);
-    void foregroundColorChanged(const QColor &color);
-    void backgroundColorChanged(const QColor &color);
+    void activeColorChanged(const QColor &color);
+    void primaryColorChanged(const QColor &color);
+    void secondaryColorChanged(const QColor &color);
     void activeToolChanged(Tool *tool);
-
-    void foregroundRectClicked();
-    void foregroundRectPressed();
-    void foregroundRectReleased();
-
-    void backgroundRectClicked();
-    void backgroundRectPressed();
-    void backgroundRectReleased();
 
 private:
     PenPicker *penPicker;
@@ -293,14 +279,19 @@ inline int Toolbox::penSize() const
     return penPicker->penSize();
 }
 
-inline const QColor &Toolbox::foregroundColor() const
+inline const QColor &Toolbox::activeColor() const
 {
-    return colorPreview->foregroundColor();
+    return colorPreview->activeColor();
 }
 
-inline const QColor &Toolbox::backgroundColor() const
+inline const QColor &Toolbox::primaryColor() const
 {
-    return colorPreview->backgroundColor();
+    return colorPreview->primaryColor();
+}
+
+inline const QColor &Toolbox::secondaryColor() const
+{
+    return colorPreview->secondaryColor();
 }
 
 inline Tool *Toolbox::activeTool()
@@ -313,14 +304,9 @@ inline void Toolbox::setPenSize(int size)
     penPicker->setPenSize(size);
 }
 
-inline void Toolbox::setForegroundColor(const QColor &color)
+inline void Toolbox::setActiveColor(const QColor &color)
 {
-    colorPreview->setForegroundColor(color);
-}
-
-inline void Toolbox::setBackgroundColor(const QColor &color)
-{
-    colorPreview->setBackgroundColor(color);
+    colorPreview->setActiveColor(color);
 }
 
 #endif // VIEW_TOOLBOX_HPP
