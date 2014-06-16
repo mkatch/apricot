@@ -84,7 +84,8 @@ AnimationFrameView::AnimationFrameView(QWidget *parent) :
     frameItem(new GraphicsAnimationFrameViewItem(this)),
     m_frame(nullptr),
     m_activeLayer(nullptr),
-    m_tool(nullptr)
+    m_tool(nullptr),
+    onionSkin(nullptr)
 {
     this->setMouseTracking(true);
     scene->addItem(frameItem);

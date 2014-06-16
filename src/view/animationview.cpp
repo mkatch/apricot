@@ -62,6 +62,7 @@ void AnimationView::setProject(Project *project)
     m_project = project;
     connect(project, SIGNAL(framesChanged()), this, SLOT(onFramesChanged()));
     setupScene();
+    updateSceneRect();
     setActiveFrame(project->frame(0));
 }
 
@@ -81,19 +82,6 @@ void AnimationView::setActiveFrame(const AnimationFrame *frame)
      // This is safe cause the view has acces to all frames anyway.
     m_activeFrame = const_cast<AnimationFrame *>(frame);
     emit activeFrameChanged(m_activeFrame);
-    if (onionSkinPrevious > 0 || onionSkinNext > 0) {
-        QList<AnimationFrame *> onionSkinFrames;
-        int index = project()->frames().indexOf(m_activeFrame);
-        int beginOfOnionSkin = max(0, index-onionSkinPrevious);
-        int endOfOnionSkin = min(project()->frameCount(), index+onionSkinNext);
-        for(int i=beginOfOnionSkin;i<index;i++) {
-            onionSkinFrames.push_back(project()->frame(i));
-        }
-        for(int i=index+1;i<=endOfOnionSkin;i++) {
-            onionSkinFrames.push_back(project()->frame(i));
-        }
-        emit onionSkinFramesChanged(onionSkinFrames);
-    }
 }
 
 /*!
@@ -105,7 +93,6 @@ void AnimationView::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
     layOut();
-    updateSceneRect();
 }
 
 /*!
@@ -197,6 +184,7 @@ void AnimationView::layOut()
 {
     graphicsView->setGeometry(0, 0, width(), height());
     layOutScene(false);
+    updateSceneRect();
 }
 
 /*!
@@ -219,7 +207,7 @@ void AnimationView::layOutScene(bool animate)
 /*!
  * \brief Lays out scene items that represent the animation frames.
  *
- * Called in response to rezising and dragging. If \a animete is \c true, item transitions are
+ * Called in response to rezising and dragging. If \a animate is \c true, item transitions are
  * animated. Otherwise the change is immediate.
  */
 void AnimationView::layOutItems(bool animate)
@@ -318,7 +306,6 @@ void AnimationView::endDrag()
     foreach (QGraphicsItem *item, dragItem->childItems())
         item->moveBy(dragItem->x(), dragItem->y());
 
-
     // Dismantle the drag item
     dragItem->clearChildItems();
     scene->removeItem(dragItem);
@@ -334,21 +321,6 @@ void AnimationView::endDrag()
     connect(project(), SIGNAL(framesChanged()), this, SLOT(onFramesChanged()));
 
     layOutItems(true);
-
-    if (onionSkinPrevious > 0 || onionSkinNext > 0) {
-        QList<AnimationFrame *> onionSkinFrames;
-        int index = project()->frames().indexOf(m_activeFrame);
-        int beginOfOnionSkin = max(0, index-onionSkinPrevious);
-        int endOfOnionSkin = min(project()->frameCount(), index+onionSkinNext);
-        for(int i=beginOfOnionSkin;i<index;i++) {
-            onionSkinFrames.push_back(project()->frame(i));
-        }
-        for(int i=index+1;i<=endOfOnionSkin;i++) {
-            onionSkinFrames.push_back(project()->frame(i));
-        }
-        emit onionSkinFramesChanged(onionSkinFrames);
-    }
-
 }
 
 /*!
