@@ -100,6 +100,9 @@ AnimationFrameView::AnimationFrameView(QWidget *parent) :
     background->setBrush(QPainterExtensions(new QPainter()).getBrushForBackground());
     background->setZValue(-1);
 
+    onionSkinPrevious = 1;
+    onionSkinNext = 1;
+
     layOut();
 }
 
@@ -174,8 +177,9 @@ void AnimationFrameView::setFrame(AnimationFrame *frame)
         setActiveLayer(frame->layer(0));
     background->setRect(frameItem->sceneBoundingRect());
     frameItem->update();
+    setOnionSkinFrames();
     emit frameChanged();
-    repaint();
+    update();
 }
 
 void AnimationFrameView::setActiveLayer(Layer *layer)
@@ -195,7 +199,7 @@ void AnimationFrameView::setActiveLayer(Layer *layer)
     backBuffer = (layer != nullptr) ? layer->canvas() : Canvas();
     lastBackBufferChange = QRect();
     emit activeLayerChanged();
-    repaint();
+    update();
 }
 
 void AnimationFrameView::setTool(Tool *tool)
@@ -212,24 +216,37 @@ void AnimationFrameView::setTool(Tool *tool)
     update();
 }
 
-void AnimationFrameView::setOnionSkinFrames(QList<AnimationFrame *> frames)
+void AnimationFrameView::setOnionSkinFrames()
 {
-    if(frames.size() > 0) {
-        onionSkin = new QPixmap(frameItem->scene()->width(), frameItem->scene()->height());
-        onionSkin->fill(Qt::transparent);
-        QPainter *p = new QPainter(onionSkin);
 
-        p->setOpacity(0.5);
-        for (int i = 0; i < frames.size(); ++i) {
-            AnimationFrame *f = frames.at(i);
-            for (int j = f->layerCount() - 1; j >= 0; --j) {
-                const Layer *layer = f->layer(j);
-                const Canvas& canvas = (layer->canvas().pixmap());
-                p->drawPixmap(0, 0, canvas.pixmap());
-            }
+    if(onionSkinPrevious > 0 && onionSkinNext) {
+        QList<AnimationFrame *> onionSkinFrames;
+        int index = frame()->project()->frames().indexOf(frame());
+        int beginOfOnionSkin = max(0, index-onionSkinPrevious);
+        int endOfOnionSkin = min(frame()->project()->frameCount(), index+onionSkinNext);
+        for(int i=beginOfOnionSkin;i<index;i++) {
+            onionSkinFrames.push_back(frame()->project()->frame(i));
         }
+        for(int i=index+1;i<=endOfOnionSkin;i++) {
+            onionSkinFrames.push_back(frame()->project()->frame(i));
+        }
+        if(onionSkinFrames.size() > 0) {
+            onionSkin = new QPixmap(frameItem->scene()->width(), frameItem->scene()->height());
+            onionSkin->fill(Qt::transparent);
+            QPainter *p = new QPainter(onionSkin);
 
-        repaint();
+            p->setOpacity(0.5);
+            for (int i = 0; i < onionSkinFrames.size(); ++i) {
+                AnimationFrame *f = onionSkinFrames.at(i);
+                for (int j = f->layerCount() - 1; j >= 0; --j) {
+                    const Layer *layer = f->layer(j);
+                    const Canvas& canvas = (layer->canvas().pixmap());
+                    p->drawPixmap(0, 0, canvas.pixmap());
+                }
+            }
+
+            repaint();
+        }
     }
 }
 

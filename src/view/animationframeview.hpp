@@ -45,11 +45,14 @@ public:
     QPointF mapToFrame(const QPointF &point) const;
     QPointF mapFromFrame(const QPointF &point) const;
 
+    int onionSkinPrevious;
+    int onionSkinNext;
+
 public slots:
     void setFrame(AnimationFrame *frame);
     void setActiveLayer(Layer *layer);
     void setTool(Tool *tool);
-    void setOnionSkinFrames(QList<AnimationFrame *>frames);
+    void setOnionSkinFrames();
 
 signals:
     void frameChanged();
@@ -92,6 +95,7 @@ private:
 
     friend class Tool;
     friend class GraphicsAnimationFrameViewItem;
+
 };
 
 inline AnimationFrame *AnimationFrameView::frame() const

@@ -37,8 +37,6 @@ using std::sort;
  */
 AnimationView::AnimationView(QWidget *parent) :
     QWidget(parent),
-    onionSkinPrevious(1),
-    onionSkinNext(1),
     graphicsView(new QGraphicsView(this)),
     scene(new QGraphicsScene(this)),
     dragItem(nullptr),
@@ -82,6 +80,7 @@ void AnimationView::setActiveFrame(const AnimationFrame *frame)
      // This is safe cause the view has acces to all frames anyway.
     m_activeFrame = const_cast<AnimationFrame *>(frame);
     emit activeFrameChanged(m_activeFrame);
+
 }
 
 /*!
@@ -190,7 +189,7 @@ void AnimationView::layOut()
 /*!
  * \brief Lays out the scene items.
  *
- * Called in response to resizing. If \a animate is \c true, item transitions are
+ * Called in response to rezising and dragging. If \a animate is \c true, item transitions are
  * animated. Otherwise the change is immediate.
  */
 void AnimationView::layOutScene(bool animate)

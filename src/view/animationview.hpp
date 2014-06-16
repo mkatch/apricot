@@ -31,16 +31,12 @@ public:
     Project *project() const;
     AnimationFrame *activeFrame() const;
 
-    int onionSkinPrevious;
-    int onionSkinNext;
-
 public slots:
     void setProject(Project *project);
     void setActiveFrame(const AnimationFrame *frame);
 
 signals:
     void activeFrameChanged(AnimationFrame *newFrame);
-    void onionSkinFramesChanged(QList<AnimationFrame *> frames);
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
