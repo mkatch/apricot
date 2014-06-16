@@ -1,7 +1,7 @@
 #include "penciltool.hpp"
 
 PencilTool::PencilTool(QObject *parent) :
-    Tool(parent)
+    Tool(parent), pressed(false)
 {
     // Do nothing.
 }
@@ -9,19 +9,19 @@ PencilTool::PencilTool(QObject *parent) :
 void PencilTool::mouseMoveEvent(ToolMouseMoveEvent *event)
 {
     mousePosition = event->pos().toPoint();
+    preview();
 
     if (pressed)
         commit();
-    else
-        preview();
 }
 
 void PencilTool::mousePressEvent(ToolMouseEvent *event)
 {
-    Q_UNUSED(event)
-
-    if (event->button() == Qt::LeftButton)
+    if (event->button() == Qt::LeftButton) {
+        commit();
         pressed = true;
+        event->accept();
+    }
 }
 
 void PencilTool::mouseReleaseEvent(ToolMouseEvent *event)

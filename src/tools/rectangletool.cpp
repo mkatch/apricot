@@ -3,18 +3,39 @@
 #include <ApricotUtils>
 
 RectangleTool::RectangleTool(QObject *parent) :
-    Tool(parent), dragged(false), dragModifiers()
+    Tool(parent), dragged(false)
 {
     // Do nothing.
 }
 
 void RectangleTool::mouseMoveEvent(ToolMouseMoveEvent *event)
 {
-    mousePosition = event->pos().toPoint();
+    if (!dragged)
+        return;
 
-    if (dragged) {
-        preview();
+    QPoint mousePosition = event->pos().toPoint();
+    int dx = mousePosition.x() - startPosition.x();
+    int dy = mousePosition.y() - startPosition.y();
+
+    if (event->modifiers() & Qt::ShiftModifier) {
+        int size = qMin(qAbs(dx), qAbs(dy));
+        dx = sgn(dx) * size;
+        dy = sgn(dy) * size;
     }
+
+    QRect rect;
+    if (event->modifiers() & Qt::ControlModifier) {
+        QPoint tl(startPosition.x() - dx, startPosition.y() - dy);
+        QPoint br(startPosition.x() + dx, startPosition.y() + dy);
+        rect.setTopLeft(tl);
+        rect.setBottomRight(br);
+    } else {
+        rect.setTopLeft(startPosition);
+        rect.setSize(QSize(dx, dy));
+    }
+
+    selectedRect = rect.normalized();
+    preview();
 }
 
 void RectangleTool::mousePressEvent(ToolMouseEvent *event)
@@ -27,8 +48,8 @@ void RectangleTool::mousePressEvent(ToolMouseEvent *event)
         break;
     case Qt::RightButton:
         dragged = false;
-        preview();
         event->accept();
+        preview();
         break;
     default:
         break;
@@ -45,41 +66,6 @@ void RectangleTool::mouseReleaseEvent(ToolMouseEvent *event)
     }
 }
 
-void RectangleTool::keyPressEvent(ToolKeyEvent *event)
-{
-    keyEvent(event);
-}
-
-void RectangleTool::keyReleaseEvent(ToolKeyEvent *event)
-{
-    keyEvent(event);
-}
-
-QRect RectangleTool::selectedRectangle()
-{
-    int dx = mousePosition.x() - startPosition.x();
-    int dy = mousePosition.y() - startPosition.y();
-
-    if (dragModifiers & RectangleTool::Square) {
-        int size = qMin(qAbs(dx), qAbs(dy));
-        dx = sgn(dx) * size;
-        dy = sgn(dy) * size;
-    }
-
-    QRect rect;
-    if (dragModifiers & RectangleTool::Center) {
-        QPoint tl(startPosition.x() - dx, startPosition.y() - dy);
-        QPoint br(startPosition.x() + dx, startPosition.y() + dy);
-        rect.setTopLeft(tl);
-        rect.setBottomRight(br);
-    } else {
-        rect.setTopLeft(startPosition);
-        rect.setSize(QSize(dx, dy));
-    }
-
-    return rect.normalized();
-}
-
 void RectangleTool::paint(Painter *painter, bool preview)
 {
     Q_UNUSED(preview)
@@ -87,21 +73,5 @@ void RectangleTool::paint(Painter *painter, bool preview)
     if (!dragged)
         return;
 
-    painter->drawRect(selectedRectangle());
-}
-
-void RectangleTool::keyEvent(ToolKeyEvent *event)
-{
-    switch (event->key()) {
-    case Qt::Key_Shift:
-        dragModifiers ^= RectangleTool::Square;
-        preview();
-        break;
-    case Qt::Key_Control:
-        dragModifiers ^= RectangleTool::Center;
-        preview();
-        break;
-    default:
-        break;
-    }
+    painter->drawRect(selectedRect);
 }

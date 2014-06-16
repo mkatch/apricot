@@ -13,5 +13,5 @@ void EllipseTool::paint(Painter *painter, bool preview)
     if (!dragged)
         return;
 
-    painter->drawEllipse(selectedRectangle());
+    painter->drawEllipse(selectedRect);
 }

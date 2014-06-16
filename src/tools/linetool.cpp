@@ -2,6 +2,8 @@
 
 #include <QtMath>
 
+const int LineTool::SNAPPING_LINES_COUNT = 4;
+
 LineTool::LineTool(QObject *parent) :
     Tool(parent), dragged(false)
 {
@@ -10,49 +12,37 @@ LineTool::LineTool(QObject *parent) :
 
 void LineTool::mouseMoveEvent(ToolMouseMoveEvent *event)
 {
-    mousePosition = event->pos().toPoint();
+    if (!dragged)
+        return;
 
-    if (dragged)
-        preview();
+    QPoint mousePosition = event->pos().toPoint();
+
+    if (event->modifiers() & Qt::ControlModifier)
+        currentPosition = snappedPosition(mousePosition);
+    else
+        currentPosition = mousePosition;
+    preview();
 }
 
 void LineTool::mouseReleaseEvent(ToolMouseEvent *event)
 {
     switch (event->button()) {
     case Qt::LeftButton:
-        if (dragged)
+        if (dragged) {
             commit();
-        else
+            previousPosition = currentPosition;
+        } else {
             dragged = true;
-        previousPosition = event->pos().toPoint();
+            previousPosition = event->pos().toPoint();
+        }
+        event->accept();
         break;
     case Qt::RightButton:
-        dragged = false;
-        preview();
-        break;
-    default:
-        break;
-    }
-
-    event->accept();
-}
-
-void LineTool::keyPressEvent(ToolKeyEvent *event)
-{
-    keyEvent(event);
-}
-
-void LineTool::keyReleaseEvent(ToolKeyEvent *event)
-{
-    keyEvent(event);
-}
-
-void LineTool::keyEvent(ToolKeyEvent *event)
-{
-    switch (event->key()) {
-    case Qt::Key_Control:
-        dragModifiers ^= Modifier_Snap;
-        preview();
+        if (dragged) {
+            dragged = false;
+            event->accept();
+            preview();
+        }
         break;
     default:
         break;
@@ -66,23 +56,18 @@ void LineTool::paint(Painter *painter, bool preview)
     if (!dragged)
         return;
 
-    if (dragModifiers & Modifier_Snap)
-        painter->drawLine(previousPosition, snappedPosition());
-    else
-        painter->drawLine(previousPosition, mousePosition);
+    painter->drawLine(previousPosition, currentPosition);
 }
 
-const int LineTool::SNAPPING_LINES = 4;
-
-QPoint LineTool::snappedPosition()
+QPoint LineTool::snappedPosition(QPoint mousePosition)
 {
     int dx = mousePosition.x() - previousPosition.x();
     int dy = mousePosition.y() - previousPosition.y();
 
     qreal pi = 4.0 * qAtan(1.0);
     qreal alfa = qAtan2(dy, dx);
-    qreal rounded = qRound(SNAPPING_LINES * (alfa / pi));
-    qreal beta = rounded * pi / SNAPPING_LINES;
+    qreal rounded = qRound(SNAPPING_LINES_COUNT * (alfa / pi));
+    qreal beta = rounded * pi / SNAPPING_LINES_COUNT;
 
     qreal dist = qSqrt(dx * dx + dy * dy);
     int x = qRound(dist * qCos(beta));
