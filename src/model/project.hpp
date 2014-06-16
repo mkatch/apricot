@@ -33,7 +33,8 @@ public:
 
     int indexOfFrame(const AnimationFrame *frame) const;
 
-    AnimationFrame *newFrame(int i);
+    AnimationFrame *newFrameBefore(int i);
+    AnimationFrame *newFrameAfter(int i);
     AnimationFrame *newFrame();
 
     void deleteFrame(int i);
@@ -49,6 +50,9 @@ signals:
 private:
     QSize m_size;
     QList<AnimationFrame *> m_frames;
+
+    AnimationFrame *newFrame(int i);
+    void insertFrame(int i, AnimationFrame *frame);
 };
 
 inline const QSize &Project::size() const
@@ -98,7 +102,7 @@ inline int Project::indexOfFrame(const AnimationFrame *frame) const
 
 inline AnimationFrame *Project::newFrame()
 {
-    return newFrame(frameCount());
+    return newFrameAfter(frameCount() - 1);
 }
 
 inline void Project::moveFrame(const AnimationFrame *frame, int to)

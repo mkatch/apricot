@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     Project *project = new Project;
 
     project->setSize(918, 655);
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 2; i++) {
         Layer *layer = project->newFrame()->newLayer();
         layer->beginPainting()->drawImage(":/images/isocastle.png");
         layer->endPainting();

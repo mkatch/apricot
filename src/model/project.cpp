@@ -82,27 +82,18 @@ void Project::setSize(const QSize &size)
  * \brief Returns index of \a frame.
  */
 
-/*!
- * \brief Creates new AnimationFrame at index \a i and returns it.
- *
- * The new frame is a copy of the frame at \a i - 1 if it is present.
- */
-AnimationFrame *Project::newFrame(int i)
+AnimationFrame *Project::newFrameBefore(int i)
 {
-    i = clamp(i, 0, frameCount());
+    AnimationFrame *frame = newFrame(i);
+    insertFrame(i, frame);
+    return frame;
+}
 
-    AnimationFrame *f = 0 < i
-        ? new AnimationFrame(frame(i - 1), this)
-        : new AnimationFrame(this); // Typically this should only happen in an empty project
-
-    m_frames.insert(i, f);
-    connect(f, SIGNAL(layersChanged()), this, SIGNAL(layersChanged()));
-
-    emit framesChanged();
-    if (f->layerCount() > 0)
-        emit layersChanged();
-
-    return f;
+AnimationFrame *Project::newFrameAfter(int i)
+{
+    AnimationFrame *frame = newFrame(i);
+    insertFrame(i + 1, frame);
+    return frame;
 }
 
 /*!
@@ -147,3 +138,20 @@ void Project::moveFrame(int from, int to)
  *
  * This call is equivalent to moveFrame(indexOfFrame(frame), to).
  */
+
+AnimationFrame *Project::newFrame(int i)
+{
+    return (0 <= i && i <= frameCount())
+        ? new AnimationFrame(frame(i), this)
+        : new AnimationFrame(this);
+}
+
+void Project::insertFrame(int i, AnimationFrame *frame)
+{
+    m_frames.insert(i, frame);
+    connect(frame, SIGNAL(layersChanged()), this, SIGNAL(layersChanged()));
+
+    emit framesChanged();
+    if (frame->layerCount() > 0)
+        emit layersChanged();
+}

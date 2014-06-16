@@ -11,6 +11,59 @@
 
 using std::sort;
 
+class AnimationViewItem : public QGraphicsObject
+{
+    Q_OBJECT
+    Q_PROPERTY(const AnimationFrame *frame READ frame)
+    Q_PROPERTY(const QSize &size READ size WRITE setSize)
+    Q_PROPERTY(int width READ width)
+    Q_PROPERTY(int height READ height)
+    Q_PROPERTY(bool active READ isActive WRITE setActive)
+
+public:
+
+    AnimationViewItem(const AnimationFrame *frame, QGraphicsItem *parent = nullptr);
+
+    const AnimationFrame *frame() const;
+
+    const QSize &size() const;
+    void setSize(const QSize &size);
+    void setSize(qreal width, qreal height);
+
+    int width() const;
+    int height() const;
+
+    bool isActive() const;
+    void setActive(bool active);
+
+    QRectF boundingRect() const override;
+    QPainterPath shape() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+
+private:
+    static const int SPACING_UNIT = 6;
+    static const int ADD_BUTTON_RADIUS = 24;
+    static const int PLUS_RADIUS = 8;
+    static const int PLUS_WIDTH = 5;
+    static const QBrush ACTIVE_BRUSH;
+    static const QBrush ADD_DOWN_BRUSH;
+
+    QSize m_size;
+    const AnimationFrame *m_frame;
+    bool m_active;
+
+    bool addBeforeDown;
+    bool addAfterDown;
+
+    AnimationView *view() const;
+
+    friend class AnimationView;
+};
+
 /*!
  * \class AnimationView
  * \inmodule view
@@ -77,8 +130,19 @@ void AnimationView::setActiveFrame(const AnimationFrame *frame)
         return;
     }
 
-     // This is safe cause the view has acces to all frames anyway.
-    m_activeFrame = const_cast<AnimationFrame *>(frame);
+    if (m_activeFrame != nullptr) {
+        int i = project()->indexOfFrame(m_activeFrame);
+        items[i]->setActive(false);
+        items[i]->setZValue(0);
+    }
+
+    scene->clearSelection();
+    int i = project()->indexOfFrame(frame);
+    m_activeFrame = project()->frame(i);
+    items[i]->setActive(true);
+    items[i]->setSelected(true);
+    items[i]->setZValue(1);
+
     emit activeFrameChanged(m_activeFrame);
 
 }
@@ -116,10 +180,8 @@ bool AnimationView::eventFilter(QObject *object, QEvent *event)
         }
         case QEvent::GraphicsSceneMouseRelease: {
             QGraphicsSceneMouseEvent *mouse = static_cast<QGraphicsSceneMouseEvent *>(event);
-            if (mouse->button() == Qt::LeftButton && dragItem != nullptr){
+            if (mouse->button() == Qt::LeftButton && dragItem != nullptr)
                 endDrag();
-
-            }
             break;
         }
         default: break;
@@ -128,8 +190,11 @@ bool AnimationView::eventFilter(QObject *object, QEvent *event)
         AnimationViewItem *item = static_cast<AnimationViewItem *>(object);
         if (event->type() == QEvent::GraphicsSceneMousePress) {
             QGraphicsSceneMouseEvent *mouse = static_cast<QGraphicsSceneMouseEvent *>(event);
-            if (mouse->button() == Qt::LeftButton)
-                setActiveFrame(item->frame());
+            if (mouse->button() == Qt::LeftButton) {
+                if (scene->selectedItems().empty() || !(mouse->modifiers() & Qt::ControlModifier))
+                    setActiveFrame(item->frame());
+                return (mouse->modifiers() & Qt::ControlModifier) && item->isActive();
+            }
         }
     }
 
@@ -152,15 +217,19 @@ void AnimationView::setupScene()
         return;
 
     // Add new thumbnails
-    for (int i = 0; i < project()->frameCount(); ++i) {
-        AnimationViewItem *item = new AnimationViewItem(project()->frame(i));
-        item->setFlag(QGraphicsItem::ItemIsSelectable);
-        item->installEventFilter(this);
-        scene->addItem(item);
-        items.append(item);
-    }
+    foreach (AnimationFrame *frame, project()->frames())
+        items.append(newItem(frame));
 
     layOutScene(false);
+}
+
+AnimationViewItem *AnimationView::newItem(AnimationFrame *frame)
+{
+    AnimationViewItem *item = new AnimationViewItem(frame);
+    item->setFlag(QGraphicsItem::ItemIsSelectable);
+    item->installEventFilter(this);
+    scene->addItem(item);
+    return item;
 }
 
 /*!
@@ -169,8 +238,9 @@ void AnimationView::setupScene()
 void AnimationView::updateSceneRect()
 {
     graphicsView->setSceneRect(
-        0, 0,
-        (items.count() + 1) * SPACING_UNIT + items.count() * ITEM_WIDTH,
+        -AnimationViewItem::ADD_BUTTON_RADIUS, 0,
+        (items.count() + 1) * SPACING_UNIT + items.count() * ITEM_WIDTH
+            + AnimationViewItem::ADD_BUTTON_RADIUS,
         height()
     );
 }
@@ -271,7 +341,6 @@ bool AnimationView::tryBeginDrag(QPointF dragBeginPos)
         animation->setEasingCurve(QEasingCurve::InOutQuad);
         draggedItemsAnimation.addAnimation(animation);
     }
-
     draggedItemsAnimation.start();
     return true;
 }
@@ -312,7 +381,7 @@ void AnimationView::endDrag()
     dragItem = nullptr;
     dropIndex = -1;
 
-    // Aply the reordering to the model
+    // Apply the reordering to the model
     disconnect(project(), SIGNAL(framesChanged()), this, SLOT(onFramesChanged()));
     sort(items.begin(), items.end(), compareItemsByX);
     for (int i = 0; i < items.count(); ++i)
@@ -320,6 +389,30 @@ void AnimationView::endDrag()
     connect(project(), SIGNAL(framesChanged()), this, SLOT(onFramesChanged()));
 
     layOutItems(true);
+}
+
+void AnimationView::handleAddButtonClick(AddButton button)
+{
+    Q_ASSERT(activeFrame() != nullptr);
+    disconnect(project(), SIGNAL(framesChanged()), this, SLOT(onFramesChanged()));
+
+    int i = project()->indexOfFrame(activeFrame());
+    QPointF pos = items[i]->pos();
+    AnimationViewItem *item;
+    if (button == AddBeforeButton) {
+        item = newItem(project()->newFrameBefore(i));
+        items.insert(i, item);
+    }
+    else { // if (button == AddAfterButton)
+        item = newItem(project()->newFrameAfter(i));
+        items.insert(i + 1, item);
+    }
+
+    item->setPos(pos); // For animation.
+    layOutScene(true);
+    updateSceneRect();
+
+    connect(project(), SIGNAL(framesChanged()), this, SLOT(onFramesChanged()));
 }
 
 /*!
@@ -363,6 +456,11 @@ void AnimationView::onFramesChanged()
  * \brief The height of the item in item coordinates.
  */
 
+// Constants
+
+const QBrush AnimationViewItem::ACTIVE_BRUSH = QBrush(QColor(226, 134, 70));
+const QBrush AnimationViewItem::ADD_DOWN_BRUSH = QBrush(QColor(176, 92, 48));
+
 // Methods
 
 /*!
@@ -371,9 +469,55 @@ void AnimationView::onFramesChanged()
 AnimationViewItem::AnimationViewItem(const AnimationFrame *frame, QGraphicsItem *parent) :
     QGraphicsObject(parent),
     m_size(100, 100),
-    m_frame(frame)
+    m_frame(frame),
+    m_active(false),
+    addBeforeDown(false),
+    addAfterDown(false)
 {
     // Do nothing
+}
+
+inline const AnimationFrame *AnimationViewItem::frame() const
+{
+    return m_frame;
+}
+
+inline const QSize &AnimationViewItem::size() const
+{
+    return m_size;
+}
+
+inline void AnimationViewItem::setSize(const QSize &size)
+{
+    m_size = size;
+}
+
+inline void AnimationViewItem::setSize(qreal width, qreal height)
+{
+    setSize(QSize(width, height));
+}
+
+inline int AnimationViewItem::width() const
+{
+    return size().width();
+}
+
+inline int AnimationViewItem::height() const
+{
+    return size().height();
+}
+
+inline bool AnimationViewItem::isActive() const
+{
+    return m_active;
+}
+
+inline void AnimationViewItem::setActive(bool active)
+{
+    m_active = active;
+    addBeforeDown = false;
+    addAfterDown = false;
+    prepareGeometryChange();
 }
 
 /*!
@@ -381,7 +525,27 @@ AnimationViewItem::AnimationViewItem(const AnimationFrame *frame, QGraphicsItem 
  */
 QRectF AnimationViewItem::boundingRect() const
 {
-    return QRectF(0, 0, width(), height());
+    if (isActive())
+        return QRectF(
+            -ADD_BUTTON_RADIUS,
+            min(height() / 2 - ADD_BUTTON_RADIUS, 0),
+            width() + 2 * ADD_BUTTON_RADIUS,
+            max(height(), 2 * ADD_BUTTON_RADIUS)
+        );
+    else
+        return QRectF(0, 0, width(), height());
+}
+
+QPainterPath AnimationViewItem::shape() const
+{
+    QPainterPath path;
+    path.addRect(0, 0, width(), height());
+    if (isActive()) {
+        path.addEllipse(QPointF(0, height() / 2), ADD_BUTTON_RADIUS, ADD_BUTTON_RADIUS);
+        path.addEllipse(QPointF(width(), height() / 2), ADD_BUTTON_RADIUS, ADD_BUTTON_RADIUS);
+    }
+    path.setFillRule(Qt::WindingFill);
+    return path;
 }
 
 /*!
@@ -399,11 +563,29 @@ void AnimationViewItem::paint(
     Q_UNUSED(option)
     Q_UNUSED(widget)
 
-    painter->setPen(Qt::NoPen);
     painter->setBrush(Qt::gray);
     if (isSelected())
         painter->setBrush(Qt::darkGray);
-    painter->drawRoundedRect(boundingRect(), SPACING_UNIT, SPACING_UNIT);
+    if (isActive())
+        painter->setBrush(ACTIVE_BRUSH);
+    painter->setPen(Qt::NoPen);
+    painter->drawRoundedRect(0, 0, width(), height(), SPACING_UNIT, SPACING_UNIT);
+
+    if (isActive()) {
+        // Draw ears
+        painter->setBrush(addBeforeDown ? ADD_DOWN_BRUSH : ACTIVE_BRUSH);
+        painter->drawEllipse(QPointF(0, height() / 2), ADD_BUTTON_RADIUS, ADD_BUTTON_RADIUS);
+        painter->setBrush(addAfterDown ? ADD_DOWN_BRUSH : ACTIVE_BRUSH);
+        painter->drawEllipse(QPointF(width(), height() / 2), ADD_BUTTON_RADIUS, ADD_BUTTON_RADIUS);
+        // Draw pluses
+        painter->setPen(QPen(Qt::white, PLUS_WIDTH, Qt::SolidLine, Qt::FlatCap));
+        QPointF lpc(-PLUS_RADIUS, height() / 2);
+        QPointF rpc(width() + PLUS_RADIUS, height() / 2);
+        painter->drawLine(lpc.x() - PLUS_RADIUS, lpc.y(), lpc.x() + PLUS_RADIUS, lpc.y());
+        painter->drawLine(lpc.x(), lpc.y() - PLUS_RADIUS, lpc.x(), lpc.y() + PLUS_RADIUS);
+        painter->drawLine(rpc.x() - PLUS_RADIUS, rpc.y(), rpc.x() + PLUS_RADIUS, rpc.y());
+        painter->drawLine(rpc.x(), rpc.y() - PLUS_RADIUS, rpc.x(), rpc.y() + PLUS_RADIUS);
+    }
 
     qreal thumbnailScaleX = max(width() - 2 * SPACING_UNIT, 0) / (qreal)m_frame->width();
     qreal thumbnailScaleY = max(height() - 2 * SPACING_UNIT, 0) / (qreal)m_frame->height();
@@ -416,7 +598,7 @@ void AnimationViewItem::paint(
         0.5 * (height() - thumbnailHeight),
         thumbnailWidth,
         thumbnailHeight
-                );
+    );
     QPainterExtensions(painter).drawAnimationFrame(
         0.5 * (width() - thumbnailWidth), 0.5 * (height() - thumbnailHeight),
         thumbnailWidth, thumbnailHeight,
@@ -424,3 +606,36 @@ void AnimationViewItem::paint(
     );
 }
 
+void AnimationViewItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsObject::mousePressEvent(event);
+    if (!isActive() || event->button() != Qt::LeftButton)
+        return;
+    if (event->pos().x() <= 0)
+        addBeforeDown = true;
+    if (event->pos().x() >= width())
+        addAfterDown = true;
+    update();
+}
+
+void AnimationViewItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsObject::mouseReleaseEvent(event);
+    if (!isActive() || event->button() != Qt::LeftButton)
+        return;
+    if (addBeforeDown && event->pos().x() <= 0)
+        view()->handleAddButtonClick(AnimationView::AddBeforeButton);
+    if (addAfterDown && event->pos().x() >= width())
+        view()->handleAddButtonClick(AnimationView::AddAfterButton);
+    addBeforeDown = false;
+    addAfterDown = false;
+    update();
+}
+
+inline AnimationView *AnimationViewItem::view() const
+{
+    return static_cast<AnimationView *>(scene()->parent());
+}
+
+#include "animationview.moc"
+#include "moc_animationview.cpp"
