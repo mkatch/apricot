@@ -6,5 +6,6 @@
 #include "tools/ellipsetool.hpp"
 #include "tools/linetool.hpp"
 #include "tools/penciltool.hpp"
+#include "tools/rubbertool.hpp"
 
 #endif // MODULE_APRICOTTOOLS

@@ -201,6 +201,7 @@ Toolbox::Toolbox(QWidget *parent) :
     Tool *rectTool = new RectangleTool(this);
     Tool *ellipseTool = new EllipseTool(this);
     Tool *pencilTool = new PencilTool(this);
+    Tool *rubberTool = new RubberTool(this);
 
     QGroupBox *toolBox = new QGroupBox("Tools", content);
     QMargins toolMargins = toolBox->contentsMargins();
@@ -213,6 +214,7 @@ Toolbox::Toolbox(QWidget *parent) :
     ToolboxButton *rectButton = new ToolboxButton(rectTool, "Rectangle tool", toolBox);
     ToolboxButton *ellipseButton = new ToolboxButton(ellipseTool, "Ellipse tool", toolBox);
     ToolboxButton *pencilButton = new ToolboxButton(pencilTool, "Pencil tool", toolBox);
+    ToolboxButton *rubberButton = new ToolboxButton(rubberTool, "Rubber tool", toolBox);
 
     dragButton->setIcon(QIcon(":/icons/tools/drag.png"));
     lineButton->setIcon(QIcon(":/icons/tools/line.png"));
@@ -226,6 +228,7 @@ Toolbox::Toolbox(QWidget *parent) :
     toolButtons->addButton(rectButton);
     toolButtons->addButton(ellipseButton);
     toolButtons->addButton(pencilButton);
+    toolButtons->addButton(rubberButton);
 
     QGridLayout *toolLayout = new QGridLayout(toolBox);
     toolLayout->addWidget(dragButton, 0, 0);
@@ -233,6 +236,7 @@ Toolbox::Toolbox(QWidget *parent) :
     toolLayout->addWidget(rectButton, 1, 0);
     toolLayout->addWidget(ellipseButton, 1, 1);
     toolLayout->addWidget(pencilButton, 2, 0);
+    toolLayout->addWidget(rubberButton, 2, 1);
     toolBox->setLayout(toolLayout);
 
     penPicker = new PenPicker(content);
