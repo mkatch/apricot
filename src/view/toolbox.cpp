@@ -214,6 +214,12 @@ Toolbox::Toolbox(QWidget *parent) :
     ToolboxButton *ellipseButton = new ToolboxButton(ellipseTool, "Ellipse tool", toolBox);
     ToolboxButton *pencilButton = new ToolboxButton(pencilTool, "Pencil tool", toolBox);
 
+    dragButton->setIcon(QIcon(":/icons/tools/drag.png"));
+    lineButton->setIcon(QIcon(":/icons/tools/line.png"));
+    rectButton->setIcon(QIcon(":/icons/tools/rect.png"));
+    ellipseButton->setIcon(QIcon(":/icons/tools/ellipse.png"));
+    pencilButton->setIcon(QIcon(":/icons/tools/pencil.png"));
+
     QButtonGroup *toolButtons = new QButtonGroup(content);
     toolButtons->addButton(dragButton);
     toolButtons->addButton(lineButton);

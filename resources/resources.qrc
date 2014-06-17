@@ -2,4 +2,11 @@
     <qresource prefix="/images">
         <file alias="isocastle.png">images/isocastle.png</file>
     </qresource>
+    <qresource prefix="/icons/tools">
+        <file alias="pencil.png">icons/tool-pencil.png</file>
+        <file alias="drag.png">icons/tool-drag.png</file>
+        <file alias="ellipse.png">icons/tool-ellipse.png</file>
+        <file alias="line.png">icons/tool-line.png</file>
+        <file alias="rect.png">icons/tool-rect.png</file>
+    </qresource>
 </RCC>
