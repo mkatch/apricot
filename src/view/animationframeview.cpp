@@ -72,6 +72,17 @@ private:
  * This property may be \c nullptr meaning that the tool is not set.
  */
 
+/*!
+ * \property AnimationFrameView::onionSkinBackward
+ * \brief number of onion skin frames before the current frame.
+ */
+
+/*!
+ * \property AnimationFrameView::onionSkinForward
+ * \brief number of onion skin frames after the current frame.
+ */
+
+
 // Methods
 
 /*!
