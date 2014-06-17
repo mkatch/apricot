@@ -51,6 +51,14 @@ MainWindow::MainWindow(QWidget *parent) :
         toolbox(), SIGNAL(activeToolChanged(Tool*)),
         frameView(), SLOT(setTool(Tool*))
     );
+    connect(
+        toolbox(), SIGNAL(penSizeChanged(int)),
+        frameView(), SLOT(setPenSize(int))
+    );
+    connect(
+        toolbox(), SIGNAL(activeColorChanged(QColor)),
+        frameView(), SLOT(setPenColor(QColor))
+    );
 
     // The order of connections is important!
     connect(

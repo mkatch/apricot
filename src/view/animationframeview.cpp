@@ -85,6 +85,8 @@ AnimationFrameView::AnimationFrameView(QWidget *parent) :
     m_frame(nullptr),
     m_activeLayer(nullptr),
     m_tool(nullptr),
+    m_penSize(1),
+    m_penColor(Qt::black),
     onionSkin(nullptr)
 {
     this->setMouseTracking(true);
@@ -437,6 +439,7 @@ void AnimationFrameView::toolPreview()
 {
     revertBackBuffer();
     Painter painter(backBuffer);
+    painter.setPen(pen());
     m_tool->paint(&painter, true);
     lastBackBufferChange = painter.boundingBox();
     frameItem->update(lastBackBufferChange);
@@ -446,6 +449,7 @@ void AnimationFrameView::toolCommit()
 {
     revertBackBuffer();
     Painter backPainter(backBuffer);
+    backPainter.setPen(pen());
     m_tool->paint(&backPainter, false);
 
     Painter *frontPainter = m_activeLayer->beginPainting();

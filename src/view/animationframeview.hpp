@@ -20,6 +20,8 @@ class AnimationFrameView : public QWidget
     Q_PROPERTY(qreal scale READ scale WRITE setScale NOTIFY scaleChanged)
     Q_PROPERTY(QPointF translation READ translation WRITE setTranslation NOTIFY translationChanged)
     Q_PROPERTY(QTransform transform READ transform NOTIFY transformChanged)
+    Q_PROPERTY(int penSize READ penSize WRITE setPenSize)
+    Q_PROPERTY(QColor penColor READ penColor WRITE setPenColor)
 
 public:
     explicit AnimationFrameView(QWidget *parent = nullptr);
@@ -29,6 +31,10 @@ public:
     Layer *activeLayer() const;
     Tool *tool();
     const Tool *tool() const;
+
+    int penSize() const;
+    const QColor &penColor() const;
+    QPen pen() const;
 
     qreal scale() const;
     void setScale(qreal scale);
@@ -53,6 +59,9 @@ public slots:
     void setActiveLayer(Layer *layer);
     void setTool(Tool *tool);
     void setOnionSkinFrames();
+
+    void setPenSize(int size);
+    void setPenColor(const QColor &color);
 
 signals:
     void frameChanged();
@@ -85,6 +94,9 @@ private:
     Layer *m_activeLayer;
     Tool *m_tool;
 
+    int m_penSize;
+    QColor m_penColor;
+
     QPixmap *onionSkin;
 
     void layOut();
@@ -95,7 +107,6 @@ private:
 
     friend class Tool;
     friend class GraphicsAnimationFrameViewItem;
-
 };
 
 inline AnimationFrame *AnimationFrameView::frame() const
@@ -156,6 +167,34 @@ inline QPointF AnimationFrameView::mapToFrame(const QPointF &point) const
 inline QPointF AnimationFrameView::mapFromFrame(const QPointF &point) const
 {
     return point * scale() + translation();
+}
+
+inline int AnimationFrameView::penSize() const
+{
+    return m_penSize;
+}
+
+inline const QColor &AnimationFrameView::penColor() const
+{
+    return m_penColor;
+}
+
+inline void AnimationFrameView::setPenSize(int size)
+{
+    m_penSize = size;
+}
+
+inline void AnimationFrameView::setPenColor(const QColor &color)
+{
+    m_penColor = color;
+}
+
+inline QPen AnimationFrameView::pen() const
+{
+    QPen pen;
+    pen.setColor(penColor());
+    pen.setWidth(penSize());
+    return pen;
 }
 
 #endif // VIEW_ANIMATIONFRAMEVIEW_HPP
