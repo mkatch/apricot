@@ -40,6 +40,7 @@ signals:
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
+    void wheelEvent(QWheelEvent *event) override;
     bool eventFilter(QObject *object, QEvent *event) override;
 
 private:
@@ -48,7 +49,7 @@ private:
         AddAfterButton
     };
 
-    static const int SPACING_UNIT = 2;
+    static const int SPACING_UNIT = 8;
     static const int ITEM_WIDTH = 150;
     static const int TRANSITION_DURATION = 150;
 
@@ -65,7 +66,6 @@ private:
 
     void setupScene();
     AnimationViewItem *newItem(AnimationFrame *frame);
-    void updateSceneRect();
 
     void layOut();
     void layOutScene(bool animate);

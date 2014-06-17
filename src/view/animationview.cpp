@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <QGraphicsSceneEvent>
+#include <QWheelEvent>
 #include <QPropertyAnimation>
 
 #include <ApricotUtils>
@@ -101,7 +102,9 @@ AnimationView::AnimationView(QWidget *parent) :
     graphicsView->setRenderHint(QPainter::Antialiasing);
     graphicsView->setScene(scene);
     graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     scene->installEventFilter(this);
+    scene->setSceneRect(-width() / 2 + 1, -SPACING_UNIT + 1, width() - 2, height() - 2);
     layOut();
 }
 
@@ -113,8 +116,19 @@ void AnimationView::setProject(Project *project)
     m_project = project;
     connect(project, SIGNAL(framesChanged()), this, SLOT(onFramesChanged()));
     setupScene();
-    updateSceneRect();
-    setActiveFrame(project->frame(0));
+
+    QRectF sceneRect = scene->sceneRect();
+    if (project->frameCount() > 0) {
+        int sceneWidth = items.count() * ITEM_WIDTH
+                       + (items.count() + 1) * SPACING_UNIT
+                       + 2 * AnimationViewItem::ADD_BUTTON_RADIUS;
+        sceneRect.setX(max(0.0, (sceneRect.width() - sceneWidth) / 2)
+            - AnimationViewItem::ADD_BUTTON_RADIUS);
+    } else {
+        setActiveFrame(nullptr);
+        sceneRect.setX(-width() / 2 + 1);
+    }
+    scene->setSceneRect(sceneRect);
 }
 
 void AnimationView::setActiveFrame(const AnimationFrame *frame)
@@ -144,7 +158,6 @@ void AnimationView::setActiveFrame(const AnimationFrame *frame)
     items[i]->setZValue(1);
 
     emit activeFrameChanged(m_activeFrame);
-
 }
 
 /*!
@@ -156,6 +169,16 @@ void AnimationView::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
     layOut();
+    QRectF sceneRect = scene->sceneRect();
+    sceneRect.setWidth(width() - 2);
+    sceneRect.setHeight(height() - 2);
+    scene->setSceneRect(sceneRect);
+}
+
+void AnimationView::wheelEvent(QWheelEvent *event)
+{
+    int dx = (event->angleDelta().x() + event->angleDelta().y()) / 8;
+    scene->setSceneRect(scene->sceneRect().translated(dx, 0));
 }
 
 /*!
@@ -232,19 +255,6 @@ AnimationViewItem *AnimationView::newItem(AnimationFrame *frame)
     return item;
 }
 
-/*!
- * \brief Sets the scene rect of the QGraphicsView to tigtly fit contents.
- */
-void AnimationView::updateSceneRect()
-{
-    graphicsView->setSceneRect(
-        -AnimationViewItem::ADD_BUTTON_RADIUS, 0,
-        (items.count() + 1) * SPACING_UNIT + items.count() * ITEM_WIDTH
-            + AnimationViewItem::ADD_BUTTON_RADIUS,
-        height()
-    );
-}
-
 /*! \brief Lays out the child widgets and graphics scene.
  *
  * Called at construction time and after resize.
@@ -253,7 +263,6 @@ void AnimationView::layOut()
 {
     graphicsView->setGeometry(0, 0, width(), height());
     layOutScene(false);
-    updateSceneRect();
 }
 
 /*!
@@ -287,17 +296,17 @@ void AnimationView::layOutItems(bool animate)
     int laidOutItemCount = 0;
     foreach (AnimationViewItem *item, items)
         if (dragItem == nullptr || item->parentItem() != dragItem) {
-            qreal itemX = SPACING_UNIT + laidOutItemCount * (ITEM_WIDTH + SPACING_UNIT);
+            qreal itemX = laidOutItemCount * (ITEM_WIDTH + SPACING_UNIT);
             if (dropIndex <= laidOutItemCount)
                 itemX += draggedItemCount * (SPACING_UNIT + ITEM_WIDTH);
             if (animate) {
                 QPropertyAnimation *animation = new QPropertyAnimation(item, "pos");
                 animation->setDuration(TRANSITION_DURATION);
-                animation->setEndValue(QPointF(itemX, SPACING_UNIT));
+                animation->setEndValue(QPointF(itemX, 0));
                 animation->setEasingCurve(QEasingCurve::InOutQuad);
                 itemsAnimation.addAnimation(animation);
             } else {
-                item->setX(itemX);
+                item->setPos(itemX, 0);
             }
             ++laidOutItemCount;
         }
@@ -410,7 +419,6 @@ void AnimationView::handleAddButtonClick(AddButton button)
 
     item->setPos(pos); // For animation.
     layOutScene(true);
-    updateSceneRect();
 
     connect(project(), SIGNAL(framesChanged()), this, SLOT(onFramesChanged()));
 }
@@ -421,7 +429,7 @@ void AnimationView::handleAddButtonClick(AddButton button)
 void AnimationView::onFramesChanged()
 {
     setupScene();
-    updateSceneRect();
+    //updateSceneRect();
 }
 
 /*!

@@ -227,7 +227,7 @@ void AnimationFrameView::setOnionSkinFrames()
         for(int i=beginOfOnionSkin;i<index;i++) {
             onionSkinFrames.push_back(frame()->project()->frame(i));
         }
-        for(int i=index+1;i<=endOfOnionSkin;i++) {
+        for(int i=index+1;i<endOfOnionSkin;i++) {
             onionSkinFrames.push_back(frame()->project()->frame(i));
         }
         if(onionSkinFrames.size() > 0) {
