@@ -19,6 +19,7 @@ public:
     void setPen(const QPen &pen);
     void setCompositionMode(QPainter::CompositionMode mode);
 
+    void drawImage(QPixmap pixmap);
     void drawImage(QString fileName);
     void drawPoint(const QPoint &p);
     void drawPoint(int x, int y);

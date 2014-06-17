@@ -1,7 +1,8 @@
-#include "project.hpp"
-
 #include <ApricotUtils>
-#include "animationframe.hpp"
+#include <ApricotModel>
+
+#include <QFile>
+#include <QDataStream>
 
 /*!
  * \class Project
@@ -53,6 +54,60 @@ Project::Project(QObject *parent) :
     QObject(parent)
 {
     // Do nothing
+}
+
+void Project::save(QString filepath, Project *project)
+{
+    QFile file(filepath);
+    file.open(QIODevice::WriteOnly);
+    QDataStream stream(&file);
+
+    stream << project->size();
+    stream << project->frameCount();
+    for (int f = project->frameCount() - 1; f >= 0; f--) {
+        AnimationFrame *frame = project->frames()[f];
+
+        stream << frame->layerCount();
+        for (int l = frame->layerCount() - 1; l >= 0; l--) {
+            Layer *layer = frame->layers()[l];
+
+            stream << layer->canvas().pixmap();
+        }
+    }
+}
+
+Project *Project::load(QString filepath, QObject *parent)
+{
+    QFile file(filepath);
+    file.open(QIODevice::ReadOnly);
+    QDataStream stream(&file);
+
+    Project *project = new Project(parent);
+
+    QSize size;
+    stream >> size;
+    project->setSize(size);
+
+    int frameCount;
+    stream >> frameCount;
+    for (int f = 0; f < frameCount; f++) {
+        AnimationFrame *frame = project->newFrame();
+
+        int layerCount;
+        stream >> layerCount;
+        for (int l = 0; l < layerCount; l++) {
+            Layer *layer = frame->newLayer();
+
+            QPixmap pixmap;
+            stream >> pixmap;
+
+            Painter *painter = layer->beginPainting();
+            painter->drawImage(pixmap);
+            layer->endPainting();
+        }
+    }
+
+    return project;
 }
 
 void Project::setSize(const QSize &size)

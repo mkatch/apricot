@@ -18,6 +18,9 @@ class Project : public QObject
 public:
     explicit Project(QObject *parent = nullptr);
 
+    static Project *load(QString filepath, QObject *parent = nullptr);
+    static void save(QString filepath, Project *project);
+
     const QSize &size() const;
     void setSize (QSize const& size);
     void setSize (int width, int height);

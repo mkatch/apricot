@@ -56,16 +56,24 @@ Painter::Painter(Canvas &canvas) :
 }
 
 /*!
+ * \brief Draws an image given as \a pixmap at point (0, 0).
+ */
+void Painter::drawImage(QPixmap pixmap)
+{
+    painter.drawPixmap(0, 0, pixmap);
+    m_boundingBox |= pixmap.rect();
+}
+
+/*!
  * \brief Draws an image loaded from \a fileName at point (0, 0).
  *
  * This is a temporal method for test purposes in early stages of development.
+ *
+ * \overload
  */
 void Painter::drawImage(QString fileName)
 {
-    QPixmap pixmap(fileName);
-
-    painter.drawPixmap(0, 0, pixmap);
-    m_boundingBox |= pixmap.rect();
+    drawImage(QPixmap(fileName));
 }
 
 /*!
