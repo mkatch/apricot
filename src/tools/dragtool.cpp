@@ -1,9 +1,5 @@
 #include "dragtool.hpp"
 
-#include <QDebug>
-
-#include <cstdlib>
-
 DragTool::DragTool(QObject *parent) :
     Tool(parent)
 {

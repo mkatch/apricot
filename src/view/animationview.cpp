@@ -168,7 +168,6 @@ void AnimationView::setActiveFrame(const AnimationFrame *frame)
     items[i]->setSelected(true);
     items[i]->setZValue(1);
 
-    qDebug() << "emit activeFrameChanged" << m_activeFrame;
     emit activeFrameChanged(m_activeFrame);
 }
 

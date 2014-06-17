@@ -2,7 +2,6 @@
 #define VIEW_COLORPICKER_HPP
 
 #include <QWidget>
-#include <Qdebug>
 #include <QResizeEvent>
 
 class QLineEdit;
@@ -30,12 +29,6 @@ private slots:
 
 signals:
     void colorChanged(const QColor &color);
-
-protected:
-    void resizeEvent(QResizeEvent *event) override
-    {
-        qDebug() << event->size();
-    }
 
 private:
     ColorWheel *wheel;

@@ -1,7 +1,6 @@
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 
-#include <QDebug>
 #include <QDockWidget>
 
 /*!
@@ -111,4 +110,5 @@ void MainWindow::handleOnionSkinActionToggled(bool checked)
 
 void MainWindow::handleWindowActionToggled(bool checked)
 {
+    Q_UNUSED(checked)
 }
