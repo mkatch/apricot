@@ -224,10 +224,13 @@ void AnimationFrameView::setOnionSkinFrames()
         int index = frame()->project()->frames().indexOf(frame());
         int beginOfOnionSkin = max(0, index-onionSkinPrevious);
         int endOfOnionSkin = min(frame()->project()->frameCount(), index+onionSkinNext);
-        for(int i=beginOfOnionSkin;i<index;i++) {
+        if(endOfOnionSkin == frame()->project()->frameCount())
+            endOfOnionSkin--;
+
+        for(int i = beginOfOnionSkin; i < index; i++) {
             onionSkinFrames.push_back(frame()->project()->frame(i));
         }
-        for(int i=index+1;i<endOfOnionSkin;i++) {
+        for(int i= index+1; i<= endOfOnionSkin; i++) {
             onionSkinFrames.push_back(frame()->project()->frame(i));
         }
         if(onionSkinFrames.size() > 0) {
