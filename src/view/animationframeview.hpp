@@ -22,6 +22,8 @@ class AnimationFrameView : public QWidget
     Q_PROPERTY(QTransform transform READ transform NOTIFY transformChanged)
     Q_PROPERTY(int penSize READ penSize WRITE setPenSize)
     Q_PROPERTY(QColor penColor READ penColor WRITE setPenColor)
+    Q_PROPERTY(int onionSkinBackward READ onionSkinBackward WRITE setOnionSkinBackward)
+    Q_PROPERTY(int onionSkinForward READ onionSkinForward WRITE setOnionSkinForward)
 
 public:
     explicit AnimationFrameView(QWidget *parent = nullptr);
@@ -46,13 +48,13 @@ public:
     void translate(const QPointF &translation);
     void translate(qreal x, qreal y);
 
+    int onionSkinBackward() const;
+    int onionSkinForward() const;
+
     QTransform transform() const;
 
     QPointF mapToFrame(const QPointF &point) const;
     QPointF mapFromFrame(const QPointF &point) const;
-
-    int onionSkinPrevious;
-    int onionSkinNext;
 
 public slots:
     void setFrame(AnimationFrame *frame);
@@ -62,6 +64,9 @@ public slots:
 
     void setPenSize(int size);
     void setPenColor(const QColor &color);
+
+    void setOnionSkinBackward(int number);
+    void setOnionSkinForward(int number);
 
 signals:
     void frameChanged();
@@ -97,6 +102,8 @@ private:
     int m_penSize;
     QColor m_penColor;
 
+    int m_onionSkinBackward;
+    int m_onionSkinForward;
     QPixmap *onionSkin;
 
     void layOut();
@@ -157,6 +164,16 @@ inline void AnimationFrameView::translate(const QPointF &translation)
 inline void AnimationFrameView::translate(qreal x, qreal y)
 {
     translate(QPointF(x, y));
+}
+
+inline int AnimationFrameView::onionSkinBackward() const
+{
+    return m_onionSkinBackward;
+}
+
+inline int AnimationFrameView::onionSkinForward() const
+{
+    return m_onionSkinForward;
 }
 
 inline QPointF AnimationFrameView::mapToFrame(const QPointF &point) const
