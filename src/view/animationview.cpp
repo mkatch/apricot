@@ -98,7 +98,6 @@ AnimationView::AnimationView(QWidget *parent) :
     m_project(nullptr),
     m_activeFrame(nullptr)
 {
-    setMinimumHeight(150);
     graphicsView->setRenderHint(QPainter::Antialiasing);
     graphicsView->setScene(scene);
     graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -114,7 +113,11 @@ void AnimationView::setProject(Project *project)
         return;
 
     m_project = project;
-    connect(project, SIGNAL(framesChanged()), this, SLOT(onFramesChanged()));
+    if (m_project == nullptr) {
+        setActiveFrame(nullptr);
+        return;
+    }
+
     setupScene();
 
     QRectF sceneRect = scene->sceneRect();
@@ -124,17 +127,32 @@ void AnimationView::setProject(Project *project)
                        + 2 * AnimationViewItem::ADD_BUTTON_RADIUS;
         sceneRect.setX(max(0.0, (sceneRect.width() - sceneWidth) / 2)
             - AnimationViewItem::ADD_BUTTON_RADIUS);
+        setActiveFrame(project->frame(0));
     } else {
         setActiveFrame(nullptr);
         sceneRect.setX(-width() / 2 + 1);
     }
     scene->setSceneRect(sceneRect);
+
+    connect(project, SIGNAL(framesChanged()), this, SLOT(onFramesChanged()));
 }
 
 void AnimationView::setActiveFrame(const AnimationFrame *frame)
 {
     if (m_activeFrame == frame)
         return;
+
+    if (m_activeFrame != nullptr) {
+        int i = project()->indexOfFrame(m_activeFrame);
+        items[i]->setActive(false);
+        items[i]->setZValue(0);
+    }
+
+    if (frame == nullptr) {
+        m_activeFrame = nullptr;
+        emit activeFrameChanged(nullptr);
+        return;
+    }
 
     if (frame->project() != project()) {
         qWarning(
@@ -144,19 +162,13 @@ void AnimationView::setActiveFrame(const AnimationFrame *frame)
         return;
     }
 
-    if (m_activeFrame != nullptr) {
-        int i = project()->indexOfFrame(m_activeFrame);
-        items[i]->setActive(false);
-        items[i]->setZValue(0);
-    }
-
-    scene->clearSelection();
     int i = project()->indexOfFrame(frame);
     m_activeFrame = project()->frame(i);
     items[i]->setActive(true);
     items[i]->setSelected(true);
     items[i]->setZValue(1);
 
+    qDebug() << "emit activeFrameChanged" << m_activeFrame;
     emit activeFrameChanged(m_activeFrame);
 }
 
@@ -167,7 +179,8 @@ void AnimationView::setActiveFrame(const AnimationFrame *frame)
  */
 void AnimationView::resizeEvent(QResizeEvent *event)
 {
-    Q_UNUSED(event);
+    QWidget::resizeEvent(event);
+
     layOut();
     QRectF sceneRect = scene->sceneRect();
     sceneRect.setWidth(width() - 2);

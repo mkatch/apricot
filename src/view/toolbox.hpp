@@ -230,7 +230,7 @@ inline QRect ColorPreview::secondaryPreviewRect() const
 
 class Tool;
 
-class Toolbox : public QDockWidget
+class Toolbox : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY(

@@ -34,8 +34,5 @@ int main(int argc, char *argv[])
 
     application.setProject(project);
 
-    DragTool tool;
-    application.mainWindow()->frameView()->setTool(&tool);
-
     return application.exec();
 }

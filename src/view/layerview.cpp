@@ -43,7 +43,6 @@ LayerView::LayerView(QWidget *parent) :
     m_activeLayer(nullptr)
 
 {
-    setMinimumWidth(150);
     graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     graphicsView->setRenderHint(QPainter::Antialiasing);
     graphicsView->setScene(scene);

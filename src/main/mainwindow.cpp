@@ -1,6 +1,7 @@
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 
+#include <QDebug>
 #include <QDockWidget>
 
 /*!
@@ -24,56 +25,11 @@
  */
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    m_frameView(new AnimationFrameView),
-    m_animationView(new AnimationView),
-    m_layerView(new LayerView),
-    m_toolbox(new Toolbox(this))
+    ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    setCentralWidget(frameView());
-
-    QDockWidget *dockableAnimationView = new QDockWidget;
-    dockableAnimationView->setWidget(animationView());
-    dockableAnimationView->setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea);
-    this->addDockWidget(Qt::BottomDockWidgetArea, dockableAnimationView);
-
-    QDockWidget *dockableLayerView = new QDockWidget;
-    dockableLayerView->setWidget(layerView());
-    dockableLayerView->setAllowedAreas(Qt::RightDockWidgetArea | Qt::LeftDockWidgetArea);
-    this->addDockWidget(Qt::RightDockWidgetArea, dockableLayerView);
-
-    toolbox()->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
-    addDockWidget(Qt::LeftDockWidgetArea, toolbox());
-
-    connect(
-        toolbox(), SIGNAL(activeToolChanged(Tool*)),
-        frameView(), SLOT(setTool(Tool*))
-    );
-    connect(
-        toolbox(), SIGNAL(penSizeChanged(int)),
-        frameView(), SLOT(setPenSize(int))
-    );
-    connect(
-        toolbox(), SIGNAL(activeColorChanged(QColor)),
-        frameView(), SLOT(setPenColor(QColor))
-    );
-
-    // The order of connections is important!
-    connect(
-        m_animationView, SIGNAL(activeFrameChanged(AnimationFrame*)),
-        m_frameView, SLOT(setFrame(AnimationFrame*))
-    );
-    connect(
-        m_animationView, SIGNAL(activeFrameChanged(AnimationFrame*)),
-        m_layerView, SLOT(setFrame(AnimationFrame*))
-    );
-    connect(
-        m_layerView, SIGNAL(activeLayerChanged(Layer*)),
-        m_frameView, SLOT(setActiveLayer(Layer*))
-    );
-
+    dockHacking();
+    connectViews();
 }
 
 /*!
@@ -90,24 +46,69 @@ void MainWindow::setProject(Project *project)
         return;
 
     m_project = project;
-    connect(m_project, SIGNAL(framesChanged()), frameView(), SLOT(setOnionSkinFrames()) );
-    animationView()->setProject(project);
-    frameView()->setFrame(project->frame(0));
-    layerView()->setFrame(project->frame(0));
-
+    connect(m_project, SIGNAL(framesChanged()), ui->frameView, SLOT(setOnionSkinFrames()) );
+    ui->animationView->setProject(project);
 }
 
-/*!
- * \fn MainWindow::frameView()
- * \brief Returns the AnimationFrameView child.
- */
+void MainWindow::dockHacking()
+{
+    QMainWindow *innerWindow = new QMainWindow;
+    innerWindow->setCentralWidget(ui->frameView);
+    innerWindow->addDockWidget(this->dockWidgetArea(ui->animationDock), ui->animationDock);
+    this->setCentralWidget(innerWindow);
+}
 
-/*!
- * \fn MainWindow::animationView()
- * \brief Returns the AnimationView child.
- */
+void MainWindow::connectViews()
+{
+    connect(
+        ui->animationView, SIGNAL(activeFrameChanged(AnimationFrame*)),
+        ui->frameView, SLOT(setFrame(AnimationFrame*))
+    );
+    connect(
+        ui->animationView, SIGNAL(activeFrameChanged(AnimationFrame*)),
+        ui->layerView, SLOT(setFrame(AnimationFrame*))
+    );
+    connect(
+        ui->layerView, SIGNAL(activeLayerChanged(Layer*)),
+        ui->frameView, SLOT(setActiveLayer(Layer*))
+    );
+    connect(
+        ui->toolbox, SIGNAL(activeToolChanged(Tool*)),
+        ui->frameView, SLOT(setTool(Tool*))
+    );
+    connect(
+        ui->toolbox, SIGNAL(penSizeChanged(int)),
+        ui->frameView, SLOT(setPenSize(int))
+    );
+    connect(
+        ui->toolbox, SIGNAL(activeColorChanged(QColor)),
+        ui->frameView, SLOT(setPenColor(QColor))
+    );
 
-/*!
- * \fn MainWindow::layerView()
- * \brief Returns the LayerView child.
- */
+    ui->frameView->setTool(ui->toolbox->activeTool());
+}
+
+void MainWindow::handleOnionSkinActionToggled(bool checked)
+{
+    if (!checked)
+        return;
+
+    if (sender() == ui->actionOnionSkinBackward0)
+        ;
+    else if (sender() == ui->actionOnionSkinBackward1)
+        ;
+    else if (sender() == ui->actionOnionSkinBackward2)
+        ;
+    else if (sender() == ui->actionOnionSkinForward0)
+        ;
+    else if (sender() == ui->actionOnionSkinForward1)
+        ;
+    else if (sender() == ui->actionOnionSkinForward2)
+        ;
+    else if (sender() == ui->actionOnionSkinForward3)
+        ;
+}
+
+void MainWindow::handleWindowActionToggled(bool checked)
+{
+}

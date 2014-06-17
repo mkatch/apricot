@@ -22,11 +22,6 @@ public:
     Project *project();
     void setProject(Project *project);
 
-    AnimationFrameView *frameView();
-    AnimationView *animationView();
-    LayerView *layerView();
-    Toolbox *toolbox();
-
 signals:
     void projectChanged();
 
@@ -34,35 +29,18 @@ private:
     Ui::MainWindow *ui;
 
     Project *m_project;
-    AnimationFrameView *m_frameView;
-    AnimationView *m_animationView;
-    LayerView *m_layerView;
-    Toolbox *m_toolbox;
+
+    void dockHacking();
+    void connectViews();
+
+private slots:
+    void handleOnionSkinActionToggled(bool checked);
+    void handleWindowActionToggled(bool checked);
 };
 
 inline Project *MainWindow::project()
 {
     return m_project;
-}
-
-inline AnimationFrameView *MainWindow::frameView()
-{
-    return m_frameView;
-}
-
-inline AnimationView *MainWindow::animationView()
-{
-    return m_animationView;
-}
-
-inline LayerView *MainWindow::layerView()
-{
-    return m_layerView;
-}
-
-inline Toolbox *MainWindow::toolbox()
-{
-    return m_toolbox;
 }
 
 #endif // MAINWINDOW_HPP
