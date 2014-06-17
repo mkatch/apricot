@@ -102,8 +102,8 @@ AnimationFrameView::AnimationFrameView(QWidget *parent) :
     background->setBrush(QPainterExtensions(new QPainter()).getBrushForBackground());
     background->setZValue(-1);
 
-    onionSkinPrevious = 1;
-    onionSkinNext = 1;
+    setOnionSkinBackward(1);
+    setOnionSkinForward(1);
 
     layOut();
 }
@@ -218,14 +218,32 @@ void AnimationFrameView::setTool(Tool *tool)
     update();
 }
 
+void AnimationFrameView::setOnionSkinBackward(int number)
+{
+    if(m_onionSkinBackward == number)
+        return;
+
+    m_onionSkinBackward = number;
+    update();
+}
+
+void AnimationFrameView::setOnionSkinForward(int number)
+{
+    if(m_onionSkinForward == number)
+        return;
+
+    m_onionSkinForward = number;
+    update();
+}
+
 void AnimationFrameView::setOnionSkinFrames()
 {
 
-    if(onionSkinPrevious > 0 && onionSkinNext) {
+    if(onionSkinBackward() > 0 && onionSkinForward()) {
         QList<AnimationFrame *> onionSkinFrames;
         int index = frame()->project()->frames().indexOf(frame());
-        int beginOfOnionSkin = max(0, index-onionSkinPrevious);
-        int endOfOnionSkin = min(frame()->project()->frameCount(), index+onionSkinNext);
+        int beginOfOnionSkin = max(0, index-onionSkinBackward());
+        int endOfOnionSkin = min(frame()->project()->frameCount(), index+onionSkinForward());
         if(endOfOnionSkin == frame()->project()->frameCount())
             endOfOnionSkin--;
 
