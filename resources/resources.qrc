@@ -1,6 +1,8 @@
 <RCC>
     <qresource prefix="/images">
         <file alias="isocastle.png">images/isocastle.png</file>
+        <file alias="cube.gif">images/cube.gif</file>
+        <file alias="tv.png">images/tv.png</file>
     </qresource>
     <qresource prefix="/icons/tools">
         <file alias="pencil.png">icons/tool-pencil.png</file>

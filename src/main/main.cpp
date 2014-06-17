@@ -29,6 +29,8 @@ int main(int argc, char *argv[])
     Project::save("test.apr", project);
     delete project;
     project = Project::load("test.apr");
+//    project = Project::load(":/images/tv.png");
+//    project = Project::load(":/images/cube.gif");
 
     application.setProject(project);
 
