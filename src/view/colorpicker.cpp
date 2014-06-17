@@ -316,6 +316,7 @@ void ColorWheel::renderHueWheelBox()
 
 void ColorWheel::resizeEvent(QResizeEvent *event)
 {
+    QWidget::resizeEvent(event);
     int size = qMin(event->size().width(), event->size().height());
 
     hueWheel.reset(new QImage(size, size, QImage::Format_ARGB32));

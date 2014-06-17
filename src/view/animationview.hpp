@@ -14,6 +14,8 @@
 
 class AnimationViewItem;
 
+#include <ApricotUtils>
+
 class AnimationView : public QWidget
 {
     Q_OBJECT

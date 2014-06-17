@@ -191,18 +191,15 @@ void ToolboxButton::leaveEvent(QEvent *event)
 }
 
 Toolbox::Toolbox(QWidget *parent) :
-    QDockWidget(parent)
+    QWidget(parent)
 {
-    QWidget *content = new QWidget(this);
-    setWidget(content);
-
     Tool *dragTool = new DragTool(this);
     Tool *lineTool = new LineTool(this);
     Tool *rectTool = new RectangleTool(this);
     Tool *ellipseTool = new EllipseTool(this);
     Tool *pencilTool = new PencilTool(this);
 
-    QGroupBox *toolBox = new QGroupBox("Tools", content);
+    QGroupBox *toolBox = new QGroupBox("Tools", this);
     QMargins toolMargins = toolBox->contentsMargins();
     toolMargins.setLeft(-10);
     toolMargins.setRight(-10);
@@ -214,7 +211,7 @@ Toolbox::Toolbox(QWidget *parent) :
     ToolboxButton *ellipseButton = new ToolboxButton(ellipseTool, "Ellipse tool", toolBox);
     ToolboxButton *pencilButton = new ToolboxButton(pencilTool, "Pencil tool", toolBox);
 
-    QButtonGroup *toolButtons = new QButtonGroup(content);
+    QButtonGroup *toolButtons = new QButtonGroup(this);
     toolButtons->addButton(dragButton);
     toolButtons->addButton(lineButton);
     toolButtons->addButton(rectButton);
@@ -229,15 +226,15 @@ Toolbox::Toolbox(QWidget *parent) :
     toolLayout->addWidget(pencilButton, 2, 0);
     toolBox->setLayout(toolLayout);
 
-    penPicker = new PenPicker(content);
-    colorPreview = new ColorPreview(content);
+    penPicker = new PenPicker(this);
+    colorPreview = new ColorPreview(this);
 
-    QVBoxLayout *layout = new QVBoxLayout(content);
+    QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(toolBox);
     layout->addWidget(penPicker);
     layout->addWidget(colorPreview);
     layout->addStretch();
-    content->setLayout(layout);
+    this->setLayout(layout);
 
     connect(
         penPicker, SIGNAL(penColorChanged(QColor)),
