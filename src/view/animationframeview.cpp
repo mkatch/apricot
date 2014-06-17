@@ -72,6 +72,17 @@ private:
  * This property may be \c nullptr meaning that the tool is not set.
  */
 
+/*!
+ * \property AnimationFrameView::onionSkinBackward
+ * \brief number of onion skin frames before the current frame.
+ */
+
+/*!
+ * \property AnimationFrameView::onionSkinForward
+ * \brief number of onion skin frames after the current frame.
+ */
+
+
 // Methods
 
 /*!
@@ -85,6 +96,8 @@ AnimationFrameView::AnimationFrameView(QWidget *parent) :
     m_frame(nullptr),
     m_activeLayer(nullptr),
     m_tool(nullptr),
+    m_penSize(1),
+    m_penColor(Qt::black),
     onionSkin(nullptr)
 {
     this->setMouseTracking(true);
@@ -100,8 +113,8 @@ AnimationFrameView::AnimationFrameView(QWidget *parent) :
     background->setBrush(QPainterExtensions(new QPainter()).getBrushForBackground());
     background->setZValue(-1);
 
-    onionSkinPrevious = 1;
-    onionSkinNext = 1;
+    setOnionSkinBackward(1);
+    setOnionSkinForward(1);
 
     layOut();
 }
@@ -216,18 +229,39 @@ void AnimationFrameView::setTool(Tool *tool)
     update();
 }
 
+void AnimationFrameView::setOnionSkinBackward(int number)
+{
+    if(m_onionSkinBackward == number)
+        return;
+
+    m_onionSkinBackward = number;
+    update();
+}
+
+void AnimationFrameView::setOnionSkinForward(int number)
+{
+    if(m_onionSkinForward == number)
+        return;
+
+    m_onionSkinForward = number;
+    update();
+}
+
 void AnimationFrameView::setOnionSkinFrames()
 {
 
-    if(onionSkinPrevious > 0 && onionSkinNext) {
+    if(onionSkinBackward() > 0 && onionSkinForward()) {
         QList<AnimationFrame *> onionSkinFrames;
         int index = frame()->project()->frames().indexOf(frame());
-        int beginOfOnionSkin = max(0, index-onionSkinPrevious);
-        int endOfOnionSkin = min(frame()->project()->frameCount(), index+onionSkinNext);
-        for(int i=beginOfOnionSkin;i<index;i++) {
+        int beginOfOnionSkin = max(0, index-onionSkinBackward());
+        int endOfOnionSkin = min(frame()->project()->frameCount(), index+onionSkinForward());
+        if(endOfOnionSkin == frame()->project()->frameCount())
+            endOfOnionSkin--;
+
+        for(int i = beginOfOnionSkin; i < index; i++) {
             onionSkinFrames.push_back(frame()->project()->frame(i));
         }
-        for(int i=index+1;i<endOfOnionSkin;i++) {
+        for(int i= index+1; i<= endOfOnionSkin; i++) {
             onionSkinFrames.push_back(frame()->project()->frame(i));
         }
         if(onionSkinFrames.size() > 0) {
@@ -434,6 +468,7 @@ void AnimationFrameView::toolPreview()
 {
     revertBackBuffer();
     Painter painter(backBuffer);
+    painter.setPen(pen());
     m_tool->paint(&painter, true);
     lastBackBufferChange = painter.boundingBox();
     frameItem->update(lastBackBufferChange);
@@ -443,6 +478,7 @@ void AnimationFrameView::toolCommit()
 {
     revertBackBuffer();
     Painter backPainter(backBuffer);
+    backPainter.setPen(pen());
     m_tool->paint(&backPainter, false);
 
     Painter *frontPainter = m_activeLayer->beginPainting();

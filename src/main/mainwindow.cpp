@@ -61,10 +61,6 @@ void MainWindow::dockHacking()
 void MainWindow::connectViews()
 {
     connect(
-        ui->toolbox, SIGNAL(activeToolChanged(Tool*)),
-        ui->frameView, SLOT(setTool(Tool*))
-    );
-    connect(
         ui->animationView, SIGNAL(activeFrameChanged(AnimationFrame*)),
         ui->frameView, SLOT(setFrame(AnimationFrame*))
     );
@@ -75,6 +71,18 @@ void MainWindow::connectViews()
     connect(
         ui->layerView, SIGNAL(activeLayerChanged(Layer*)),
         ui->frameView, SLOT(setActiveLayer(Layer*))
+    );
+    connect(
+        ui->toolbox, SIGNAL(activeToolChanged(Tool*)),
+        ui->frameView, SLOT(setTool(Tool*))
+    );
+    connect(
+        ui->toolbox, SIGNAL(penSizeChanged(int)),
+        ui->frameView, SLOT(setPenSize(int))
+    );
+    connect(
+        ui->toolbox, SIGNAL(activeColorChanged(QColor)),
+        ui->frameView, SLOT(setPenColor(QColor))
     );
 
     ui->frameView->setTool(ui->toolbox->activeTool());

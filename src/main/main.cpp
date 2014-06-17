@@ -25,13 +25,12 @@ int main(int argc, char *argv[])
         layer->endPainting();
     }
 
-    application.setProject(project);
+    // Serialization test.
+    Project::save("test.apr", project);
+    delete project;
+    project = Project::load("test.apr");
 
-    //DragTool tool;
-//    RectangleTool tool;
-    //EllipseTool tool;
-    //LineTool tool;
-    //application.mainWindow()->frameView()->setTool(&tool);
+    application.setProject(project);
 
     return application.exec();
 }

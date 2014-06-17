@@ -20,6 +20,10 @@ class AnimationFrameView : public QWidget
     Q_PROPERTY(qreal scale READ scale WRITE setScale NOTIFY scaleChanged)
     Q_PROPERTY(QPointF translation READ translation WRITE setTranslation NOTIFY translationChanged)
     Q_PROPERTY(QTransform transform READ transform NOTIFY transformChanged)
+    Q_PROPERTY(int penSize READ penSize WRITE setPenSize)
+    Q_PROPERTY(QColor penColor READ penColor WRITE setPenColor)
+    Q_PROPERTY(int onionSkinBackward READ onionSkinBackward WRITE setOnionSkinBackward)
+    Q_PROPERTY(int onionSkinForward READ onionSkinForward WRITE setOnionSkinForward)
 
 public:
     explicit AnimationFrameView(QWidget *parent = nullptr);
@@ -29,6 +33,10 @@ public:
     Layer *activeLayer() const;
     Tool *tool();
     const Tool *tool() const;
+
+    int penSize() const;
+    const QColor &penColor() const;
+    QPen pen() const;
 
     qreal scale() const;
     void setScale(qreal scale);
@@ -40,19 +48,25 @@ public:
     void translate(const QPointF &translation);
     void translate(qreal x, qreal y);
 
+    int onionSkinBackward() const;
+    int onionSkinForward() const;
+
     QTransform transform() const;
 
     QPointF mapToFrame(const QPointF &point) const;
     QPointF mapFromFrame(const QPointF &point) const;
-
-    int onionSkinPrevious;
-    int onionSkinNext;
 
 public slots:
     void setFrame(AnimationFrame *frame);
     void setActiveLayer(Layer *layer);
     void setTool(Tool *tool);
     void setOnionSkinFrames();
+
+    void setPenSize(int size);
+    void setPenColor(const QColor &color);
+
+    void setOnionSkinBackward(int number);
+    void setOnionSkinForward(int number);
 
 signals:
     void frameChanged();
@@ -85,6 +99,11 @@ private:
     Layer *m_activeLayer;
     Tool *m_tool;
 
+    int m_penSize;
+    QColor m_penColor;
+
+    int m_onionSkinBackward;
+    int m_onionSkinForward;
     QPixmap *onionSkin;
 
     void layOut();
@@ -95,7 +114,6 @@ private:
 
     friend class Tool;
     friend class GraphicsAnimationFrameViewItem;
-
 };
 
 inline AnimationFrame *AnimationFrameView::frame() const
@@ -148,6 +166,16 @@ inline void AnimationFrameView::translate(qreal x, qreal y)
     translate(QPointF(x, y));
 }
 
+inline int AnimationFrameView::onionSkinBackward() const
+{
+    return m_onionSkinBackward;
+}
+
+inline int AnimationFrameView::onionSkinForward() const
+{
+    return m_onionSkinForward;
+}
+
 inline QPointF AnimationFrameView::mapToFrame(const QPointF &point) const
 {
     return (point - translation()) / scale();
@@ -156,6 +184,34 @@ inline QPointF AnimationFrameView::mapToFrame(const QPointF &point) const
 inline QPointF AnimationFrameView::mapFromFrame(const QPointF &point) const
 {
     return point * scale() + translation();
+}
+
+inline int AnimationFrameView::penSize() const
+{
+    return m_penSize;
+}
+
+inline const QColor &AnimationFrameView::penColor() const
+{
+    return m_penColor;
+}
+
+inline void AnimationFrameView::setPenSize(int size)
+{
+    m_penSize = size;
+}
+
+inline void AnimationFrameView::setPenColor(const QColor &color)
+{
+    m_penColor = color;
+}
+
+inline QPen AnimationFrameView::pen() const
+{
+    QPen pen;
+    pen.setColor(penColor());
+    pen.setWidth(penSize());
+    return pen;
 }
 
 #endif // VIEW_ANIMATIONFRAMEVIEW_HPP
