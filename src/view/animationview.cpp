@@ -143,7 +143,7 @@ void AnimationView::setActiveFrame(const AnimationFrame *frame)
         return;
 
     if (m_activeFrame != nullptr) {
-        int i = project()->indexOfFrame(m_activeFrame);
+        int i = m_activeFrame->project()->indexOfFrame(m_activeFrame);
         items[i]->setActive(false);
         items[i]->setZValue(0);
     }

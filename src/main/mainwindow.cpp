@@ -45,15 +45,17 @@ void MainWindow::setProject(Project *project, bool own)
     if (m_project == project)
         return;
 
-    m_project->setParent(nullptr);
+    connect(project, SIGNAL(framesChanged()), ui->frameView, SLOT(setOnionSkinFrames()) );
+    ui->animationView->setProject(project);
+
+    if (m_project != nullptr && m_project->parent() == this)
+        m_project->setParent(nullptr);
     if (ownProject && m_project != nullptr)
         delete m_project;
 
     m_project = project;
-    m_project->setParent(this);
     ownProject = own;
-    connect(m_project, SIGNAL(framesChanged()), ui->frameView, SLOT(setOnionSkinFrames()) );
-    ui->animationView->setProject(project);
+    project->setParent(this);
 
     if (project->objectName().isEmpty())
         setWindowTitle("Apricot — untitled");
@@ -186,7 +188,7 @@ void MainWindow::handleSaveAction()
         return;
     }
 
-    if (project()->objectName().isEmpty())
+    if (project()->objectName().isEmpty() || !project()->objectName().endsWith("apr"))
         return handleSaveAsAction();
     else
         Project::save(project()->objectName(), project());

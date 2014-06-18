@@ -86,19 +86,19 @@ Project *Project::load(QString filepath)
     QFileInfo info(filepath);
 
     if (info.suffix() == "apr")
-        return loadApricotFile(filepath, parent);
+        return loadApricotFile(filepath);
     if (info.suffix() == "gif")
-        return loadGifFile(filepath, parent);
-    return loadImageFile(filepath, parent);
+        return loadGifFile(filepath);
+    return loadImageFile(filepath);
 }
 
-Project *Project::loadApricotFile(QString filepath, QObject *parent)
+Project *Project::loadApricotFile(QString filepath)
 {
     QFile file(filepath);
     file.open(QIODevice::ReadOnly);
     QDataStream stream(&file);
 
-    Project *project = new Project(parent);
+    Project *project = new Project;
 
     QSize size;
     stream >> size;
@@ -127,11 +127,11 @@ Project *Project::loadApricotFile(QString filepath, QObject *parent)
     return project;
 }
 
-Project *Project::loadGifFile(QString filepath, QObject *parent)
+Project *Project::loadGifFile(QString filepath)
 {
     QMovie gif(filepath);
 
-    Project *project = new Project(parent);
+    Project *project = new Project;
     gif.jumpToNextFrame();
     project->setSize(gif.currentPixmap().size());
 
@@ -149,11 +149,11 @@ Project *Project::loadGifFile(QString filepath, QObject *parent)
     return project;
 }
 
-Project *Project::loadImageFile(QString filepath, QObject *parent)
+Project *Project::loadImageFile(QString filepath)
 {
     QPixmap image(filepath);
 
-    Project *project = new Project(parent);
+    Project *project = new Project;
     project->setSize(image.size());
 
     AnimationFrame *frame = project->newFrame();
@@ -208,11 +208,14 @@ AnimationFrame *Project::newFrameAfter(int i)
 }
 
 /*!
- * \fn Project::newFrame()
  * \brief Creats new AnimationFrame at the end of animation and returns it.
- *
- * The new frame is a copy of the last frame if present.
  */
+AnimationFrame *Project::newFrame()
+{
+    AnimationFrame *frame = new AnimationFrame(this);
+    insertFrame(frameCount(), frame);
+    return frame;
+}
 
 /*!
  * Removes AnimationFrame at index \a i.

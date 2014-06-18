@@ -18,7 +18,7 @@ class Project : public QObject
 public:
     explicit Project(QObject *parent = nullptr);
 
-    static Project *load(QString filepath, QObject *parent = nullptr);
+    static Project *load(QString filepath);
     static void save(QString filepath, Project *project);
 
     const QSize &size() const;
@@ -57,9 +57,9 @@ private:
     AnimationFrame *newFrame(int i);
     void insertFrame(int i, AnimationFrame *frame);
 
-    static Project *loadApricotFile(QString filepath, QObject *parent);
-    static Project *loadGifFile(QString filepath, QObject *parent);
-    static Project *loadImageFile(QString filepath, QObject *parent);
+    static Project *loadApricotFile(QString filepath);
+    static Project *loadGifFile(QString filepath);
+    static Project *loadImageFile(QString filepath);
 };
 
 inline const QSize &Project::size() const
@@ -105,11 +105,6 @@ inline const AnimationFrame *Project::frame(int i) const
 inline int Project::indexOfFrame(const AnimationFrame *frame) const
 {
     return m_frames.indexOf(const_cast<AnimationFrame *>(frame));
-}
-
-inline AnimationFrame *Project::newFrame()
-{
-    return newFrameAfter(frameCount() - 1);
 }
 
 inline void Project::moveFrame(const AnimationFrame *frame, int to)
