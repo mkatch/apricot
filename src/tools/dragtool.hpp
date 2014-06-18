@@ -13,8 +13,6 @@ public:
 protected:
     void mouseMoveEvent(ToolMouseMoveEvent *event) override;
     void wheelEvent(ToolWheelEvent *event) override;
-    void mousePressEvent(ToolMouseEvent *event) override;
-    void paint(Painter *painter, bool preview) override;
 
 private:
     QPoint lastPoint;

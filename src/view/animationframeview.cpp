@@ -130,6 +130,7 @@ void AnimationFrameView::setScale(qreal scale)
         return;
 
     frameItem->setScale(scale);
+
     background->setRect(frameItem->sceneBoundingRect());
     emit scaleChanged();
     emit transformChanged();
@@ -401,6 +402,7 @@ void AnimationFrameView::wheelEvent(QWheelEvent *event)
         event->buttons(),
         event->modifiers()
     );
+    frameItem->setTransformOriginPoint(frameItem->mapFromScene(event->x(), event->y()));
     tool()->wheelEvent(&toolEvent);
 }
 
