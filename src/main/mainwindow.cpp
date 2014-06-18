@@ -26,7 +26,8 @@
  */
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    m_project(nullptr)
 {
     ui->setupUi(this);
     dockHacking();
