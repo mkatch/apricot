@@ -16,11 +16,9 @@ void DragTool::mouseMoveEvent(ToolMouseMoveEvent *event)
 
 void DragTool::wheelEvent(ToolWheelEvent *event)
 {
-    qreal factor = 1.0 + event->angleDelta().y() / 1200.0;
-    qreal oldScale = view()->scale();
-    view()->scale(factor);
-    qreal f = factor / oldScale - 1.0;
-    QPointF center(view()->width() / 4.0, view()->height() / 4.0);
-    view()->translate(f * (view()->pos() - center));
+    qreal df = event->angleDelta().y() / 1200.0;
+    QPointF center(0.5 * view()->width(), 0.5 * view()->height());
+    view()->scale(1.0 + df);
+    view()->translate(df * (view()->translation() - center));
     event->accept();
 }
