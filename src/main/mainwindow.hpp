@@ -40,6 +40,7 @@ private:
 
 private slots:
     void handleOnionSkinActionToggled(bool checked);
+    void handleNewAction();
     void handleOpenAction();
     void handleSaveAsAction();
     void handleSaveAction();

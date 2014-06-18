@@ -3,6 +3,8 @@
 
 #include <QDockWidget>
 
+#include "newprojectdialog.hpp"
+
 /*!
  * \class MainWindow
  * \inmodule main
@@ -99,7 +101,14 @@ void MainWindow::connectViews()
         ui->toolbox, SIGNAL(activeColorChanged(QColor)),
         ui->frameView, SLOT(setPenColor(QColor))
     );
-
+    connect(
+        ui->colorPicker, SIGNAL(colorChanged(QColor)),
+        ui->toolbox, SLOT(setActiveColor(QColor))
+    );
+    connect(
+        ui->toolbox, SIGNAL(activeColorChanged(QColor)),
+        ui->colorPicker, SLOT(setColor(QColor))
+    );
     ui->frameView->setTool(ui->toolbox->activeTool());
 }
 
@@ -160,6 +169,18 @@ void MainWindow::handleOpenAction()
         return;
 
     setProject(Project::load(fileName));
+}
+
+void MainWindow::handleNewAction()
+{
+    NewProjectDialog dialog(this);
+    if (dialog.exec() == QDialog::Rejected)
+        return;
+
+    Project *project = new Project;
+    project->setSize(dialog.size());
+    project->newFrame()->newLayer();
+    setProject(project);
 }
 
 void MainWindow::handleSaveAsAction()

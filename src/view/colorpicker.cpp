@@ -252,6 +252,7 @@ void ColorWheel::setActiveColor(const QColor &color)
     if (color == activeColor())
         return;
 
+    setPreviousColor(color);
     setHue(qRound(color.hslHueF() * 360.0));
     setSaturation(qRound(color.hslSaturationF() * 100.0));
     setLightness(qRound(color.lightnessF() * 100.0));

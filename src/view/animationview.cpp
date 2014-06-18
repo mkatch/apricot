@@ -162,6 +162,7 @@ void AnimationView::setActiveFrame(const AnimationFrame *frame)
         return;
     }
 
+    scene->clearSelection();
     int i = project()->indexOfFrame(frame);
     m_activeFrame = project()->frame(i);
     items[i]->setActive(true);

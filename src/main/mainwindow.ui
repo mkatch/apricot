@@ -70,7 +70,6 @@
     </property>
     <addaction name="actionAnimation"/>
     <addaction name="actionLayers"/>
-    <addaction name="actionPalette"/>
     <addaction name="actionColorPicker"/>
     <addaction name="actionToolbox"/>
    </widget>
@@ -662,11 +661,28 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionNew</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>handleNewAction()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>519</x>
+     <y>398</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>handleOnionSkinActionToggled(bool)</slot>
   <slot>handleOpenAction()</slot>
   <slot>handleSaveAsAction()</slot>
   <slot>handleSaveAction()</slot>
+  <slot>handleNewAction()</slot>
  </slots>
 </ui>
