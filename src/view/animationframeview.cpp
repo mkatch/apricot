@@ -130,6 +130,7 @@ void AnimationFrameView::setScale(qreal scale)
         return;
 
     frameItem->setScale(scale);
+
     background->setRect(frameItem->sceneBoundingRect());
     emit scaleChanged();
     emit transformChanged();
