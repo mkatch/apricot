@@ -56,6 +56,10 @@ private:
 
     AnimationFrame *newFrame(int i);
     void insertFrame(int i, AnimationFrame *frame);
+
+    static Project *loadApricotFile(QString filepath, QObject *parent);
+    static Project *loadGifFile(QString filepath, QObject *parent);
+    static Project *loadImageFile(QString filepath, QObject *parent);
 };
 
 inline const QSize &Project::size() const

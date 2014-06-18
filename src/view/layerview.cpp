@@ -46,6 +46,7 @@ LayerView::LayerView(QWidget *parent) :
     graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     graphicsView->setRenderHint(QPainter::Antialiasing);
     graphicsView->setScene(scene);
+    graphicsView->setAlignment(Qt::AlignTop);
     scene->installEventFilter(this);
 
     QVBoxLayout *vbox = new QVBoxLayout();
@@ -54,6 +55,7 @@ LayerView::LayerView(QWidget *parent) :
     hbox->addWidget(add);
     hbox->addWidget(remove);
     vbox->addLayout(hbox);
+    vbox->setMargin(0);
     setLayout(vbox);
     layOut();
     connect(add, SIGNAL(clicked()), this, SLOT(addLayer()));
@@ -455,13 +457,13 @@ void LayerViewItem::paint(
     int thumbnailHeight = m_layer->height() * thumbnailScale;
 
     QPainterExtensions(painter).drawBackground(
-        0.5 * (width() - thumbnailWidth) - 5,
+        0.5 * (width() - thumbnailWidth),
         0.5 * (height() - thumbnailHeight),
         thumbnailWidth,
         thumbnailHeight
     );
     QPainterExtensions(painter).drawLayer(
-        0.5 * (width() - thumbnailWidth) - 5,
+        0.5 * (width() - thumbnailWidth),
         0.5 * (height() - thumbnailHeight),
         thumbnailWidth,
         thumbnailHeight,

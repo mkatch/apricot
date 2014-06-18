@@ -1,8 +1,11 @@
 #include <ApricotUtils>
 #include <ApricotModel>
 
+#include <QFileInfo>
 #include <QFile>
 #include <QDataStream>
+#include <QPixmap>
+#include <QMovie>
 
 /*!
  * \class Project
@@ -80,6 +83,17 @@ void Project::save(QString filepath, Project *project)
 
 Project *Project::load(QString filepath)
 {
+    QFileInfo info(filepath);
+
+    if (info.suffix() == "apr")
+        return loadApricotFile(filepath, parent);
+    if (info.suffix() == "gif")
+        return loadGifFile(filepath, parent);
+    return loadImageFile(filepath, parent);
+}
+
+Project *Project::loadApricotFile(QString filepath, QObject *parent)
+{
     QFile file(filepath);
     file.open(QIODevice::ReadOnly);
     QDataStream stream(&file);
@@ -110,6 +124,45 @@ Project *Project::load(QString filepath)
     }
 
     project->setObjectName(filepath);
+    return project;
+}
+
+Project *Project::loadGifFile(QString filepath, QObject *parent)
+{
+    QMovie gif(filepath);
+
+    Project *project = new Project(parent);
+    gif.jumpToNextFrame();
+    project->setSize(gif.currentPixmap().size());
+
+    for (int f = 0; f < gif.frameCount(); f++) {
+        AnimationFrame *frame = project->newFrame();
+        Layer *layer = frame->newLayer();
+
+        Painter *painter = layer->beginPainting();
+        painter->drawImage(gif.currentPixmap());
+        layer->endPainting();
+
+        gif.jumpToNextFrame();
+    }
+
+    return project;
+}
+
+Project *Project::loadImageFile(QString filepath, QObject *parent)
+{
+    QPixmap image(filepath);
+
+    Project *project = new Project(parent);
+    project->setSize(image.size());
+
+    AnimationFrame *frame = project->newFrame();
+    Layer *layer = frame->newLayer();
+
+    Painter *painter = layer->beginPainting();
+    painter->drawImage(image);
+    layer->endPainting();
+
     return project;
 }
 

@@ -1,7 +1,6 @@
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 
-#include <QDebug>
 #include <QDockWidget>
 
 /*!
@@ -149,7 +148,6 @@ void MainWindow::handleOnionSkinActionToggled(bool checked)
 
 void MainWindow::handleOpenAction()
 {
-
     QString fileName = QFileDialog::getOpenFileName(
         this,
         "Open File",
