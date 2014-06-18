@@ -74,9 +74,11 @@ void Project::save(QString filepath, Project *project)
             stream << layer->canvas().pixmap();
         }
     }
+
+    project->setObjectName(filepath);
 }
 
-Project *Project::load(QString filepath, QObject *parent)
+Project *Project::load(QString filepath)
 {
     QFile file(filepath);
     file.open(QIODevice::ReadOnly);
@@ -107,6 +109,7 @@ Project *Project::load(QString filepath, QObject *parent)
         }
     }
 
+    project->setObjectName(filepath);
     return project;
 }
 

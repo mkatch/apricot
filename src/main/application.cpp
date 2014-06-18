@@ -9,15 +9,6 @@
  * It is a singleton.
  */
 
-// Properties
-
-/*!
- * \property Application::project
- * \brief The root of application data model.
- *
- * The application takes ownership of the project set as the value of this property.
- */
-
 // Methods
 
 /*!
@@ -27,20 +18,9 @@
  * call for \c main.
  */
 Application::Application(int &argc, char** argv) :
-    QApplication(argc, argv),
-    m_project(nullptr)
+    QApplication(argc, argv)
 {
     mainWindow()->show();
-}
-
-void Application::setProject(Project *project)
-{
-    if (m_project == project)
-        return;
-
-    m_project = project;
-    mainWindow()->setProject(project);
-    emit projectChanged();
 }
 
 

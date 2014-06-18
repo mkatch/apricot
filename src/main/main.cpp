@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     delete project;
     project = Project::load("test.apr");
 
-    application.setProject(project);
+    application.mainWindow()->setProject(project);
 
     return application.exec();
 }

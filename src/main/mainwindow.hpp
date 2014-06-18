@@ -2,6 +2,7 @@
 #define MAINWINDOW_HPP
 
 #include <QMainWindow>
+#include <QFileDialog>
 
 #include <ApricotCore>
 #include <ApricotView>
@@ -20,7 +21,7 @@ public:
     ~MainWindow();
 
     Project *project();
-    void setProject(Project *project);
+    void setProject(Project *project, bool own = true);
 
 signals:
     void projectChanged();
@@ -29,13 +30,19 @@ private:
     Ui::MainWindow *ui;
 
     Project *m_project;
+    bool ownProject;
 
     void dockHacking();
     void connectViews();
+    void groupOnionSkinActions();
+
+    QString projectDirectory() const;
 
 private slots:
     void handleOnionSkinActionToggled(bool checked);
-    void handleWindowActionToggled(bool checked);
+    void handleOpenAction();
+    void handleSaveAsAction();
+    void handleSaveAction();
 };
 
 inline Project *MainWindow::project()
