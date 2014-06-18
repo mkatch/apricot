@@ -10,5 +10,6 @@
         <file alias="ellipse.png">icons/tool-ellipse.png</file>
         <file alias="line.png">icons/tool-line.png</file>
         <file alias="rect.png">icons/tool-rect.png</file>
+        <file alias="eraser.png">icons/tool-eraser.png</file>
     </qresource>
 </RCC>
