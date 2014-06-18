@@ -402,7 +402,6 @@ void AnimationFrameView::wheelEvent(QWheelEvent *event)
         event->buttons(),
         event->modifiers()
     );
-    frameItem->setTransformOriginPoint(frameItem->mapFromScene(event->x(), event->y()));
     tool()->wheelEvent(&toolEvent);
 }
 
